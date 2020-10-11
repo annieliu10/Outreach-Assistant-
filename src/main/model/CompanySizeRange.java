@@ -4,11 +4,14 @@ import java.util.List;
 
 public class CompanySizeRange {
     private List<Integer> range;
+    private int lowerBound;
+    private int upperBound;
 
     // REQUIRES: lower <= upper
     // EFFECTS: constructs a range of integers from
     // lowerBound to upperBound including the lowerBound and upperBound
     public CompanySizeRange(int lowerBound, int upperBound) {
+
         int i = lowerBound;
         while (i <= upperBound) {
             range.add(i);
@@ -20,4 +23,10 @@ public class CompanySizeRange {
     public boolean contains(Integer val) {
         return range.contains(val);
     }
+
+    public List<Integer> getRange(){
+        return range;
+    }
+
+
 }
