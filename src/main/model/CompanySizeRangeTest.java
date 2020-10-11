@@ -8,9 +8,11 @@ import static org.junit.jupiter.api.Assertions.*;
 public class CompanySizeRangeTest {
     private CompanySizeRange range;
 
+
     @BeforeEach
     public void setUp() {
         range = new CompanySizeRange(10, 100);
+
     }
 
     @Test
@@ -19,8 +21,10 @@ public class CompanySizeRangeTest {
         int pos = 0;
         for (Integer i : range.getRange()) {
             assertEquals(i, range.getRange().get(pos));
-            pos = pos + 1;
+            pos++;
+
         }
+
     }
 
     @Test

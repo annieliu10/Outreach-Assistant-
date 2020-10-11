@@ -20,7 +20,7 @@ public class Company {
     }
 
 
-    public void updateContactStatus() {
+    public void contacted() {
         this.contactStatus = true;
         dateContacted = new Date();
     }
