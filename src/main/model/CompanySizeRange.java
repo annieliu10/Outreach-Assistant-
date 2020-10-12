@@ -12,6 +12,8 @@ public class CompanySizeRange {
     // EFFECTS: constructs a range of integers from
     // lowerBound to upperBound including the lowerBound and upperBound
     public CompanySizeRange(Integer lowerBound, Integer upperBound) {
+        this.lowerBound = lowerBound;
+        this.upperBound = upperBound;
         range = new ArrayList<>();
         int i = lowerBound;
         while (i <= upperBound) {
@@ -30,5 +32,12 @@ public class CompanySizeRange {
         return range;
     }
 
+    public int getLowerBound() {
+        return lowerBound;
+    }
 
+    public int getUpperBound() {
+        return upperBound;
+
+    }
 }

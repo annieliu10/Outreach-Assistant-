@@ -1,23 +1,46 @@
 package model;
 
+import java.util.Calendar;
+
 public class Meeting {
     private Company company;
-    private String date;
+    private Calendar date;
+    private String agenda;
 
     //EFFECTS: books the meeting
-    public void booking(){
+    public Meeting(Company company, int year, int month, int date) {
+        this.date = Calendar.getInstance();
+        this.date.set(year, month, date);
+        this.company = company;
+    }
+
+
+
+    public void setMeetingAgenda(String agenda) {
+        this.agenda = agenda;
 
     }
 
-    //EFFECTS: confirms the booking
-    public boolean confirmBooking(){
-        return false;
+    public void displayBooking() {
     }
 
-    public void setMeetingAgenda(){
-
-
+    public Calendar getDate() {
+        return date;
     }
 
-    public void displayBooking(){}
+    public Company getCompany() {
+        return company;
+    }
+
+
+    //EFFECTS: changes the meeting time
+    public void changeMeetingTime(int year, int month, int date) {
+        this.date.set(year, month, date);
+    }
+
+
+
+
+
+
 }

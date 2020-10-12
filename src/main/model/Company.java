@@ -9,30 +9,26 @@ public class Company {
     private String employerName;
     private boolean contactStatus;
     private int interestLevel;
-    private Date dateContacted;
 
-    public Company(int size, String industry, String companyName, String employerName) {
+
+    public Company(Integer size, String industry, String companyName, String employerName) {
         this.companySize = size;
         this.industry = industry;
         this.companyName = companyName;
         this.contactStatus = false;
+        this.employerName = employerName;
 
     }
 
 
-    public void contacted() {
+    public void contacted(int interest) {
         this.contactStatus = true;
-        dateContacted = new Date();
-    }
-
-
-
-
-    public void setInterestLevel(int interest) {
         interestLevel = interest;
     }
 
-    public int getSize() {
+
+
+    public Integer getSize() {
         return companySize;
     }
 

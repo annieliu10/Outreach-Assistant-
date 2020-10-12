@@ -1,10 +1,6 @@
 package model;
 
-import jdk.nashorn.internal.codegen.CompilerConstants;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 import static java.util.Collections.reverse;
 
@@ -41,41 +37,46 @@ public class CompanyList {
         }
     }
 
+    // REQUIRES: prioritizeContactsBasedOnIndustry can't be called
     // EFFECTS: prioritizes the list of new companies to be contacted as well as the companies that have
-    // not been contacted in the record first based on their size and then base it on industry preferences
+    // not been contacted in the record first based on their size
     // for size, it's smaller the better as long as it's within that range
-    public List<Company> prioritizeContacts(CompanyIndustryPreferenceOrder order) {
+    public List<Company> prioritizeContactsBasedOnSize() {
         getNewCompaniesThisWeek().addAll(getUnContactedCompanies());
         CallMethods getSize = new GetSizeMethod();
-        List<Company> sizeSortedCompanies = quicksortCompanies(getNewCompaniesThisWeek(), getSize);
-        List<Company> industrySortedCompanies = sortBasedOnIndustry(sizeSortedCompanies, order);
+        List<Company> sizeSortedCompanies = sortCompanies(getNewCompaniesThisWeek(), getSize);
+        return sizeSortedCompanies;
+    }
+
+    // REQUIRES: prioritizeContactsBasedOnSize can't be called
+    // EFFECTS: prioritizes the list of new companies to be contacted as well as the companies that have
+    // not been contacted in the record first based on industries
+    public List<Company> prioritizeContactsBasedOnIndustry(CompanyIndustryPreferenceOrder order) {
+        getNewCompaniesThisWeek().addAll(getUnContactedCompanies());
+        List<Company> industrySortedCompanies = sortBasedOnIndustry(getNewCompaniesThisWeek(), order);
         return industrySortedCompanies;
     }
 
 
-    private List<Company> quicksortCompanies(List<Company> listOfCompany, CallMethods method) {
-        if (listOfCompany.size() == 0) {
-            return listOfCompany;
-        } else {
-            List<Company> leftArray = new ArrayList<>();
-            List<Company> rightArray = new ArrayList<>();
-            Company pivotCompany = listOfCompany.get(0);
-            int pivot = method.call(pivotCompany);
-            listOfCompany.remove(pivotCompany);
+    //method.call(company)
+    private List<Company> sortCompanies(List<Company> listOfCompany, CallMethods method) {
+        List<Integer> values = new ArrayList<>();
+        for (Company next : listOfCompany) {
+            values.add(method.call(next));
+        }
+        Collections.sort(values);
+        List<Company> sorted = new ArrayList<>();
+        for (Integer i : values) {
             for (Company next : listOfCompany) {
-                if (method.call(next) < pivot) {
-                    leftArray.add(next);
-                } else {
-                    rightArray.add(next);
+                if (i == method.call(next) && !(sorted.contains(next))) {
+                    sorted.add(next);
                 }
             }
-            leftArray.add(pivotCompany);
-            leftArray.addAll(rightArray);
-            return quicksortCompanies(leftArray, method);
         }
 
-    }
+        return sorted;
 
+    }
 
     // create four different lists
     //
@@ -116,7 +117,7 @@ public class CompanyList {
             }
         }
         CallMethods getInterest = new GetInterestMethod();
-        List<Company> sortedCompanies = quicksortCompanies(temporaryResults, getInterest);
+        List<Company> sortedCompanies = sortCompanies(temporaryResults, getInterest);
         reverse(sortedCompanies);
         return sortedCompanies;
     }
@@ -178,7 +179,7 @@ public class CompanyList {
     }
 
     public List<Company> getNewCompaniesThisWeek() {
-        return null;
+        return companiesThisWeek;
     }
 
 
