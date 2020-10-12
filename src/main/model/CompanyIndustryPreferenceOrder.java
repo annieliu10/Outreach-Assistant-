@@ -31,8 +31,6 @@ public class CompanyIndustryPreferenceOrder {
         preferences.add(ENG);
     }
 
-
-
     public void changePreferenceOrder(String preferred1, String preferred2, String preferred3, String preferred4) {
         preferences.set(0, preferred1);
         preferences.set(1, preferred2);

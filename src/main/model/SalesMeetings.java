@@ -53,6 +53,8 @@ public class SalesMeetings {
                 tempDict.put(i, tempDict.get(i) + 1);
             }
         }
+
+        //looked up how to get the max value in a hash map
         Integer greatestKey = Collections.max(tempDict.entrySet(), Map.Entry.comparingByValue()).getKey();
         List<Meeting> results = new ArrayList<>();
         for (Meeting next : salesMeetings) {

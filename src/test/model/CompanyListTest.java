@@ -31,11 +31,9 @@ public class CompanyListTest {
                 "Ann Dawson");
         companies.addCompany(company1, range);
         companies.addCompany(company2, range);
-        assertEquals(2, companies.getNewCompaniesThisWeek().size());
-        assertEquals(65, companies.getNewCompaniesThisWeek().get(0).getSize());
-        assertEquals(70, companies.getNewCompaniesThisWeek().get(1).getSize());
-
-
+        assertEquals(2, companies.getUnContactedCompanies().size());
+        assertEquals(65, companies.getUnContactedCompanies().get(0).getSize());
+        assertEquals(70, companies.getUnContactedCompanies().get(1).getSize());
     }
 
     @Test
@@ -50,24 +48,25 @@ public class CompanyListTest {
                 "Ann Dawson");
         companies.addCompany(company1, range);
         companies.addCompany(company2, range);
-        assertEquals(0, companies.getNewCompaniesThisWeek().size());
+        assertEquals(0, companies.getUnContactedCompanies().size());
     }
 
     @Test
-    //doesn't add when it has been contacted recently but is not in the list of uncontacted companies from before
+    //doesn't add when it has been contacted recently and is not in the list of uncontacted companies
     public void testAddCompanyWhenRecentlyContacted() {
-        //first week
+
         Company company1 = new Company(65, "Information Technology", "AppAnn",
                 "Charlie Liu");
         companies.addCompany(company1, range);
+        assertEquals(1, companies.getUnContactedCompanies().size());
         company1.contacted(5);
+        companies.updateListsBasedOnContactStatuses();
         List<Company> contacts = companies.prioritizeContactsBasedOnSize();
-        companies.getReadyForNextWeek(contacts);
 
 
-        //second week
+
         companies.addCompany(company1, range);
-        assertEquals(0, companies.getNewCompaniesThisWeek().size());
+        assertEquals(0, companies.getUnContactedCompanies().size());
 
     }
 
@@ -79,15 +78,16 @@ public class CompanyListTest {
         Company company1 = new Company(65, "Information Technology", "AppAnn",
                 "Charlie Liu");
         companies.addCompany(company1, range);
+        assertEquals(1, companies.getUnContactedCompanies().size());
         List<Company> contacts = companies.prioritizeContactsBasedOnSize();
-        companies.getReadyForNextWeek(contacts);
+
 
         //second week starts
         //invoke the method
         companies.addCompany(company1, range);
 
         //check outcome
-        assertEquals(0, companies.getNewCompaniesThisWeek().size());
+        assertEquals(1, companies.getUnContactedCompanies().size());
     }
 
     @Test
@@ -96,8 +96,6 @@ public class CompanyListTest {
         Company company5 = new Company(150, "Marketing", "AdX",
                 "Chris Lee");
         companies.addCompany(company5, range);
-        List<Company> contacts = companies.prioritizeContactsBasedOnSize();
-        companies.getReadyForNextWeek(contacts);
 
 
         //second week starts
@@ -122,11 +120,7 @@ public class CompanyListTest {
         Company company5 = new Company(150, "Engineering", "AdX",
                 "Chris Lee");
         companies.addCompany(company5, range);
-        List<Company> contacts = companies.prioritizeContactsBasedOnSize();
-        companies.getReadyForNextWeek(contacts);
 
-
-        //second week starts
         Company company1 = new Company(65, "Information Technology", "AppAnn",
                 "Charlie Liu");
         Company company3 = new Company(200, "Marketing", "MGN",
@@ -144,7 +138,7 @@ public class CompanyListTest {
 
 
     @Test
-    public void testPrioritizeFollowUpContacted() {
+    public void testPrioritizeFollowUpContactedAndNotFollowedUp() {
         //first week starts
 
         Company company1 = new Company(65, "Information Technology", "AppAnn",
@@ -154,13 +148,13 @@ public class CompanyListTest {
         companies.addCompany(company1, range);
         companies.addCompany(company3, range);
 
-
         List<Company> contacts = companies.prioritizeContactsBasedOnSize();
         company1.contacted(8);
         company3.contacted(5);
+        companies.updateListsBasedOnContactStatuses();
 
-        //first week has ended
-        List<Company> results = companies.prioritizeFollowUp(contacts);
+
+        List<Company> results = companies.prioritizeFollowUp();
         assertEquals(2, results.size());
         assertEquals(company1, results.get(0));
         assertEquals(company3, results.get(1));
@@ -181,100 +175,107 @@ public class CompanyListTest {
 
         List<Company> contacts = companies.prioritizeContactsBasedOnSize();
         //first week has ended
-        List<Company> results = companies.prioritizeFollowUp(contacts);
+        List<Company> results = companies.prioritizeFollowUp();
         assertEquals(0, results.size());
 
     }
 
     @Test
-    public void testGetReadyForNextWeekAllNewCompaniesContacted() {
-
+    public void testPrioritizeFollowUpWhenFollowedUp(){
         Company company1 = new Company(65, "Information Technology", "AppAnn",
                 "Charlie Liu");
         Company company3 = new Company(200, "Engineering", "MGN",
                 "Christopher Runnell");
         companies.addCompany(company1, range);
         companies.addCompany(company3, range);
-
         List<Company> contacts = companies.prioritizeContactsBasedOnSize();
-        company1.contacted(5);
-        company3.contacted(10);
-        companies.prioritizeFollowUp(contacts);
-        //week has already ended
-        companies.getReadyForNextWeek(contacts);
-
-
-        //outcome
-        assertEquals(0, companies.getNewCompaniesThisWeek().size());
-        assertEquals(2, companies.getContactedCompanies().size());
-        assertEquals(0, companies.getUnContactedCompanies().size());
-        assertTrue(companies.getContactedCompanies().contains(company1));
-        assertTrue(companies.getContactedCompanies().contains(company3));
-        assertFalse(companies.getUnContactedCompanies().contains(company3));
-        assertFalse(companies.getUnContactedCompanies().contains(company1));
-
-
-    }
-
-    @Test
-    public void testGetReadyForNextWeekContactedTheUncontactedFromPast() {
-        //first week
-
-        Company company1 = new Company(65, "Information Technology", "AppAnn",
-                "Charlie Liu");
-        Company company3 = new Company(200, "Engineering", "MGN",
-                "Christopher Runnell");
-        companies.addCompany(company1, range);
-        companies.addCompany(company3, range);
-
-        List<Company> contacts = companies.prioritizeContactsBasedOnSize();
-        companies.prioritizeFollowUp(contacts);
-        companies.getReadyForNextWeek(contacts);
-
-        //second week(no new companies added)
-        List<Company> contacts2 = companies.prioritizeContactsBasedOnSize();
         company1.contacted(8);
-        company3.contacted(7);
-        companies.prioritizeFollowUp(contacts2);
-        companies.getReadyForNextWeek(contacts2);
+        company3.contacted(5);
+        companies.updateListsBasedOnContactStatuses();
+        company1.followedUp();
+        company3.followedUp();
+        companies.updateListsBasedOnFollowedUpCompanies();
+        List<Company> results = companies.prioritizeFollowUp();
+        assertEquals(0, results.size());
 
-        //outcome
-        assertEquals(0, companies.getNewCompaniesThisWeek().size());
-        assertEquals(0, companies.getUnContactedCompanies().size());
-        assertEquals(2, companies.getContactedCompanies().size());
-        assertTrue(companies.getContactedCompanies().contains(company1));
-        assertTrue(companies.getContactedCompanies().contains(company3));
-        assertFalse(companies.getUnContactedCompanies().contains(company3));
-        assertFalse(companies.getUnContactedCompanies().contains(company1));
 
     }
 
     @Test
-    public void testGetReadyForNextWeekAllNewCompaniesUncontacted() {
-
+    public void testUpdateListsBasedOnContactedSuccess(){
         Company company1 = new Company(65, "Information Technology", "AppAnn",
                 "Charlie Liu");
         Company company3 = new Company(200, "Engineering", "MGN",
                 "Christopher Runnell");
         companies.addCompany(company1, range);
         companies.addCompany(company3, range);
-
         List<Company> contacts = companies.prioritizeContactsBasedOnSize();
-        companies.prioritizeFollowUp(contacts);
-        //week has already ended
-        companies.getReadyForNextWeek(contacts);
+        company1.contacted(8);
+        company3.contacted(5);
+        companies.updateListsBasedOnContactStatuses();
+        assertEquals(2, companies.getContactedCompanies().size());
+        assertEquals(company1, companies.getContactedCompanies().get(0));
+        assertEquals(company3, companies.getContactedCompanies().get(1));
+        assertEquals(0, companies.getUnContactedCompanies().size());
+    }
 
 
-        //outcome
-        assertEquals(0, companies.getNewCompaniesThisWeek().size());
+    @Test
+    public void testUpdateListsBasedOnContactedUnSuccessful(){
+        Company company1 = new Company(65, "Information Technology", "AppAnn",
+                "Charlie Liu");
+        Company company3 = new Company(200, "Engineering", "MGN",
+                "Christopher Runnell");
+        companies.addCompany(company1, range);
+        companies.addCompany(company3, range);
+        List<Company> contacts = companies.prioritizeContactsBasedOnSize();
+        companies.updateListsBasedOnContactStatuses();
         assertEquals(0, companies.getContactedCompanies().size());
         assertEquals(2, companies.getUnContactedCompanies().size());
-        assertFalse(companies.getContactedCompanies().contains(company1));
-        assertFalse(companies.getContactedCompanies().contains(company3));
-        assertTrue(companies.getUnContactedCompanies().contains(company3));
-        assertTrue(companies.getUnContactedCompanies().contains(company1));
+        assertEquals(company1, companies.getUnContactedCompanies().get(0));
+        assertEquals(company3, companies.getUnContactedCompanies().get(1));
+    }
+
+    @Test
+    public void testUpdatedListsBasedOnFollowedUpSuccess(){
+        Company company1 = new Company(65, "Information Technology", "AppAnn",
+                "Charlie Liu");
+        Company company3 = new Company(200, "Engineering", "MGN",
+                "Christopher Runnell");
+        companies.addCompany(company1, range);
+        companies.addCompany(company3, range);
+        List<Company> contacts = companies.prioritizeContactsBasedOnSize();
+        company1.contacted(8);
+        company3.contacted(5);
+        companies.updateListsBasedOnContactStatuses();
+        company1.followedUp();
+        company3.followedUp();
+        companies.updateListsBasedOnFollowedUpCompanies();
+        assertEquals(0, companies.getContactedCompanies().size());
+        assertEquals(2, companies.getFollowedUpCompanies().size());
+        assertEquals(company1, companies.getFollowedUpCompanies().get(0));
+        assertEquals(company3, companies.getFollowedUpCompanies().get(1));
+    }
+    @Test
+    public void testUpdatedListsBasedOnFollowedUpUnSuccess() {
+        Company company1 = new Company(65, "Information Technology", "AppAnn",
+                "Charlie Liu");
+        Company company3 = new Company(200, "Engineering", "MGN",
+                "Christopher Runnell");
+        companies.addCompany(company1, range);
+        companies.addCompany(company3, range);
+        List<Company> contacts = companies.prioritizeContactsBasedOnSize();
+        company1.contacted(8);
+        company3.contacted(5);
+        companies.updateListsBasedOnContactStatuses();
+        companies.updateListsBasedOnFollowedUpCompanies();
+        assertEquals(2, companies.getContactedCompanies().size());
+        assertEquals(0, companies.getFollowedUpCompanies().size());
+        assertEquals(company1, companies.getContactedCompanies().get(0));
+        assertEquals(company3, companies.getContactedCompanies().get(1));
+
+
 
     }
 
-
-}
+    }

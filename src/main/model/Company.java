@@ -9,6 +9,7 @@ public class Company {
     private String employerName;
     private boolean contactStatus;
     private int interestLevel;
+    private boolean followUpStatus;
 
 
     public Company(Integer size, String industry, String companyName, String employerName) {
@@ -18,6 +19,7 @@ public class Company {
         this.contactStatus = false;
         this.employerName = employerName;
         this.interestLevel = 0;
+        this.followUpStatus = false;
 
     }
 
@@ -27,7 +29,10 @@ public class Company {
         interestLevel = interest;
     }
 
+    public void followedUp(){
+        this.followUpStatus = true;
 
+    }
 
     public Integer getSize() {
         return companySize;
@@ -56,6 +61,9 @@ public class Company {
     }
 
 
+    public boolean getFollowUpStatus(){
+        return followUpStatus;
+    }
 
 
 }

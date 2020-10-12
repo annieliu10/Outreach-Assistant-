@@ -14,12 +14,13 @@ import static java.util.Collections.reverse;
 // from the past weeks will get contacted again in the following week along with the new companies.
 // This process repeats.
 public class CompanyList {
-    private List<Company> companiesThisWeek;
+
     private List<Company> contactedCompanies;
     private List<Company> unContactedCompanies;
+    private List<Company> followedUpCompanies;
 
     public CompanyList() {
-        companiesThisWeek = new ArrayList<>();
+        followedUpCompanies = new ArrayList<>();
         contactedCompanies = new ArrayList<>();
         unContactedCompanies = new ArrayList<>();
     }
@@ -32,7 +33,7 @@ public class CompanyList {
     public void addCompany(Company company, CompanySizeRange range) {
         if (!(getContactedCompanies().contains(company)) && (!(getUnContactedCompanies().contains(company)))) {
             if (range.contains(company.getSize())) {
-                companiesThisWeek.add(company);
+                unContactedCompanies.add(company);
             }
         }
     }
@@ -42,9 +43,8 @@ public class CompanyList {
     // not been contacted in the record first based on their size
     // for size, it's smaller the better as long as it's within that range
     public List<Company> prioritizeContactsBasedOnSize() {
-        getNewCompaniesThisWeek().addAll(getUnContactedCompanies());
         CallMethods getSize = new GetSizeMethod();
-        List<Company> sizeSortedCompanies = sortCompanies(getNewCompaniesThisWeek(), getSize);
+        List<Company> sizeSortedCompanies = sortCompanies(getUnContactedCompanies(), getSize);
         return sizeSortedCompanies;
     }
 
@@ -52,8 +52,7 @@ public class CompanyList {
     // EFFECTS: prioritizes the list of new companies to be contacted as well as the companies that have
     // not been contacted in the record first based on industries
     public List<Company> prioritizeContactsBasedOnIndustry(CompanyIndustryPreferenceOrder order) {
-        getNewCompaniesThisWeek().addAll(getUnContactedCompanies());
-        List<Company> industrySortedCompanies = sortBasedOnIndustry(getNewCompaniesThisWeek(), order);
+        List<Company> industrySortedCompanies = sortBasedOnIndustry(getUnContactedCompanies(), order);
         return industrySortedCompanies;
     }
 
@@ -102,6 +101,21 @@ public class CompanyList {
         return list1;
     }
 
+    public void updateListsBasedOnContactStatuses() {
+        List<Company> removedOnes = new ArrayList<>();
+        for (Company next : unContactedCompanies) {
+            if (next.getStatus()) {
+                contactedCompanies.add(next);
+                removedOnes.add(next);
+            }
+        }
+        for (Company next : removedOnes) {
+            unContactedCompanies.remove(next);
+        }
+
+    }
+
+
     //REQUIRES: the week has ended and that finishedCompanies have been prioritized to be contacted and have their
     // status updated (either contacted or uncontacted) still; the ones that were contacted have employer's
     // interest levels updated as well
@@ -109,10 +123,10 @@ public class CompanyList {
     // based on employers' interest levels
     //ONLY IF they have been contacted
     // to be displayed to the user
-    public List<Company> prioritizeFollowUp(List<Company> finishedCompanies) {
+    public List<Company> prioritizeFollowUp() {
         List<Company> temporaryResults = new ArrayList<>();
-        for (Company next : finishedCompanies) {
-            if (next.getStatus()) {
+        for (Company next : contactedCompanies) {
+            if (!followedUpCompanies.contains(next)) {
                 temporaryResults.add(next);
             }
         }
@@ -123,50 +137,19 @@ public class CompanyList {
     }
 
 
-    //REQUIRES: this week has ended and that companies have to be returned by prioritizeContacts
-    //MODIFIES: this
-
-    public void getReadyForNextWeek(List<Company> companies) {
-        storeUncontactedCompaniesThisWeek(companies);
-        storeContactedCompaniesThisWeek(companies);
-        resetNewCompaniesForNewWeek();
-    }
-
-
-    // MODIFIES: this
-
-    // EFFECTS: put the companies that were going to be contacted but did not end up being contacted this week into
-    // the record system; store ONLY if they are not already in the uncontacted system
-    // (uncontacted ones from before could be uncontacted again)
-    private void storeUncontactedCompaniesThisWeek(List<Company> companies) {
-        for (Company next : companies) {
-            if (!next.getStatus() && !getUnContactedCompanies().contains(next)) {
-                unContactedCompanies.add(next);
+    public void updateListsBasedOnFollowedUpCompanies() {
+        List<Company> removedOnes = new ArrayList<>();
+        for (Company next : contactedCompanies) {
+            if (next.getFollowUpStatus()) {
+                followedUpCompanies.add(next);
+                removedOnes.add(next);
             }
+        }
+        for (Company next : removedOnes) {
+            contactedCompanies.remove(next);
         }
     }
 
-    // MODIFIES: this
-    // REQUIRES: this week has ended and that prioritizeFollowUp has been called
-    // EFFECTS: put the companies that have been contacted this week into the record system
-    private void storeContactedCompaniesThisWeek(List<Company> companies) {
-        //put the companies that have been contacted (including new companies as well as the ones that were
-        // contacted in the uncontacted list into the contacted list
-        for (Company next : companies) {
-            if (next.getStatus()) {
-                if (getUnContactedCompanies().contains(next)) {
-                    unContactedCompanies.remove(next);
-                }
-                contactedCompanies.add(next);
-            }
-        }
-    }
-
-    //REQUIRES: this week has ended
-    //MODIFIES: this
-    private void resetNewCompaniesForNewWeek() {
-        companiesThisWeek = new ArrayList<>();
-    }
 
     // EFFECTS: returns the list of companies that have not been contacted
     public List<Company> getUnContactedCompanies() {
@@ -178,9 +161,8 @@ public class CompanyList {
         return contactedCompanies;
     }
 
-    public List<Company> getNewCompaniesThisWeek() {
-        return companiesThisWeek;
+    public List<Company> getFollowedUpCompanies() {
+        return followedUpCompanies;
     }
-
 
 }
