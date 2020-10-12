@@ -22,6 +22,7 @@ public class CompanyIndustryPreferenceOrder {
 
 
     //default order
+    //EFFECTS: initiate the constructor with a default ordered list
     public CompanyIndustryPreferenceOrder() {
         preferences = new ArrayList<>();
         preferences.add(IT);

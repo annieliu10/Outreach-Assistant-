@@ -17,13 +17,14 @@ public class SalesMeetings {
     // returns true if meeting is successfully added, otherwise false
 
 
+
     public boolean addMeeting(Meeting meeting) {
         boolean flag = true;
         salesMeetings.add(meeting);
         for (int i = 0; i < salesMeetings.size() - 1; i++) {
-            if (meeting.getDate().get(Calendar.MONTH) == salesMeetings.get(i).getDate().get(Calendar.MONTH) &&
-                    ((meeting.getDate().get(Calendar.DAY_OF_MONTH))
-                            == (salesMeetings.get(i).getDate().get(Calendar.DAY_OF_MONTH)))) {
+            if (((meeting.getDate().get(Calendar.DAY_OF_MONTH))
+                    == (salesMeetings.get(i).getDate().get(Calendar.DAY_OF_MONTH))) &&
+                    (meeting.getDate().get(Calendar.MONTH) == salesMeetings.get(i).getDate().get(Calendar.MONTH))) {
                 flag = false;
             }
         }

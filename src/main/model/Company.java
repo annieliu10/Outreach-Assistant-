@@ -17,6 +17,7 @@ public class Company {
         this.companyName = companyName;
         this.contactStatus = false;
         this.employerName = employerName;
+        this.interestLevel = 0;
 
     }
 
