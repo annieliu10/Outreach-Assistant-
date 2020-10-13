@@ -6,6 +6,8 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Scanner;
 
+
+// Console UI
 public class OutreachApp {
     private CompanyList listOfCompanies;
     private Scanner inputsFromUser;
