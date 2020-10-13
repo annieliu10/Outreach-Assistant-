@@ -149,20 +149,24 @@ public class CompanyListTest {
     public void testPrioritizeContactsBasedOnIndustry() {
         Company company5 = new Company(150, "Engineering", "AdX",
                 "Chris Lee");
-        companies.addCompany(company5, range);
 
+        Company company4 = new Company(70, "Business Admin/ Project MGMT", "YaT",
+                "Chris Lee");
         Company company1 = new Company(65, "Information Technology", "AppAnn",
                 "Charlie Liu");
         Company company3 = new Company(200, "Marketing", "MGN",
                 "Christopher Runnell");
+        companies.addCompany(company5, range);
         companies.addCompany(company1, range);
         companies.addCompany(company3, range);
+        companies.addCompany(company4, range);
 
         //invoking the method
         List<Company> result = companies.prioritizeContactsBasedOnIndustry(industries);
         assertEquals(company1, result.get(0));
-        assertEquals(company3, result.get(1));
-        assertEquals(company5, result.get(2));
+        assertEquals(company4, result.get(1));
+        assertEquals(company3, result.get(2));
+        assertEquals(company5, result.get(3));
 
     }
 
