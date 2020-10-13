@@ -2,13 +2,15 @@ package model;
 
 import java.util.Calendar;
 
+//Represents one sale meeting
 public class Meeting {
     private Company company;
     private Calendar date;
     private String agenda;
 
-    //REQUIRES: month is greater than or equal to 0; 0 being January
-    //EFFECTS: constructs the meeting
+    //REQUIRES: company is valid, month has to be in word form and entered in full while date>=1,
+    // year is a valid year 4 digit integer
+    //EFFECTS: constructs the meeting with given company, year, month and date
     public Meeting(Company company, int year, String month, int date) {
         this.date = Calendar.getInstance();
         int months = convertFromStringToNumMonth(month);
@@ -44,26 +46,30 @@ public class Meeting {
     }
 
 
+    //MODIFIES: this
     //EFFECTS: sets the meeting agenda
     public void setMeetingAgenda(String agenda) {
         this.agenda = agenda;
 
     }
 
-
+    //EFFECTS: returns the meeting date
     public Calendar getDate() {
         return date;
     }
 
+    //EFFECTS: returns the company for the meeting
     public Company getCompany() {
         return company;
     }
 
-
+    //EFFECTS: returns the agenda for the meeting
     public String getAgenda() {
         return agenda;
     }
 
+    //REQUIRES: month has to be in word form and entered in full while date>=1, year is a valid year 4 digit integer
+    //MODIFIES: this
     //EFFECTS: changes the meeting time
     public void changeMeetingTime(int year, String month, int date) {
         int months = convertFromStringToNumMonth(month);

@@ -2,22 +2,22 @@ package model;
 
 import java.util.*;
 
+
+//Represents a list of sales meetings
 public class SalesMeetings {
     //FIELDS
 
     private List<Meeting> salesMeetings;
-    private int numMeetingsMax;
 
+    //EFFECTS: constructs an empty list of sales meetings
     public SalesMeetings() {
         salesMeetings = new ArrayList<>();
-
     }
 
+    //REQUIRES: meeting is valid
+    //MODIFIES: this
     //EFFECTS: adds a meeting to the sales meetings list only if no two meetings are on the same day;
-    // returns true if meeting is successfully added, otherwise false
-
-
-
+    //returns true if meeting is successfully added, otherwise false
     public boolean addMeeting(Meeting meeting) {
         boolean flag = true;
         salesMeetings.add(meeting);
@@ -35,10 +35,7 @@ public class SalesMeetings {
     }
 
 
-    // REQUIRES: numMeetingsMax >=1
     //EFFECTS: returns the meetings in the week in which most meetings occur
-
-
     public List<Meeting> checkMostMeetings() {
         List<Integer> storeMeetingsInWeek = new ArrayList<>();
         for (Meeting next : salesMeetings) {
@@ -56,6 +53,7 @@ public class SalesMeetings {
 
         //looked up how to get the max value in a hash map
         Integer greatestKey = Collections.max(tempDict.entrySet(), Map.Entry.comparingByValue()).getKey();
+
         List<Meeting> results = new ArrayList<>();
         for (Meeting next : salesMeetings) {
             if (next.getDate().get(Calendar.WEEK_OF_YEAR) == greatestKey) {
@@ -66,10 +64,8 @@ public class SalesMeetings {
     }
 
 
-    public void setNumMeetingsMax(int numMeetingsMax) {
-        this.numMeetingsMax = numMeetingsMax;
-    }
 
+    //EFFECTS: returns the list of sales meetings
     public List<Meeting> getSalesMeetings() {
         return salesMeetings;
     }

@@ -5,31 +5,27 @@ import java.util.*;
 import static java.util.Collections.reverse;
 
 
-//The CompanyList class has 3 different lists, one list contains the companies that are to be contacted in
-// the current week; second list being the companies that have been contacted in the past; third list being
-// the companies that were going to be contacted but didn't end up being contacted from the past
-// At the end of the current week, the contacted companies will get stored in the second list. The ones that have not
-// been contacted will get stored in the third list. If they are stored, that means the week has already ended and
-// therefore the first list would reset itself to get ready for next week. The companies that have not been contacted
-// from the past weeks will get contacted again in the following week along with the new companies.
-// This process repeats.
+//Represents a full CompanyList with 3 different sub-lists, first list contains the companies that have been contacted;
+// second list being the companies that have not been contacted; third list being the companies that have been
+// contacted and followed up.
+
 public class CompanyList {
 
     private List<Company> contactedCompanies;
     private List<Company> unContactedCompanies;
     private List<Company> followedUpCompanies;
 
+    //constructs a CompanyList where all 3 lists are empty
     public CompanyList() {
         followedUpCompanies = new ArrayList<>();
         contactedCompanies = new ArrayList<>();
         unContactedCompanies = new ArrayList<>();
     }
 
+    //REQUIRES: range is valid
     //MODIFIES: this
-    //EFFECTS: adds the company to the new companies to be contacted this week if it hasn't been contacted recently
-    // and that it is not already one of the companies that is in the record from the past
-    // but hasn't been contacted yet
-    //filters the list of new companies to be contacted based on their sizes
+    //EFFECTS: adds the company to the new companies to be contacted this week if it hasn't been contacted
+    //and it is not already one of the companies that hasn't been contacted and on top it meets the range requirement
     public void addCompany(Company company, CompanySizeRange range) {
         if (!(getContactedCompanies().contains(company)) && (!(getUnContactedCompanies().contains(company)))) {
             if (range.contains(company.getSize())) {
@@ -38,9 +34,7 @@ public class CompanyList {
         }
     }
 
-    // REQUIRES: prioritizeContactsBasedOnIndustry can't be called
-    // EFFECTS: prioritizes the list of new companies to be contacted as well as the companies that have
-    // not been contacted in the record first based on their size
+    // EFFECTS: prioritizes the list of companies that haven't been contacted based on size and returns the list
     // for size, it's smaller the better as long as it's within that range
     public List<Company> prioritizeContactsBasedOnSize() {
         CallMethods getSize = new GetSizeMethod();
@@ -48,9 +42,8 @@ public class CompanyList {
         return sizeSortedCompanies;
     }
 
-    // REQUIRES: prioritizeContactsBasedOnSize can't be called
-    // EFFECTS: prioritizes the list of new companies to be contacted as well as the companies that have
-    // not been contacted in the record first based on industries
+
+    // EFFECTS: prioritizes the list of companies that haven't been contacted based on industry preferences
     public List<Company> prioritizeContactsBasedOnIndustry(CompanyIndustryPreferenceOrder order) {
         List<Company> industrySortedCompanies = sortBasedOnIndustry(getUnContactedCompanies(), order);
         return industrySortedCompanies;
@@ -101,6 +94,9 @@ public class CompanyList {
         return list1;
     }
 
+    //MODIFIES: this
+    //EFFECTS: put the contacted companies from the list of companies that have not been contacted into the list of
+    //companies that have been contacted
     public void updateListsBasedOnContactStatuses() {
         List<Company> removedOnes = new ArrayList<>();
         for (Company next : unContactedCompanies) {
@@ -116,13 +112,8 @@ public class CompanyList {
     }
 
 
-    //REQUIRES: the week has ended and that finishedCompanies have been prioritized to be contacted and have their
-    // status updated (either contacted or uncontacted) still; the ones that were contacted have employer's
-    // interest levels updated as well
-    //EFFECTS: construct the follow-up order for companies that have been contacted this week
-    // based on employers' interest levels
-    //ONLY IF they have been contacted
-    // to be displayed to the user
+    //EFFECTS: construct the follow-up order for companies that have been contacted but haven't been followed up
+    // based on employers' interest levels and returns the follow-up list
     public List<Company> prioritizeFollowUp() {
         List<Company> temporaryResults = new ArrayList<>();
         for (Company next : contactedCompanies) {
@@ -137,6 +128,9 @@ public class CompanyList {
     }
 
 
+    //MODIFIES: this
+    //EFFECTS: put the contacted companies from the list of companies that have been contacted into the list of
+    //companies that have been followed up
     public void updateListsBasedOnFollowedUpCompanies() {
         List<Company> removedOnes = new ArrayList<>();
         for (Company next : contactedCompanies) {
@@ -161,6 +155,7 @@ public class CompanyList {
         return contactedCompanies;
     }
 
+    // EFFECTS: returns the list of companies that have been followed up
     public List<Company> getFollowedUpCompanies() {
         return followedUpCompanies;
     }

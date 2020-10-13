@@ -3,6 +3,8 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
+//Represents a list of integers within the range of [lower, upper] and includes all integers from lower to upper
+//Referenced the range in the ColourPalette
 public class CompanySizeRange {
     private List<Integer> range;
     private Integer lowerBound;
@@ -22,20 +24,22 @@ public class CompanySizeRange {
         }
     }
 
-
     //EFFECTS: returns true if val is contained in this; false otherwise
     public boolean contains(Integer val) {
         return range.contains(val);
     }
 
+    //EFFECTS: returns the list of integers within the range
     public List<Integer> getRange() {
         return range;
     }
 
+    //EFFECTS: returns the lower bound integer
     public int getLowerBound() {
         return lowerBound;
     }
 
+    //EFFECTS: returns the upper bound integer
     public int getUpperBound() {
         return upperBound;
 
