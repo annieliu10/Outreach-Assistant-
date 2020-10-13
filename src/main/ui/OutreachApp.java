@@ -253,8 +253,8 @@ public class OutreachApp {
 
     private void postContact() {
         postContactDisplay("\nu -> update the companies that have been followed up",
-                "\np -> prioritize the companies for follow-up", "\nvu -> view the list of companies " +
-                        "that haven't been contacted", "\nvc -> view the contacted list of companies",
+                "\np -> prioritize the companies for follow-up", "\nvu -> view the list of companies "
+                        + "that haven't been contacted", "\nvc -> view the contacted list of companies",
                 "\nvf -> view the list of companies that have been followed up");
         String command = inputsFromUser.next();
         if (command.equals("u")) {
