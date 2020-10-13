@@ -1,6 +1,10 @@
 package model;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.List;
 
 //Represents one sale meeting
 public class Meeting {
@@ -19,30 +23,19 @@ public class Meeting {
     }
 
     private int convertFromStringToNumMonth(String month) {
-        if (month.equals("January")) {
-            return 0;
-        } else if (month.equals("February")) {
-            return 1;
-        } else if (month.equals("March")) {
-            return 2;
-        } else if (month.equals("April")) {
-            return 3;
-        } else if (month.equals("May")) {
-            return 4;
-        } else if (month.equals("June")) {
-            return 5;
-        } else if (month.equals("July")) {
-            return 6;
-        } else if (month.equals("August")) {
-            return 7;
-        } else if (month.equals("September")) {
-            return 8;
-        } else if (month.equals("October")) {
-            return 9;
-        } else if (month.equals("November")) {
-            return 10;
+        List<String> months = Arrays.asList("January", "February", "March", "April", "May", "June", "July",
+                "August", "September", "October", "November", "December");
+        List<Integer> nums = new ArrayList<>();
+        for (int i = 0; i < 12; i++) {
+            nums.add(i);
         }
-        return 11;
+        int target = 0;
+        for (String next : months) {
+            if (next.equals(month)) {
+                target = nums.get((months.indexOf(next)));
+            }
+        }
+        return target;
     }
 
 

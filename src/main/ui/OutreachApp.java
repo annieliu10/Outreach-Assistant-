@@ -10,6 +10,8 @@ public class OutreachApp {
     private CompanyList listOfCompanies;
     private Scanner inputsFromUser;
     private SalesMeetings meetings;
+    private int count;
+    private int secondLevelCount;
 
     public OutreachApp() {
         runOutReach();
@@ -32,12 +34,12 @@ public class OutreachApp {
         }
     }
 
-    int count = 0;
-    int secondLevelCount = 0;
 
     private void init() {
         listOfCompanies = new CompanyList();
         meetings = new SalesMeetings();
+        count = 0;
+        secondLevelCount = 0;
     }
 
     private void display() {
@@ -69,13 +71,20 @@ public class OutreachApp {
     }
 
     private void preContact() {
-        gatherCompanyInfo();
+        CompanySizeRange range = gatherCompanyInfo();
         CompanyIndustryPreferenceOrder order = new CompanyIndustryPreferenceOrder();
         System.out.println("Select how you would like to prioritize the company contact list. ");
         System.out.println("\ni -> by industry");
         System.out.println("\ns -> by size (the smaller, the better)");
         String command = inputsFromUser.next();
         List<Company> prioritizedContact = null;
+        prioritizedContact = prioritizeContacting(order, command, range, prioritizedContact);
+        System.out.println("The following is the order in which you should contact these companies.");
+        printingCompanies(prioritizedContact);
+        count++;
+    }
+
+    private List<Company> prioritizeContacting(CompanyIndustryPreferenceOrder order, String command, CompanySizeRange range, List<Company> prioritizedContact) {
         if (command.equals("i")) {
             System.out.println("Type p to enter your preference order for the industries or d for the default order");
             String command1 = inputsFromUser.next();
@@ -91,23 +100,26 @@ public class OutreachApp {
             }
             prioritizedContact = listOfCompanies.prioritizeContactsBasedOnIndustry(order);
         } else if (command.equals("s")) {
-            prioritizedContact = listOfCompanies.prioritizeContactsBasedOnSize();
+            prioritizedContact = listOfCompanies.prioritizeContactsBasedOnSize(range);
         } else {
             System.out.println("Please select a valid option");
         }
-        System.out.println("The following is order in which you should contact these companies.");
-        printingCompanies(prioritizedContact);
-        count++;
+        return prioritizedContact;
     }
 
 
-    private void gatherCompanyInfo() {
+    private CompanySizeRange gatherCompanyInfo() {
         System.out.println("We would like to know your preference for company sizes. " + "Please enter a range: ");
         System.out.println("Lower Bound: ");
         int lowerBound = inputsFromUser.nextInt();
         System.out.println("Upper Bound: ");
         int upperBound = inputsFromUser.nextInt();
         CompanySizeRange range = new CompanySizeRange(lowerBound, upperBound);
+        addingCompanies(range);
+        return range;
+    }
+
+    private void addingCompanies(CompanySizeRange range) {
         boolean flag = true;
         System.out.println("Please enter company information below");
         while (flag) {
@@ -158,62 +170,85 @@ public class OutreachApp {
         System.out.println("\nv -> view booked meetings");
         System.out.println("\nc -> check which meetings are least spaced out");
         String command = inputsFromUser.next();
+        doMidContactOptions(command);
+        secondLevelCount++;
+    }
+
+    private void doMidContactOptions(String command) {
         if (command.equals("v")) {
             displayBooking(this.meetings.getSalesMeetings());
         } else if (command.equals("b")) {
-            boolean flag = true;
-            while (flag) {
-                System.out.println("Enter the company name you want to book a meeting for: ");
-                String companyName = inputsFromUser.next();
-                System.out.println("Enter the year: ");
-                int year = inputsFromUser.nextInt();
-                System.out.println("Enter the month in full: ");
-                String month = inputsFromUser.next();
-                System.out.println("Enter the date: ");
-                int date = inputsFromUser.nextInt();
-                for (Company next : listOfCompanies.getContactedCompanies()) {
-                    if (next.getCompanyName().equals(companyName)) {
-                        Meeting meeting = new Meeting(next, year, month, date);
-                        boolean result = meetings.addMeeting(meeting);
-                        if (result) {
-                            System.out.println("Booking was successful");
-                        } else {
-                            System.out.println("Booking was unsuccessful");
-                        }
-                    }
-                }
-                System.out.println("Type c to continue adding or q to quit");
-                String command3 = inputsFromUser.next();
-                if (command3.equals("q")) {
-                    flag = false;
-                }
-            }
+            bookMeetings();
         } else if (command.equals("c")) {
             List<Meeting> squishedMeetings = meetings.checkMostMeetings();
+            System.out.println("Here is a list of squished companies");
             displayBooking(squishedMeetings);
         } else if (command.equals("u")) {
-            boolean flag = true;
-            while (flag) {
-                System.out.println("Enter the company that has been contacted");
-                String companyName = inputsFromUser.next();
-                System.out.println("Enter the company's interest level");
-                int interestLevel = inputsFromUser.nextInt();
-                for (Company next : listOfCompanies.getUnContactedCompanies()) {
-                    if (next.getCompanyName().equals(companyName)) {
-                        next.contacted(interestLevel);
-                    }
-                }
-                System.out.println("Enter c to continue or q to quit");
-                String commandss = inputsFromUser.next();
-                if (commandss.equals("q")) {
-                    flag = false;
-                }
-            }
+            updateContacted();
             listOfCompanies.updateListsBasedOnContactStatuses();
         } else {
             System.out.println("Please select a valid option");
         }
-        secondLevelCount++;
+    }
+
+    private void updateContacted() {
+        boolean flag = true;
+        while (flag) {
+            System.out.println("Enter the company that has been contacted");
+            String companyName = inputsFromUser.next();
+            System.out.println("Enter the company's interest level");
+            int interestLevel = inputsFromUser.nextInt();
+            for (Company next : listOfCompanies.getUnContactedCompanies()) {
+                if (next.getCompanyName().equals(companyName)) {
+                    next.contacted(interestLevel);
+                }
+            }
+            System.out.println("Enter c to continue or q to quit");
+            String commandss = inputsFromUser.next();
+            if (commandss.equals("q")) {
+                flag = false;
+            }
+        }
+    }
+
+    private void bookMeetings() {
+        boolean flag = true;
+        while (flag) {
+            System.out.println("Enter the company name you want to book a meeting for: ");
+            String companyName = inputsFromUser.next();
+            System.out.println("Enter the year: ");
+            int year = inputsFromUser.nextInt();
+            System.out.println("Enter the month in full: ");
+            String month = inputsFromUser.next();
+            System.out.println("Enter the date: ");
+            int date = inputsFromUser.nextInt();
+            addBookingInner(companyName, year, month, date);
+            System.out.println("Type c to continue adding or q to quit");
+            String command3 = inputsFromUser.next();
+            if (command3.equals("q")) {
+                flag = false;
+            }
+        }
+    }
+
+
+    private void addBookingInner(String companyName, int year, String month, int date) {
+        boolean flag = false;
+        for (Company next : listOfCompanies.getContactedCompanies()) {
+            if (next.getCompanyName().equals(companyName)) {
+                flag = true;
+                Meeting meeting = new Meeting(next, year, month, date);
+                boolean result = meetings.addMeeting(meeting);
+                if (result) {
+                    System.out.println("Booking was successful");
+                } else {
+                    System.out.println("Booking was unsuccessful");
+                }
+            }
+        }
+        if (!flag) {
+            System.out.println("The company for which you want to book a meeting isn't in the contacted list.");
+        }
     }
 
     private void postContact() {
@@ -223,25 +258,11 @@ public class OutreachApp {
                 "\nvf -> view the list of companies that have been followed up");
         String command = inputsFromUser.next();
         if (command.equals("u")) {
-            boolean flag = true;
-            while (flag) {
-                System.out.println("Enter the company that has been followed up");
-                String companyName = inputsFromUser.next();
-                for (Company next : listOfCompanies.getUnContactedCompanies()) {
-                    if (next.getCompanyName().equals(companyName)) {
-                        next.followedUp();
-                    }
-                }
-                System.out.println("Enter c to continue or q to quit");
-                String commandss = inputsFromUser.next();
-                if (commandss.equals("q")) {
-                    flag = false;
-                }
-            }
+            updateFollowedUpCompanies();
             listOfCompanies.updateListsBasedOnFollowedUpCompanies();
         } else if (command.equals("p")) {
             List<Company> companies = listOfCompanies.prioritizeFollowUp();
-            System.out.println("The following is order in which you should follow up with these companies.");
+            System.out.println("The following is the order in which you should follow up with these companies.");
             printingCompanies(companies);
         } else if (command.equals("vu")) {
             printingCompanies(listOfCompanies.getUnContactedCompanies());
@@ -251,6 +272,24 @@ public class OutreachApp {
             printingCompanies(listOfCompanies.getFollowedUpCompanies());
         } else {
             System.out.println("Please select a valid option");
+        }
+    }
+
+    private void updateFollowedUpCompanies() {
+        boolean flag = true;
+        while (flag) {
+            System.out.println("Enter the company that has been followed up");
+            String companyName = inputsFromUser.next();
+            for (Company next : listOfCompanies.getUnContactedCompanies()) {
+                if (next.getCompanyName().equals(companyName)) {
+                    next.followedUp();
+                }
+            }
+            System.out.println("Enter c to continue or q to quit");
+            String commandss = inputsFromUser.next();
+            if (commandss.equals("q")) {
+                flag = false;
+            }
         }
     }
 
@@ -271,14 +310,12 @@ public class OutreachApp {
     }
 
     private void displayBooking(List<Meeting> meetings) {
-        System.out.println("The following is a list of the meetings booked");
         int count = 1;
         for (Meeting next : meetings) {
             System.out.println("Meeting" + count + ":");
             System.out.println(next.getCompany().getCompanyName());
             System.out.println(next.getDate().get(Calendar.YEAR) + "," + (next.getDate().get(Calendar.MONTH) + 1) + ","
                     + next.getDate().get(Calendar.DATE));
-            // bug in the month
             count++;
         }
     }

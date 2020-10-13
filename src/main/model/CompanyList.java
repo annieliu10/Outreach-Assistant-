@@ -34,11 +34,18 @@ public class CompanyList {
         }
     }
 
-    // EFFECTS: prioritizes the list of companies that haven't been contacted based on size and returns the list
+    // EFFECTS: prioritizes the list of companies that haven't been contacted based on size and the given range
     // for size, it's smaller the better as long as it's within that range
-    public List<Company> prioritizeContactsBasedOnSize() {
+    public List<Company> prioritizeContactsBasedOnSize(CompanySizeRange range) {
         CallMethods getSize = new GetSizeMethod();
-        List<Company> sizeSortedCompanies = sortCompanies(getUnContactedCompanies(), getSize);
+        List<Company> tempUncontacted = new ArrayList<>();
+        for (Company company : unContactedCompanies) {
+            if (range.contains(company.getSize())) {
+                tempUncontacted.add(company);
+            }
+        }
+
+        List<Company> sizeSortedCompanies = sortCompanies(tempUncontacted, getSize);
         return sizeSortedCompanies;
     }
 
