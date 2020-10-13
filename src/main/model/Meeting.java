@@ -8,7 +8,7 @@ public class Meeting {
     private String agenda;
 
     //REQUIRES: month is greater than or equal to 0; 0 being January
-    //EFFECTS: books the meeting
+    //EFFECTS: constructs the meeting
     public Meeting(Company company, int year, String month, int date) {
         this.date = Calendar.getInstance();
         int months = convertFromStringToNumMonth(month);
@@ -17,31 +17,32 @@ public class Meeting {
     }
 
     private int convertFromStringToNumMonth(String month) {
-        if (month == "January") {
+        if (month.equals("January")) {
             return 0;
-        } else if (month == "February") {
+        } else if (month.equals("February")) {
             return 1;
-        } else if (month == "March") {
+        } else if (month.equals("March")) {
             return 2;
-        } else if (month == "April") {
+        } else if (month.equals("April")) {
             return 3;
-        } else if (month == "May") {
+        } else if (month.equals("May")) {
             return 4;
-        } else if (month == "June") {
+        } else if (month.equals("June")) {
             return 5;
-        } else if (month == "July") {
+        } else if (month.equals("July")) {
             return 6;
-        } else if (month == "August") {
+        } else if (month.equals("August")) {
             return 7;
-        } else if (month == "September") {
+        } else if (month.equals("September")) {
             return 8;
-        } else if (month == "October") {
+        } else if (month.equals("October")) {
             return 9;
-        } else if (month == "November") {
+        } else if (month.equals("November")) {
             return 10;
         }
         return 11;
     }
+
 
     //EFFECTS: sets the meeting agenda
     public void setMeetingAgenda(String agenda) {

@@ -32,6 +32,8 @@ public class OutreachApp {
         }
     }
 
+    int count = 0;
+    int secondLevelCount = 0;
 
     private void init() {
         listOfCompanies = new CompanyList();
@@ -40,10 +42,16 @@ public class OutreachApp {
 
     private void display() {
         System.out.println(("\nSelect one of the following: "));
-        System.out.println("\nNote: you can only select one phase after you have completed the previous one");
-        System.out.println("\npr -> Pre-contact");
-        System.out.println("\nm -> Mid-contact");
-        System.out.println("\npo -> Post-contact");
+        if (count == 0) {
+            System.out.println("\npr -> Pre-contact");
+        } else if (secondLevelCount >= 1) {
+            System.out.println("\npr -> Pre-contact");
+            System.out.println("\nm -> Mid-contact");
+            System.out.println("\npo -> Post-contact");
+        } else if (count >= 1) {
+            System.out.println("\npr -> Pre-contact");
+            System.out.println("\nm -> Mid-contact");
+        }
         System.out.println("\nq -> quit");
     }
 
@@ -89,6 +97,7 @@ public class OutreachApp {
         }
         System.out.println("The following is order in which you should contact these companies.");
         printingCompanies(prioritizedContact);
+        count++;
     }
 
 
@@ -204,6 +213,7 @@ public class OutreachApp {
         } else {
             System.out.println("Please select a valid option");
         }
+        secondLevelCount++;
     }
 
     private void postContact() {

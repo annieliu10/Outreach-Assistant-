@@ -3,6 +3,7 @@ package model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Calendar;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -42,6 +43,8 @@ public class SalesMeetingsTest {
         assertTrue(salesMeetings.addMeeting(meeting1));
         assertTrue(salesMeetings.addMeeting(meeting2));
         assertEquals(2, salesMeetings.getSalesMeetings().size());
+        assertEquals(meeting1, salesMeetings.getSalesMeetings().get(0));
+        assertEquals(meeting2, salesMeetings.getSalesMeetings().get(1));
     }
 
     @Test
@@ -66,6 +69,7 @@ public class SalesMeetingsTest {
         assertEquals(meeting1, meetings.get(0));
         assertEquals(meeting2, meetings.get(1));
         assertEquals(meeting3, meetings.get(2));
+
     }
 
 }
