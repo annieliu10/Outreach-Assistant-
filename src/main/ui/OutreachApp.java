@@ -83,7 +83,7 @@ public class OutreachApp {
         prioritizedContact = prioritizeContacting(order, command, range, prioritizedContact);
         System.out.println("The following is the order in which you should contact these companies.");
         printingCompanies(prioritizedContact);
-        count++;
+
     }
 
     private List<Company> prioritizeContacting(CompanyIndustryPreferenceOrder order, String command,
@@ -102,8 +102,10 @@ public class OutreachApp {
                 order.changePreferenceOrder(industry1, industry2, industry3, industry4);
             }
             prioritizedContact = listOfCompanies.prioritizeContactsBasedOnIndustry(order);
+            count++;
         } else if (command.equals("s")) {
             prioritizedContact = listOfCompanies.prioritizeContactsBasedOnSize(range);
+            count++;
         } else {
             System.out.println("Please select a valid option");
         }
@@ -174,21 +176,25 @@ public class OutreachApp {
         System.out.println("\nc -> check which meetings are least spaced out");
         String command = inputsFromUser.next();
         doMidContactOptions(command);
-        secondLevelCount++;
+
     }
 
     private void doMidContactOptions(String command) {
         if (command.equals("v")) {
             displayBooking(this.meetings.getSalesMeetings());
+            secondLevelCount++;
         } else if (command.equals("b")) {
             bookMeetings();
+            secondLevelCount++;
         } else if (command.equals("c")) {
             List<Meeting> squishedMeetings = meetings.checkMostMeetings();
             System.out.println("Here is a list of squished companies");
             displayBooking(squishedMeetings);
+            secondLevelCount++;
         } else if (command.equals("u")) {
             updateContacted();
             listOfCompanies.updateListsBasedOnContactStatuses();
+            secondLevelCount++;
         } else {
             System.out.println("Please select a valid option");
         }
@@ -199,7 +205,7 @@ public class OutreachApp {
         while (flag) {
             System.out.println("Enter the company that has been contacted");
             String companyName = inputsFromUser.next();
-            System.out.println("Enter the company's interest level");
+            System.out.println("Enter the company's interest level on a scale of 1 to 10: ");
             int interestLevel = inputsFromUser.nextInt();
             for (Company next : listOfCompanies.getUnContactedCompanies()) {
                 if (next.getCompanyName().equals(companyName)) {
