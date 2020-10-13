@@ -36,4 +36,10 @@ public class CompanySizeRangeTest {
         assertFalse(range.contains(150));
     }
 
+    @Test
+    public void testGetLowerBound(){
+        assertEquals(10, range.getLowerBound());
+        assertEquals(100, range.getUpperBound());
+    }
+
 }

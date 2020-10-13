@@ -22,8 +22,8 @@ public class SalesMeetings {
         boolean flag = true;
         salesMeetings.add(meeting);
         for (int i = 0; i < salesMeetings.size() - 1; i++) {
-            if (((meeting.getDate().get(Calendar.DAY_OF_MONTH))
-                    == (salesMeetings.get(i).getDate().get(Calendar.DAY_OF_MONTH)))
+            if (((meeting.getDate().get(Calendar.DATE))
+                    == (salesMeetings.get(i).getDate().get(Calendar.DATE)))
                     && (meeting.getDate().get(Calendar.MONTH) == salesMeetings.get(i).getDate().get(Calendar.MONTH))) {
                 flag = false;
             }
