@@ -29,7 +29,7 @@ public class Company {
         interestLevel = interest;
     }
 
-    public void followedUp(){
+    public void followedUp() {
         this.followUpStatus = true;
 
     }
@@ -52,7 +52,7 @@ public class Company {
         return employerName;
     }
 
-    public boolean getStatus() {
+    public boolean getContactStatus() {
         return contactStatus;
     }
 
@@ -61,7 +61,7 @@ public class Company {
     }
 
 
-    public boolean getFollowUpStatus(){
+    public boolean getFollowUpStatus() {
         return followUpStatus;
     }
 

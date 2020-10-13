@@ -20,19 +20,23 @@ public class CompanyTest {
         assertEquals("Information Technology", company.getIndustry());
         assertEquals("AppAnn", company.getCompanyName());
         assertEquals("Charlie Liu", company.getEmployerName());
-        assertFalse(company.getStatus());
+        assertFalse(company.getContactStatus());
         assertEquals(0, company.getInterestLevel());
     }
 
     @Test
     public void testContacted(){
         company.contacted(8);
-        assertTrue(company.getStatus());
+        assertTrue(company.getContactStatus());
         assertEquals(8, company.getInterestLevel());
     }
 
 
-
+    @Test
+    public void testFollowedUp(){
+        company.followedUp();
+        assertTrue(company.getFollowUpStatus());
+    }
 
 
 }

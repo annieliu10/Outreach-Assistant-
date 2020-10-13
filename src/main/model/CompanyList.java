@@ -104,7 +104,7 @@ public class CompanyList {
     public void updateListsBasedOnContactStatuses() {
         List<Company> removedOnes = new ArrayList<>();
         for (Company next : unContactedCompanies) {
-            if (next.getStatus()) {
+            if (next.getContactStatus()) {
                 contactedCompanies.add(next);
                 removedOnes.add(next);
             }
