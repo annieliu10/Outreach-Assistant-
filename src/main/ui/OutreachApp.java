@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Scanner;
 
 
-// Console UI
+// Console UI for the outreach tool
 public class OutreachApp {
     private CompanyList listOfCompanies;
     private Scanner inputsFromUser;
@@ -86,7 +86,8 @@ public class OutreachApp {
         count++;
     }
 
-    private List<Company> prioritizeContacting(CompanyIndustryPreferenceOrder order, String command, CompanySizeRange range, List<Company> prioritizedContact) {
+    private List<Company> prioritizeContacting(CompanyIndustryPreferenceOrder order, String command,
+                                               CompanySizeRange range, List<Company> prioritizedContact) {
         if (command.equals("i")) {
             System.out.println("Type p to enter your preference order for the industries or d for the default order");
             String command1 = inputsFromUser.next();
