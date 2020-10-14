@@ -188,7 +188,7 @@ public class OutreachApp {
             secondLevelCount++;
         } else if (command.equals("c")) {
             List<Meeting> squishedMeetings = meetings.checkMostMeetings();
-            System.out.println("Here is a list of squished companies");
+            System.out.println("Here is a list of meetings that are the least spaced out. ");
             displayBooking(squishedMeetings);
             secondLevelCount++;
         } else if (command.equals("u")) {
