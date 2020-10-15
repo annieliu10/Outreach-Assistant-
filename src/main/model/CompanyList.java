@@ -57,7 +57,7 @@ public class CompanyList {
     }
 
 
-    //method.call(company)
+    //EFFECTS: sort companies based on size or interest given the method and listofCompany
     private List<Company> sortCompanies(List<Company> listOfCompany, CallMethods method) {
         List<Integer> values = new ArrayList<>();
         for (Company next : listOfCompany) {
@@ -77,8 +77,8 @@ public class CompanyList {
 
     }
 
-    // create four different lists
-    //
+    // EFFECTS: prioritizes the companies to contact based on given industry preference order as well as the list of
+    // companies
     private List<Company> sortBasedOnIndustry(List<Company> companies, CompanyIndustryPreferenceOrder order) {
         List<Company> list1 = new ArrayList<>();
         List<Company> list2 = new ArrayList<>();

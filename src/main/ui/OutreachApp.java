@@ -8,6 +8,7 @@ import java.util.Scanner;
 
 
 // Console UI for the outreach tool
+
 public class OutreachApp {
     private CompanyList listOfCompanies;
     private Scanner inputsFromUser;
@@ -15,10 +16,12 @@ public class OutreachApp {
     private int count;
     private int secondLevelCount;
 
+    //EFFECTS: runs the outreach interface
     public OutreachApp() {
         runOutReach();
     }
 
+    //EFFECTS: displays the menu only if the user doesn't press quit
     // referenced this method from the Teller sample
     private void runOutReach() {
         boolean stayOnConsole = true;
@@ -37,6 +40,7 @@ public class OutreachApp {
     }
 
 
+    //EFFECTS: constructs the empty list, meetings and counts for this application
     private void init() {
         listOfCompanies = new CompanyList();
         meetings = new SalesMeetings();
@@ -44,6 +48,7 @@ public class OutreachApp {
         secondLevelCount = 0;
     }
 
+    //EFFECTS: displays the menu
     private void display() {
         System.out.println(("\nSelect one of the following: "));
         if (count == 0) {
@@ -60,6 +65,7 @@ public class OutreachApp {
     }
 
 
+    //EFFECTS: backend operation is returned with different commands
     private void proceedWithCommand(String enterCommand) {
         if (enterCommand.equals("pr")) {
             preContact();
@@ -72,6 +78,7 @@ public class OutreachApp {
         }
     }
 
+    //EFFECTS: does the pre-contact operation
     private void preContact() {
         CompanySizeRange range = gatherCompanyInfo();
         CompanyIndustryPreferenceOrder order = new CompanyIndustryPreferenceOrder();
@@ -86,6 +93,7 @@ public class OutreachApp {
 
     }
 
+    //EFFECTS: prioritizes the contact list based on user's command input (whether it be size or industry)
     private List<Company> prioritizeContacting(CompanyIndustryPreferenceOrder order, String command,
                                                CompanySizeRange range, List<Company> prioritizedContact) {
         if (command.equals("i")) {
@@ -113,6 +121,7 @@ public class OutreachApp {
     }
 
 
+    //EFFECTS: gathers information from the user about the company as well as their preference for the size range
     private CompanySizeRange gatherCompanyInfo() {
         System.out.println("We would like to know your preference for company sizes. " + "Please enter a range: ");
         System.out.println("Lower Bound: ");
@@ -124,6 +133,7 @@ public class OutreachApp {
         return range;
     }
 
+    //EFFECTS: adds companies to the list of companies
     private void addingCompanies(CompanySizeRange range) {
         boolean flag = true;
         System.out.println("Please enter company information below");
@@ -149,6 +159,7 @@ public class OutreachApp {
         }
     }
 
+    //EFFECTS: displays industries in the interface
     private void displayIndustries(String s2, String s3, String s4, String s5) {
         System.out.println(s2);
         System.out.println(s3);
@@ -157,6 +168,7 @@ public class OutreachApp {
     }
 
 
+    //EFFECTS: converts from user command input to actual word strings for the methods to use
     private String convertFromCommandToString(String command) {
         if (command.equals("i")) {
             return "Information Technology";
@@ -169,6 +181,8 @@ public class OutreachApp {
     }
 
 
+
+    //EFFECTS: displays the mid-contact option menus and does mid-contact operations for the user
     private void midContact() {
         System.out.println("\nu -> update the companies that have been contacted");
         System.out.println("\nb -> book a new meeting for contacted companies");
@@ -179,6 +193,7 @@ public class OutreachApp {
 
     }
 
+    //EFFECTS: does different operations based on user input for mid-contact section
     private void doMidContactOptions(String command) {
         if (command.equals("v")) {
             displayBooking(this.meetings.getSalesMeetings());
@@ -200,6 +215,7 @@ public class OutreachApp {
         }
     }
 
+    //EFFECTS: updates the list of companies that have been contacted
     private void updateContacted() {
         boolean flag = true;
         while (flag) {
@@ -220,6 +236,7 @@ public class OutreachApp {
         }
     }
 
+    //EFFECTS: prompts user input for meeting information when booking meetings and quits operation if user types quit
     private void bookMeetings() {
         boolean flag = true;
         while (flag) {
@@ -241,6 +258,7 @@ public class OutreachApp {
     }
 
 
+    //EFFECTS: does each individual booking for one company at a time given the company information as well as date
     private void addBookingInner(String companyName, int year, String month, int date) {
         boolean flag = false;
         for (Company next : listOfCompanies.getContactedCompanies()) {
@@ -260,6 +278,7 @@ public class OutreachApp {
         }
     }
 
+    //EFFECTS: does the post contact operation
     private void postContact() {
         postContactDisplay("\nu -> update the companies that have been followed up",
                 "\np -> prioritize the companies for follow-up", "\nvu -> view the list of companies "
@@ -284,6 +303,7 @@ public class OutreachApp {
         }
     }
 
+    // EFFECTS: updates the companies that have been followed up
     private void updateFollowedUpCompanies() {
         boolean flag = true;
         while (flag) {
@@ -303,6 +323,7 @@ public class OutreachApp {
     }
 
 
+    //EFFECTS: displays the options for post-contact
     private void postContactDisplay(String s, String s2, String s3, String s4, String s5) {
         System.out.println(s);
         System.out.println(s2);
@@ -312,12 +333,14 @@ public class OutreachApp {
     }
 
 
+    //EFFECTS: prints company names given companiesss
     private void printingCompanies(List<Company> companiesss) {
         for (Company next : companiesss) {
             System.out.println(next.getCompanyName());
         }
     }
 
+    //EFFECTS; displays booking information given meetings
     private void displayBooking(List<Meeting> meetings) {
         int count = 1;
         for (Meeting next : meetings) {
