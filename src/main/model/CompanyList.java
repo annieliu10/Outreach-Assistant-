@@ -49,7 +49,7 @@ public class CompanyList {
         return sizeSortedCompanies;
     }
 
-    //
+
     // EFFECTS: prioritizes the list of companies that haven't been contacted based on industry preferences
     public List<Company> prioritizeContactsBasedOnIndustry(CompanyIndustryPreferenceOrder order) {
         List<Company> industrySortedCompanies = sortBasedOnIndustry(getUnContactedCompanies(), order);

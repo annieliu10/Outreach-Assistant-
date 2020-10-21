@@ -21,8 +21,10 @@ public class OutreachApp {
         runOutReach();
     }
 
+    //MODIFIES: this
     //EFFECTS: displays the menu only if the user doesn't press quit
     // referenced this method from the Teller sample
+    //https://github.students.cs.ubc.ca/CPSC210/TellerApp
     private void runOutReach() {
         boolean stayOnConsole = true;
         String enterCommand = null;
@@ -40,6 +42,7 @@ public class OutreachApp {
     }
 
 
+    //MODIFIES: this
     //EFFECTS: constructs the empty list, meetings and counts for this application
     private void init() {
         listOfCompanies = new CompanyList();
@@ -65,6 +68,7 @@ public class OutreachApp {
     }
 
 
+    //MODIFIES: this
     //EFFECTS: backend operation is returned with different commands
     private void proceedWithCommand(String enterCommand) {
         if (enterCommand.equals("pr")) {
@@ -78,6 +82,7 @@ public class OutreachApp {
         }
     }
 
+    //MODIFIES: this
     //EFFECTS: does the pre-contact operation
     private void preContact() {
         CompanySizeRange range = gatherCompanyInfo();
@@ -121,6 +126,7 @@ public class OutreachApp {
     }
 
 
+    //MODIFIES: this
     //EFFECTS: gathers information from the user about the company as well as their preference for the size range
     private CompanySizeRange gatherCompanyInfo() {
         System.out.println("We would like to know your preference for company sizes. " + "Please enter a range: ");
@@ -133,6 +139,7 @@ public class OutreachApp {
         return range;
     }
 
+    //MODIFIES: this
     //EFFECTS: adds companies to the list of companies
     private void addingCompanies(CompanySizeRange range) {
         boolean flag = true;
@@ -182,6 +189,7 @@ public class OutreachApp {
 
 
 
+    //MODIFIES: this
     //EFFECTS: displays the mid-contact option menus and does mid-contact operations for the user
     private void midContact() {
         System.out.println("\nu -> update the companies that have been contacted");
@@ -193,6 +201,7 @@ public class OutreachApp {
 
     }
 
+    //MODIFIES: this
     //EFFECTS: does different operations based on user input for mid-contact section
     private void doMidContactOptions(String command) {
         if (command.equals("v")) {
@@ -215,6 +224,7 @@ public class OutreachApp {
         }
     }
 
+    //MODIFIES: this
     //EFFECTS: updates the list of companies that have been contacted
     private void updateContacted() {
         boolean flag = true;
@@ -235,6 +245,7 @@ public class OutreachApp {
             }
         }
     }
+
 
     //EFFECTS: prompts user input for meeting information when booking meetings and quits operation if user types quit
     private void bookMeetings() {
@@ -258,6 +269,7 @@ public class OutreachApp {
     }
 
 
+    //MODIFIES: this
     //EFFECTS: does each individual booking for one company at a time given the company information as well as date
     private void addBookingInner(String companyName, int year, String month, int date) {
         boolean flag = false;
@@ -278,6 +290,7 @@ public class OutreachApp {
         }
     }
 
+    //MODIFIES: this
     //EFFECTS: does the post contact operation
     private void postContact() {
         postContactDisplay("\nu -> update the companies that have been followed up",
@@ -303,6 +316,7 @@ public class OutreachApp {
         }
     }
 
+    //MODIFIES: this
     // EFFECTS: updates the companies that have been followed up
     private void updateFollowedUpCompanies() {
         boolean flag = true;
