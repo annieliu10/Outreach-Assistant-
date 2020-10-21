@@ -1,5 +1,8 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.util.*;
 
 import static java.util.Collections.reverse;
@@ -166,5 +169,23 @@ public class CompanyList {
     public List<Company> getFollowedUpCompanies() {
         return followedUpCompanies;
     }
+
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("Companies which have not been contacted", companiesToJson(unContactedCompanies));
+        json.put("Companies which have ben contacted", companiesToJson(contactedCompanies));
+        json.put("Companies which have been followed-up", companiesToJson(followedUpCompanies));
+        return json;
+    }
+
+
+    private JSONArray companiesToJson(List<Company> companiess) {
+        JSONArray jsonArray = new JSONArray();
+        for (Company next : companiess) {
+            jsonArray.put(next.toJson());
+        }
+        return jsonArray;
+    }
+
 
 }

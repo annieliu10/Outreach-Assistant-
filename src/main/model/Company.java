@@ -1,5 +1,7 @@
 package model;
 
+import org.json.JSONObject;
+
 import java.util.Date;
 
 
@@ -14,7 +16,7 @@ public class Company {
     private boolean followUpStatus;
 
 
-    //constructs a new company with size, industry, companyName and employerName as information and assumes
+    //EFFECTS: constructs a new company with size, industry, companyName and employerName as information and assumes
     //it hasn't been contacted
     public Company(Integer size, String industry, String companyName, String employerName) {
         this.companySize = size;
@@ -76,5 +78,15 @@ public class Company {
         return followUpStatus;
     }
 
-
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("name", companyName);
+        json.put("size", companySize);
+        json.put("industry", industry);
+        json.put("employer name", employerName);
+        json.put("interest level", interestLevel);
+        json.put("contact status", contactStatus);
+        json.put("follow-up status", followUpStatus);
+        return json;
+    }
 }
