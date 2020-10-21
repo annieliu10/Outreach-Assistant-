@@ -157,7 +157,7 @@ public class OutreachApp {
             System.out.println("Enter the recruiter name: ");
             String employerName = inputsFromUser.next();
             Company company = new Company(size, industry, companyName, employerName);
-            listOfCompanies.addCompany(company, range);
+            listOfCompanies.addNewCompany(company, range);
             System.out.println("Enter anything to continue or type q to quit.");
             String command = inputsFromUser.next();
             if (command.equals("q")) {

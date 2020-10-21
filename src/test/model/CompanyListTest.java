@@ -35,8 +35,8 @@ public class CompanyListTest {
                 "Charlie Liu");
         Company company2 = new Company(70, "Marketing", "HealthPlus",
                 "Ann Dawson");
-        companies.addCompany(company1, range);
-        companies.addCompany(company2, range);
+        companies.addNewCompany(company1, range);
+        companies.addNewCompany(company2, range);
         assertEquals(2, companies.getUnContactedCompanies().size());
         assertEquals(65, companies.getUnContactedCompanies().get(0).getSize());
         assertEquals(70, companies.getUnContactedCompanies().get(1).getSize());
@@ -52,8 +52,8 @@ public class CompanyListTest {
                 "Charlie Liu");
         Company company2 = new Company(10, "Marketing", "HealthPlus",
                 "Ann Dawson");
-        companies.addCompany(company1, range);
-        companies.addCompany(company2, range);
+        companies.addNewCompany(company1, range);
+        companies.addNewCompany(company2, range);
         assertEquals(0, companies.getUnContactedCompanies().size());
     }
 
@@ -63,7 +63,7 @@ public class CompanyListTest {
 
         Company company1 = new Company(65, "Information Technology", "AppAnn",
                 "Charlie Liu");
-        companies.addCompany(company1, range);
+        companies.addNewCompany(company1, range);
         assertEquals(1, companies.getUnContactedCompanies().size());
         company1.contacted(5);
         companies.updateListsBasedOnContactStatuses();
@@ -71,7 +71,7 @@ public class CompanyListTest {
 
 
 
-        companies.addCompany(company1, range);
+        companies.addNewCompany(company1, range);
         assertEquals(0, companies.getUnContactedCompanies().size());
 
     }
@@ -83,14 +83,14 @@ public class CompanyListTest {
         //first week
         Company company1 = new Company(65, "Information Technology", "AppAnn",
                 "Charlie Liu");
-        companies.addCompany(company1, range);
+        companies.addNewCompany(company1, range);
         assertEquals(1, companies.getUnContactedCompanies().size());
         List<Company> contacts = companies.prioritizeContactsBasedOnSize(range);
 
 
         //second week starts
         //invoke the method
-        companies.addCompany(company1, range);
+        companies.addNewCompany(company1, range);
 
         //check outcome
         assertEquals(1, companies.getUnContactedCompanies().size());
@@ -101,7 +101,7 @@ public class CompanyListTest {
         //first week
         Company company5 = new Company(150, "Marketing", "AdX",
                 "Chris Lee");
-        companies.addCompany(company5, range);
+        companies.addNewCompany(company5, range);
 
 
         //second week starts
@@ -109,8 +109,8 @@ public class CompanyListTest {
                 "Charlie Liu");
         Company company3 = new Company(200, "Engineering", "MGN",
                 "Christopher Runnell");
-        companies.addCompany(company1, range);
-        companies.addCompany(company3, range);
+        companies.addNewCompany(company1, range);
+        companies.addNewCompany(company3, range);
 
 
         //invoking the method
@@ -136,11 +136,11 @@ public class CompanyListTest {
                 "Charlie Liu");
         Company company3 = new Company(200, "Engineering", "MGN",
                 "Christopher Runnell");
-        companies.addCompany(company5, range);
-        companies.addCompany(company1, range);
-        companies.addCompany(company3, range);
-        companies.addCompany(company2, range);
-        companies.addCompany(company4, range);
+        companies.addNewCompany(company5, range);
+        companies.addNewCompany(company1, range);
+        companies.addNewCompany(company3, range);
+        companies.addNewCompany(company2, range);
+        companies.addNewCompany(company4, range);
 
 
         //invoking the method
@@ -162,10 +162,10 @@ public class CompanyListTest {
                 "Charlie Liu");
         Company company3 = new Company(200, "Marketing", "MGN",
                 "Christopher Runnell");
-        companies.addCompany(company5, range);
-        companies.addCompany(company1, range);
-        companies.addCompany(company3, range);
-        companies.addCompany(company4, range);
+        companies.addNewCompany(company5, range);
+        companies.addNewCompany(company1, range);
+        companies.addNewCompany(company3, range);
+        companies.addNewCompany(company4, range);
 
         //invoking the method
         List<Company> result = companies.prioritizeContactsBasedOnIndustry(industries);
@@ -185,8 +185,8 @@ public class CompanyListTest {
                 "Charlie Liu");
         Company company3 = new Company(200, "Engineering", "MGN",
                 "Christopher Runnell");
-        companies.addCompany(company1, range);
-        companies.addCompany(company3, range);
+        companies.addNewCompany(company1, range);
+        companies.addNewCompany(company3, range);
 
         List<Company> contacts = companies.prioritizeContactsBasedOnSize(range);
         company1.contacted(8);
@@ -210,8 +210,8 @@ public class CompanyListTest {
                 "Charlie Liu");
         Company company3 = new Company(200, "Engineering", "MGN",
                 "Christopher Runnell");
-        companies.addCompany(company1, range);
-        companies.addCompany(company3, range);
+        companies.addNewCompany(company1, range);
+        companies.addNewCompany(company3, range);
 
         List<Company> contacts = companies.prioritizeContactsBasedOnSize(range);
         //first week has ended
@@ -226,8 +226,8 @@ public class CompanyListTest {
                 "Charlie Liu");
         Company company3 = new Company(200, "Engineering", "MGN",
                 "Christopher Runnell");
-        companies.addCompany(company1, range);
-        companies.addCompany(company3, range);
+        companies.addNewCompany(company1, range);
+        companies.addNewCompany(company3, range);
         List<Company> contacts = companies.prioritizeContactsBasedOnSize(range);
         company1.contacted(8);
         company3.contacted(5);
@@ -247,8 +247,8 @@ public class CompanyListTest {
                 "Charlie Liu");
         Company company3 = new Company(200, "Engineering", "MGN",
                 "Christopher Runnell");
-        companies.addCompany(company1, range);
-        companies.addCompany(company3, range);
+        companies.addNewCompany(company1, range);
+        companies.addNewCompany(company3, range);
         List<Company> contacts = companies.prioritizeContactsBasedOnSize(range);
         company1.contacted(8);
         company3.contacted(5);
@@ -266,8 +266,8 @@ public class CompanyListTest {
                 "Charlie Liu");
         Company company3 = new Company(200, "Engineering", "MGN",
                 "Christopher Runnell");
-        companies.addCompany(company1, range);
-        companies.addCompany(company3, range);
+        companies.addNewCompany(company1, range);
+        companies.addNewCompany(company3, range);
         List<Company> contacts = companies.prioritizeContactsBasedOnSize(range);
         companies.updateListsBasedOnContactStatuses();
         assertEquals(0, companies.getContactedCompanies().size());
@@ -282,8 +282,8 @@ public class CompanyListTest {
                 "Charlie Liu");
         Company company3 = new Company(200, "Engineering", "MGN",
                 "Christopher Runnell");
-        companies.addCompany(company1, range);
-        companies.addCompany(company3, range);
+        companies.addNewCompany(company1, range);
+        companies.addNewCompany(company3, range);
         List<Company> contacts = companies.prioritizeContactsBasedOnSize(range);
         company1.contacted(8);
         company3.contacted(5);
@@ -302,8 +302,8 @@ public class CompanyListTest {
                 "Charlie Liu");
         Company company3 = new Company(200, "Engineering", "MGN",
                 "Christopher Runnell");
-        companies.addCompany(company1, range);
-        companies.addCompany(company3, range);
+        companies.addNewCompany(company1, range);
+        companies.addNewCompany(company3, range);
         List<Company> contacts = companies.prioritizeContactsBasedOnSize(range);
         company1.contacted(8);
         company3.contacted(5);

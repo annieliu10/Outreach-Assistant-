@@ -29,7 +29,7 @@ public class CompanyList {
     //MODIFIES: this
     //EFFECTS: adds the company to the new companies to be contacted this week if it hasn't been contacted
     //and it is not already one of the companies that hasn't been contacted and on top it meets the range requirement
-    public void addCompany(Company company, CompanySizeRange range) {
+    public void addNewCompany(Company company, CompanySizeRange range) {
         if (!(getContactedCompanies().contains(company)) && (!(getUnContactedCompanies().contains(company)))) {
             if (range.contains(company.getSize())) {
                 unContactedCompanies.add(company);
@@ -79,6 +79,7 @@ public class CompanyList {
         return sorted;
 
     }
+
 
     // EFFECTS: prioritizes the companies to contact based on given industry preference order as well as the list of
     // companies
@@ -170,6 +171,8 @@ public class CompanyList {
         return followedUpCompanies;
     }
 
+
+
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
         json.put("Companies which have not been contacted", companiesToJson(unContactedCompanies));
@@ -179,6 +182,7 @@ public class CompanyList {
     }
 
 
+    //EFFECTS: returns the companylist as a JSON array
     private JSONArray companiesToJson(List<Company> companiess) {
         JSONArray jsonArray = new JSONArray();
         for (Company next : companiess) {
@@ -187,5 +191,15 @@ public class CompanyList {
         return jsonArray;
     }
 
-
+    //MODIFIES: this
+    //EFFECTS: retrieve the companies back for data persistence
+    public void reAddCompanies(Company company) {
+        if (company.getContactStatus() && !company.getFollowUpStatus()) {
+            contactedCompanies.add(company);
+        } else if (company.getFollowUpStatus()) {
+            followedUpCompanies.add(company);
+        } else {
+            unContactedCompanies.add(company);
+        }
+    }
 }
