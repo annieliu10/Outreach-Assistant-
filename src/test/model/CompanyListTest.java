@@ -26,6 +26,8 @@ public class CompanyListTest {
         assertEquals(0, companies.getContactedCompanies().size());
         assertEquals(0, companies.getFollowedUpCompanies().size());
     }
+
+
     @Test
     //add when it hasn't been contacted recently and it is not in the list of uncontacted companies from the past,
     // and meets the size range

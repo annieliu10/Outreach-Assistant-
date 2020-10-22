@@ -323,7 +323,7 @@ public class OutreachApp {
         while (flag) {
             System.out.println("Enter the company that has been followed up");
             String companyName = inputsFromUser.next();
-            for (Company next : listOfCompanies.getUnContactedCompanies()) {
+            for (Company next : listOfCompanies.getContactedCompanies()) {
                 if (next.getCompanyName().equals(companyName)) {
                     next.followedUp();
                 }
