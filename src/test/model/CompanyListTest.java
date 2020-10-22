@@ -22,9 +22,9 @@ public class CompanyListTest {
 
     @Test
     public void testConstructor(){
-        assertEquals(0, companies.getContactedCompanies());
-        assertEquals(0, companies.getContactedCompanies());
-        assertEquals(0, companies.getFollowedUpCompanies());
+        assertEquals(0, companies.getUnContactedCompanies().size());
+        assertEquals(0, companies.getContactedCompanies().size());
+        assertEquals(0, companies.getFollowedUpCompanies().size());
     }
     @Test
     //add when it hasn't been contacted recently and it is not in the list of uncontacted companies from the past,
@@ -316,4 +316,44 @@ public class CompanyListTest {
 
     }
 
+    @Test
+    public void testReAddCompaniesWhenContacted(){
+        Company company1 = new Company(65, "Information Technology", "AppAnn",
+                "Charlie Liu");
+        company1.contacted(8);
+        companies.reAddCompanies(company1);
+        assertTrue(companies.getContactedCompanies().contains(company1));
+        assertFalse(companies.getUnContactedCompanies().contains(company1));
+        assertFalse(companies.getFollowedUpCompanies().contains(company1));
+
+    }
+
+    @Test
+    public void testReAddCompaniesWhenUncontacted(){
+        Company company1 = new Company(65, "Information Technology", "AppAnn",
+                "Charlie Liu");
+        companies.reAddCompanies(company1);
+        assertTrue(companies.getUnContactedCompanies().contains(company1));
+        assertFalse(companies.getFollowedUpCompanies().contains(company1));
+        assertFalse(companies.getContactedCompanies().contains(company1));
+    }
+
+
+    @Test
+    public void testReAddCompaniesWhenFollowedUp(){
+        Company company1 = new Company(65, "Information Technology", "AppAnn",
+                "Charlie Liu");
+        company1.contacted(10);
+        company1.followedUp();
+        companies.reAddCompanies(company1);
+        assertTrue(companies.getFollowedUpCompanies().contains(company1));
+        assertFalse(companies.getContactedCompanies().contains(company1));
+        assertFalse(companies.getUnContactedCompanies().contains(company1));
+
+
+
+
+
+
+    }
     }

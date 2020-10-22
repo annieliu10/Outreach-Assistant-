@@ -1,0 +1,29 @@
+{
+     "Companies which have been followed-up": [{
+          "contact status": true,
+          "size": 70,
+          "interest level": 5,
+          "name": "HealthPlus",
+          "industry": "Marketing",
+          "follow-up status": true,
+          "employer name": "Ann Dawson"
+     }],
+     "Companies which have ben contacted": [{
+          "contact status": true,
+          "size": 65,
+          "interest level": 8,
+          "name": "AppAnn",
+          "industry": "Information Technology",
+          "follow-up status": false,
+          "employer name": "Charlie Liu"
+     }],
+     "Companies which have not been contacted": [{
+          "contact status": false,
+          "size": 10,
+          "interest level": 0,
+          "name": "J@L",
+          "industry": "Marketing",
+          "follow-up status": false,
+          "employer name": "Chris Dune"
+     }]
+}
