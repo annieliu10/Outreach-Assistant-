@@ -13,8 +13,7 @@ public class OutreachApp {
     private CompanyList listOfCompanies;
     private Scanner inputsFromUser;
     private SalesMeetings meetings;
-    private int count;
-    private int secondLevelCount;
+    private CountAccumulator counts;
 
     //EFFECTS: runs the outreach interface
     public OutreachApp() {
@@ -47,20 +46,19 @@ public class OutreachApp {
     private void init() {
         listOfCompanies = new CompanyList();
         meetings = new SalesMeetings();
-        count = 0;
-        secondLevelCount = 0;
+        counts = new CountAccumulator();
     }
 
     //EFFECTS: displays the menu
     private void display() {
         System.out.println(("\nSelect one of the following: "));
-        if (count == 0) {
+        if (counts.count == 0) {
             System.out.println("\npr -> Pre-contact");
-        } else if (secondLevelCount >= 1) {
+        } else if (counts.secondLevelCount >= 1) {
             System.out.println("\npr -> Pre-contact");
             System.out.println("\nm -> Mid-contact");
             System.out.println("\npo -> Post-contact");
-        } else if (count >= 1) {
+        } else if (counts.count >= 1) {
             System.out.println("\npr -> Pre-contact");
             System.out.println("\nm -> Mid-contact");
         }
@@ -115,10 +113,10 @@ public class OutreachApp {
                 order.changePreferenceOrder(industry1, industry2, industry3, industry4);
             }
             prioritizedContact = listOfCompanies.prioritizeContactsBasedOnIndustry(order);
-            count++;
+            counts.incrementCount();
         } else if (command.equals("s")) {
             prioritizedContact = listOfCompanies.prioritizeContactsBasedOnSize(range);
-            count++;
+            counts.incrementCount();
         } else {
             System.out.println("Please select a valid option");
         }
@@ -188,7 +186,6 @@ public class OutreachApp {
     }
 
 
-
     //MODIFIES: this
     //EFFECTS: displays the mid-contact option menus and does mid-contact operations for the user
     private void midContact() {
@@ -206,19 +203,19 @@ public class OutreachApp {
     private void doMidContactOptions(String command) {
         if (command.equals("v")) {
             displayBooking(this.meetings.getSalesMeetings());
-            secondLevelCount++;
+            counts.incrementSecondLevelCount();
         } else if (command.equals("b")) {
             bookMeetings();
-            secondLevelCount++;
+            counts.incrementSecondLevelCount();
         } else if (command.equals("c")) {
             List<Meeting> squishedMeetings = meetings.checkMostMeetings();
             System.out.println("Here is a list of meetings that are the least spaced out. ");
             displayBooking(squishedMeetings);
-            secondLevelCount++;
+            counts.incrementSecondLevelCount();
         } else if (command.equals("u")) {
             updateContacted();
             listOfCompanies.updateListsBasedOnContactStatuses();
-            secondLevelCount++;
+            counts.incrementSecondLevelCount();
         } else {
             System.out.println("Please select a valid option");
         }
