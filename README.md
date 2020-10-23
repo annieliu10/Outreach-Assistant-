@@ -37,6 +37,7 @@ to be followed up.
 so that I can change booking times. 
 - As a user, I want to be able to update the company status if they are contacted or followed up. 
 - As a user, I want to be able to save my company lists to file 
-- As a user, I want to be able to be able to load my company lists from file 
-
+- As a user, I want to be able to load my company lists from file 
+- As a user, I want to be able to save the meetings to file
+- As a user, I want to be able to load the meetings from file 
 
