@@ -1,8 +1,10 @@
 package ui;
 
 import model.*;
-import persistence.Reader;
-import persistence.Writer;
+import persistence.CompanyListReader;
+import persistence.CompanyListWriter;
+import persistence.MeetingListReader;
+import persistence.MeetingsListWriter;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -15,13 +17,15 @@ import java.util.Scanner;
 
 public class OutreachApp {
     private static final String STORAGE = "./data/companyList.json";
-
+    private static final String STORAGE2 = "./data/meetingsList.json";
     private CompanyList listOfCompanies;
     private Scanner inputsFromUser;
     private SalesMeetings meetings;
     private CountAccumulator counts;
-    private Writer writer;
-    private Reader reader;
+    private CompanyListWriter companyListWriter;
+    private CompanyListReader companyListReader;
+    private MeetingsListWriter meetingsListWriter;
+    private MeetingListReader meetingsListReader;
 
     //EFFECTS: runs the outreach interface
     public OutreachApp() {
@@ -37,12 +41,14 @@ public class OutreachApp {
         String enterCommand = null;
         inputsFromUser = new Scanner(System.in);
         init();
-        loadData();
+        loadCompanyListData();
+        loadMeetingsListData();
         while (stayOnConsole) {
             display();
             enterCommand = inputsFromUser.next();
             if (enterCommand.equals("q")) {
-                saveData();
+                saveCompanyListData();
+                saveMeetingsListData();
                 stayOnConsole = false;
             } else {
                 proceedWithCommand(enterCommand);
@@ -57,9 +63,10 @@ public class OutreachApp {
         listOfCompanies = new CompanyList();
         meetings = new SalesMeetings();
         counts = new CountAccumulator();
-        writer = new Writer(STORAGE);
-        reader = new Reader(STORAGE);
-
+        companyListWriter = new CompanyListWriter(STORAGE);
+        companyListReader = new CompanyListReader(STORAGE);
+        meetingsListWriter = new MeetingsListWriter(STORAGE2);
+        meetingsListReader = new MeetingListReader(STORAGE2);
     }
 
     //EFFECTS: displays the menu
@@ -389,25 +396,46 @@ public class OutreachApp {
 
 
     //EFFECTS: save the data to file
-    private void saveData() {
+    private void saveCompanyListData() {
         try {
-            writer.open();
-            writer.write(listOfCompanies);
-            writer.close();
-            System.out.println("Saved data");
+            companyListWriter.open();
+            companyListWriter.write(listOfCompanies);
+            companyListWriter.close();
+            System.out.println("Saved company list data");
         } catch (FileNotFoundException e) {
             System.out.println("Unable to write to this file");
         }
 
     }
 
-    private void loadData() {
+
+    private void saveMeetingsListData() {
         try {
-            listOfCompanies = reader.read();
-            System.out.println("Loaded data");
+            meetingsListWriter.open();
+            meetingsListWriter.write(meetings);
+            meetingsListWriter.close();
+            System.out.println("Saved meetings data");
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to this file");
+        }
+
+    }
+
+    private void loadCompanyListData() {
+        try {
+            listOfCompanies = companyListReader.read();
+            System.out.println("Loaded company list data");
         } catch (IOException e) {
             System.out.println("Unable to load data");
         }
     }
 
+    private void loadMeetingsListData() {
+        try {
+            meetings = meetingsListReader.read();
+            System.out.println("Loaded meetings data");
+        } catch (IOException e) {
+            System.out.println("Unable to load data");
+        }
+    }
 }

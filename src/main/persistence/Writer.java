@@ -15,9 +15,9 @@ import java.io.PrintWriter;
 
 // Represents a writer that writes JSON representation of lists of companies to file
 public class Writer {
-    private static final int INDENTS = 5;
-    private PrintWriter writer;
-    private String path;
+    protected static final int INDENTS = 5;
+    protected PrintWriter writer;
+    protected String path;
 
 
     //EFFECTS: constructs a new writer that writes to the specified path
@@ -32,12 +32,6 @@ public class Writer {
         writer = new PrintWriter(new File(path));
     }
 
-    // MODIFIES: this
-    // EFFECTS: writes JSON representation of CompanyList to file
-    public void write(CompanyList lists) {
-        JSONObject json = lists.toJson();
-        saveToFile(json.toString(INDENTS));
-    }
 
     // MODIFIES: this
     // EFFECTS: closes the writer
@@ -48,9 +42,10 @@ public class Writer {
 
     // MODIFIES: this
     // EFFECTS: writes string to file
-    private void saveToFile(String json) {
+    protected void saveToFile(String json) {
         writer.print(json);
     }
+
 
 
 }

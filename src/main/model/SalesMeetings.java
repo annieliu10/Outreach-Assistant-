@@ -1,5 +1,8 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.util.*;
 
 
@@ -64,11 +67,30 @@ public class SalesMeetings {
     }
 
 
-
     //EFFECTS: returns the list of sales meetings
     public List<Meeting> getSalesMeetings() {
         return salesMeetings;
     }
 
 
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("list of meetings", meetingsToJSON());
+        return json;
+    }
+
+    //returns the sales meetings as a JSON array
+    public JSONArray meetingsToJSON() {
+        JSONArray json = new JSONArray();
+        for (Meeting next : salesMeetings) {
+            json.put(next.toJson());
+        }
+        return json;
+    }
+
+    //MODIFIES: this
+    //EFFECTS: retrieve the meeting back into the list of sales meetings
+    public void reAddMeetingsBack(Meeting meeting) {
+        salesMeetings.add(meeting);
+    }
 }

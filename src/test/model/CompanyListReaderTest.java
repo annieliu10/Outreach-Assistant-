@@ -1,18 +1,18 @@
 package model;
 
 import org.junit.jupiter.api.Test;
-import persistence.Reader;
+import persistence.CompanyListReader;
 
 import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
-public class ReaderTest {
+public class CompanyListReaderTest {
 
     @Test
     public void testReaderInvalidPath(){
-        Reader reader1 = new Reader("./data/invalidfile.json");
+        CompanyListReader reader1 = new CompanyListReader("./data/invalidPath.json");
         try {
             CompanyList list1 = reader1.read();
             fail("IOException should have been thrown");
@@ -23,7 +23,7 @@ public class ReaderTest {
 
     @Test
     public void testReaderEmptyCompanyList(){
-        Reader reader1 = new Reader("./data/testReaderEmptyCompanyList.json");
+        CompanyListReader reader1 = new CompanyListReader("./data/testReaderEmptyCompanyList.json");
         try {
             CompanyList list = reader1.read();
             assertEquals(0, list.getUnContactedCompanies().size());
@@ -37,7 +37,7 @@ public class ReaderTest {
 
     @Test
     public void testReaderValidCompanyList(){
-        Reader reader1 = new Reader("./data/testReaderAFilledCompanyList.json");
+        CompanyListReader reader1 = new CompanyListReader("./data/testReaderAFilledCompanyList.json");
         try {
             CompanyList list = reader1.read();
             assertEquals(1, list.getUnContactedCompanies().size());

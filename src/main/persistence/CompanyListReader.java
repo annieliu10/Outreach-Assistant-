@@ -17,12 +17,12 @@ import java.util.stream.Stream;
 
 // Represents a reader that reads company lists from JSON data stored in file and then retrieve the old data
 // to work with
-public class Reader {
+public class CompanyListReader {
     private String path;
 
 
     //EFFECTS: constructs a new reader that reads from the specified path
-    public Reader(String path) {
+    public CompanyListReader(String path) {
         this.path = path;
     }
 
@@ -35,7 +35,7 @@ public class Reader {
     }
 
     // EFFECTS: reads the data in the file as strings and returns it
-    private String readFile(String path) throws IOException {
+    protected String readFile(String path) throws IOException {
         StringBuilder contentBuilder = new StringBuilder();
 
         try (Stream<String> stream = Files.lines(Paths.get(path), StandardCharsets.UTF_8)) {
@@ -45,7 +45,7 @@ public class Reader {
     }
 
     // EFFECTS: parses the company list from JSONObject and returns it
-    private CompanyList parseCompanyList(JSONObject jsonObject) {
+    protected CompanyList parseCompanyList(JSONObject jsonObject) {
         CompanyList list1 = new CompanyList();
         addCompanies(list1, jsonObject);
         return list1;

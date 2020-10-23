@@ -1,5 +1,7 @@
 package model;
 
+import org.json.JSONObject;
+
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -69,5 +71,20 @@ public class Meeting {
         this.date.set(year, months, date);
     }
 
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("name", company.getCompanyName());
+        json.put("size", company.getSize());
+        json.put("industry", company.getIndustry());
+        json.put("employer name", company.getEmployerName());
+        json.put("interest level", company.getInterestLevel());
+        json.put("contact status", company.getContactStatus());
+        json.put("follow-up status", company.getFollowUpStatus());
+        json.put("year", date.get(Calendar.YEAR));
+        json.put("month", date.get(Calendar.MONTH));
+        json.put("date", date.get(Calendar.DATE));
+        json.put("agenda", agenda);
+        return json;
+    }
 
 }

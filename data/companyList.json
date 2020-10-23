@@ -1,13 +1,24 @@
 {
      "Companies which have been followed-up": [],
      "Companies which have ben contacted": [],
-     "Companies which have not been contacted": [{
-          "contact status": false,
-          "size": 60,
-          "interest level": 0,
-          "name": "JWK",
-          "industry": "Business Admin/ Project MGMT",
-          "follow-up status": false,
-          "employer name": "Recruiter"
-     }]
+     "Companies which have not been contacted": [
+          {
+               "contact status": false,
+               "size": 60,
+               "interest level": 0,
+               "name": "JWK",
+               "industry": "Business Admin/ Project MGMT",
+               "follow-up status": false,
+               "employer name": "Recruiter"
+          },
+          {
+               "contact status": false,
+               "size": 60,
+               "interest level": 0,
+               "name": "JPP",
+               "industry": "Engineering",
+               "follow-up status": false,
+               "employer name": "Recruiter"
+          }
+     ]
 }
