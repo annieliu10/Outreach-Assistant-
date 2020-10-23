@@ -30,7 +30,7 @@ public class Reader {
     // throws IOException if an error occurs reading data from file
     public CompanyList read() throws IOException {
         String jsonData = readFile(path);
-        JSONObject jsonObject = new JSONObject(jsonData);
+        JSONObject jsonObject = new JSONObject(jsonData.trim());
         return parseCompanyList(jsonObject);
     }
 

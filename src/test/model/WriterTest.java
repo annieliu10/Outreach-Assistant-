@@ -80,7 +80,6 @@ public class WriterTest {
             assertEquals("AppAnn", list1.getContactedCompanies().get(0).getCompanyName());
             assertEquals(1, list1.getContactedCompanies().size());
             assertEquals("HealthPlus", list1.getFollowedUpCompanies().get(0).getCompanyName());
-
             assertEquals(1, list1.getFollowedUpCompanies().size());
             assertEquals("J@L", list1.getUnContactedCompanies().get(0).getCompanyName());
         } catch (IOException e) {

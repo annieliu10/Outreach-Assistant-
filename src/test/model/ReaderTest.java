@@ -37,6 +37,17 @@ public class ReaderTest {
 
     @Test
     public void testReaderValidCompanyList(){
-
+        Reader reader1 = new Reader("./data/testReaderAFilledCompanyList.json");
+        try {
+            CompanyList list = reader1.read();
+            assertEquals(1, list.getUnContactedCompanies().size());
+            assertEquals("AppAnn", list.getContactedCompanies().get(0).getCompanyName());
+            assertEquals(1, list.getContactedCompanies().size());
+            assertEquals("HealthPlus", list.getFollowedUpCompanies().get(0).getCompanyName());
+            assertEquals(1, list.getFollowedUpCompanies().size());
+            assertEquals("J@L", list.getUnContactedCompanies().get(0).getCompanyName());
+        } catch (IOException e) {
+            fail("IOException should not have been thrown");
+        }
     }
 }

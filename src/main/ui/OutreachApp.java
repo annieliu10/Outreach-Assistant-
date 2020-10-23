@@ -1,7 +1,11 @@
 package ui;
 
 import model.*;
+import persistence.Reader;
+import persistence.Writer;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Scanner;
@@ -10,10 +14,14 @@ import java.util.Scanner;
 // Console UI for the outreach tool
 
 public class OutreachApp {
+    private static final String STORAGE = "./data/companyList.json";
+
     private CompanyList listOfCompanies;
     private Scanner inputsFromUser;
     private SalesMeetings meetings;
     private CountAccumulator counts;
+    private Writer writer;
+    private Reader reader;
 
     //EFFECTS: runs the outreach interface
     public OutreachApp() {
@@ -29,10 +37,12 @@ public class OutreachApp {
         String enterCommand = null;
         inputsFromUser = new Scanner(System.in);
         init();
+        loadData();
         while (stayOnConsole) {
             display();
             enterCommand = inputsFromUser.next();
             if (enterCommand.equals("q")) {
+                saveData();
                 stayOnConsole = false;
             } else {
                 proceedWithCommand(enterCommand);
@@ -47,20 +57,36 @@ public class OutreachApp {
         listOfCompanies = new CompanyList();
         meetings = new SalesMeetings();
         counts = new CountAccumulator();
+        writer = new Writer(STORAGE);
+        reader = new Reader(STORAGE);
+
     }
 
     //EFFECTS: displays the menu
     private void display() {
+
         System.out.println(("\nSelect one of the following: "));
         if (counts.count == 0) {
+
             System.out.println("\npr -> Pre-contact");
-        } else if (counts.secondLevelCount >= 1) {
+        } else if (counts.secondLevelCount == 1) {
             System.out.println("\npr -> Pre-contact");
             System.out.println("\nm -> Mid-contact");
             System.out.println("\npo -> Post-contact");
+            System.out.println("\nvu -> View the list of companies that have not been contacted");
+            System.out.println("\nvc -> view the contacted list of companies");
+        } else if (counts.secondLevelCount > 1) {
+            System.out.println("\npr -> Pre-contact");
+            System.out.println("\nm -> Mid-contact");
+            System.out.println("\npo -> Post-contact");
+            System.out.println("\nvu -> View the list of companies that have not been contacted");
+            System.out.println("\nvc -> view the contacted list of companies");
+            System.out.println("\nvf -> view the followed-up companies");
+
         } else if (counts.count >= 1) {
             System.out.println("\npr -> Pre-contact");
             System.out.println("\nm -> Mid-contact");
+            System.out.println("\nvu -> View the list of companies that have not been contacted");
         }
         System.out.println("\nq -> quit");
     }
@@ -75,6 +101,12 @@ public class OutreachApp {
             midContact();
         } else if (enterCommand.equals("po")) {
             postContact();
+        } else if (enterCommand.equals("vu")) {
+            printingCompanies(listOfCompanies.getUnContactedCompanies());
+        } else if (enterCommand.equals("vc")) {
+            printingCompanies(listOfCompanies.getContactedCompanies());
+        } else if (enterCommand.equals("vf")) {
+            printingCompanies(listOfCompanies.getFollowedUpCompanies());
         } else {
             System.out.println("Please select a valid option");
         }
@@ -291,23 +323,17 @@ public class OutreachApp {
     //EFFECTS: does the post contact operation
     private void postContact() {
         postContactDisplay("\nu -> update the companies that have been followed up",
-                "\np -> prioritize the companies for follow-up", "\nvu -> view the list of companies "
-                        + "that haven't been contacted", "\nvc -> view the contacted list of companies",
-                "\nvf -> view the list of companies that have been followed up");
+                "\np -> prioritize the companies for follow-up");
         String command = inputsFromUser.next();
         if (command.equals("u")) {
             updateFollowedUpCompanies();
             listOfCompanies.updateListsBasedOnFollowedUpCompanies();
+            counts.incrementSecondLevelCount();
         } else if (command.equals("p")) {
             List<Company> companies = listOfCompanies.prioritizeFollowUp();
             System.out.println("The following is the order in which you should follow up with these companies.");
             printingCompanies(companies);
-        } else if (command.equals("vu")) {
-            printingCompanies(listOfCompanies.getUnContactedCompanies());
-        } else if (command.equals("vc")) {
-            printingCompanies(listOfCompanies.getContactedCompanies());
-        } else if (command.equals("vf")) {
-            printingCompanies(listOfCompanies.getFollowedUpCompanies());
+            counts.incrementSecondLevelCount();
         } else {
             System.out.println("Please select a valid option");
         }
@@ -335,12 +361,10 @@ public class OutreachApp {
 
 
     //EFFECTS: displays the options for post-contact
-    private void postContactDisplay(String s, String s2, String s3, String s4, String s5) {
+    private void postContactDisplay(String s, String s2) {
         System.out.println(s);
         System.out.println(s2);
-        System.out.println(s3);
-        System.out.println(s4);
-        System.out.println(s5);
+
     }
 
 
@@ -363,5 +387,27 @@ public class OutreachApp {
         }
     }
 
+
+    //EFFECTS: save the data to file
+    private void saveData() {
+        try {
+            writer.open();
+            writer.write(listOfCompanies);
+            writer.close();
+            System.out.println("Saved data");
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to this file");
+        }
+
+    }
+
+    private void loadData() {
+        try {
+            listOfCompanies = reader.read();
+            System.out.println("Loaded data");
+        } catch (IOException e) {
+            System.out.println("Unable to load data");
+        }
+    }
 
 }
