@@ -21,7 +21,7 @@ public class OutreachApp {
     private CompanyList listOfCompanies;
     private Scanner inputsFromUser;
     private SalesMeetings meetings;
-    private CountAccumulator counts;
+
     private CompanyListWriter companyListWriter;
     private CompanyListReader companyListReader;
     private MeetingsListWriter meetingsListWriter;
@@ -62,7 +62,7 @@ public class OutreachApp {
     private void init() {
         listOfCompanies = new CompanyList();
         meetings = new SalesMeetings();
-        counts = new CountAccumulator();
+
         companyListWriter = new CompanyListWriter(STORAGE);
         companyListReader = new CompanyListReader(STORAGE);
         meetingsListWriter = new MeetingsListWriter(STORAGE2);
@@ -73,28 +73,13 @@ public class OutreachApp {
     private void display() {
 
         System.out.println(("\nSelect one of the following: "));
-        if (counts.count == 0) {
-
-            System.out.println("\npr -> Pre-contact");
-        } else if (counts.secondLevelCount == 1) {
-            System.out.println("\npr -> Pre-contact");
-            System.out.println("\nm -> Mid-contact");
-            System.out.println("\npo -> Post-contact");
-            System.out.println("\nvu -> View the list of companies that have not been contacted");
-            System.out.println("\nvc -> view the contacted list of companies");
-        } else if (counts.secondLevelCount > 1) {
-            System.out.println("\npr -> Pre-contact");
-            System.out.println("\nm -> Mid-contact");
-            System.out.println("\npo -> Post-contact");
-            System.out.println("\nvu -> View the list of companies that have not been contacted");
-            System.out.println("\nvc -> view the contacted list of companies");
-            System.out.println("\nvf -> view the followed-up companies");
-
-        } else if (counts.count >= 1) {
-            System.out.println("\npr -> Pre-contact");
-            System.out.println("\nm -> Mid-contact");
-            System.out.println("\nvu -> View the list of companies that have not been contacted");
-        }
+        System.out.println("\npr -> Pre-contact");
+        System.out.println("\nm -> Mid-contact");
+        System.out.println("\npo -> Post-contact");
+        System.out.println("\nvu -> View the list of companies that have not been contacted");
+        System.out.println("\nvc -> view the contacted list of companies");
+        System.out.println("\nvf -> view the followed-up companies");
+        System.out.println("\nv -> view booked meetings");
         System.out.println("\nq -> quit");
     }
 
@@ -114,6 +99,8 @@ public class OutreachApp {
             printingCompanies(listOfCompanies.getContactedCompanies());
         } else if (enterCommand.equals("vf")) {
             printingCompanies(listOfCompanies.getFollowedUpCompanies());
+        } else if (enterCommand.equals("v")) {
+            displayBooking(this.meetings.getSalesMeetings());
         } else {
             System.out.println("Please select a valid option");
         }
@@ -152,10 +139,10 @@ public class OutreachApp {
                 order.changePreferenceOrder(industry1, industry2, industry3, industry4);
             }
             prioritizedContact = listOfCompanies.prioritizeContactsBasedOnIndustry(order);
-            counts.incrementCount();
+
         } else if (command.equals("s")) {
             prioritizedContact = listOfCompanies.prioritizeContactsBasedOnSize(range);
-            counts.incrementCount();
+
         } else {
             System.out.println("Please select a valid option");
         }
@@ -230,7 +217,6 @@ public class OutreachApp {
     private void midContact() {
         System.out.println("\nu -> update the companies that have been contacted");
         System.out.println("\nb -> book a new meeting for contacted companies");
-        System.out.println("\nv -> view booked meetings");
         System.out.println("\nc -> check which meetings are least spaced out");
         String command = inputsFromUser.next();
         doMidContactOptions(command);
@@ -240,21 +226,20 @@ public class OutreachApp {
     //MODIFIES: this
     //EFFECTS: does different operations based on user input for mid-contact section
     private void doMidContactOptions(String command) {
-        if (command.equals("v")) {
-            displayBooking(this.meetings.getSalesMeetings());
-            counts.incrementSecondLevelCount();
-        } else if (command.equals("b")) {
+        if (command.equals("b")) {
+            System.out.println("The list of contacted companies are as follows:");
+            printingCompanies(listOfCompanies.getContactedCompanies());
             bookMeetings();
-            counts.incrementSecondLevelCount();
+
         } else if (command.equals("c")) {
             List<Meeting> squishedMeetings = meetings.checkMostMeetings();
             System.out.println("Here is a list of meetings that are the least spaced out. ");
             displayBooking(squishedMeetings);
-            counts.incrementSecondLevelCount();
+
         } else if (command.equals("u")) {
             updateContacted();
             listOfCompanies.updateListsBasedOnContactStatuses();
-            counts.incrementSecondLevelCount();
+
         } else {
             System.out.println("Please select a valid option");
         }
@@ -335,12 +320,12 @@ public class OutreachApp {
         if (command.equals("u")) {
             updateFollowedUpCompanies();
             listOfCompanies.updateListsBasedOnFollowedUpCompanies();
-            counts.incrementSecondLevelCount();
+
         } else if (command.equals("p")) {
             List<Company> companies = listOfCompanies.prioritizeFollowUp();
             System.out.println("The following is the order in which you should follow up with these companies.");
             printingCompanies(companies);
-            counts.incrementSecondLevelCount();
+
         } else {
             System.out.println("Please select a valid option");
         }

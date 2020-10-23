@@ -25,7 +25,6 @@ public class CompanyListWriterTest {
         } catch (FileNotFoundException e) {
             //expected
         }
-
     }
 
     @Test

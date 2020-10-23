@@ -1,0 +1,26 @@
+{"list of meetings": [
+     {
+          "date": 10,
+          "contact status": true,
+          "size": 65,
+          "month": 10,
+          "year": 2020,
+          "interest level": 8,
+          "name": "AppAnn",
+          "industry": "Information Technology",
+          "follow-up status": false,
+          "employer name": "Charlie Liu"
+     },
+     {
+          "date": 20,
+          "contact status": true,
+          "size": 70,
+          "month": 10,
+          "year": 2020,
+          "interest level": 10,
+          "name": "HealthPlus",
+          "industry": "Marketing",
+          "follow-up status": false,
+          "employer name": "Ann Dawson"
+     }
+]}

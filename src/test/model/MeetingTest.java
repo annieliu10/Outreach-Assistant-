@@ -26,12 +26,7 @@ public class MeetingTest {
         assertEquals(company1, meeting.getCompany());
     }
 
-    @Test
-    public void testSetMeetingAgenda(){
-        meeting.setMeetingAgenda("Close the deal");
-        assertEquals("Close the deal", meeting.getAgenda());
 
-    }
 
     @Test
     public void testChangeMeetingTime(){

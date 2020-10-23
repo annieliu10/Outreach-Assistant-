@@ -12,7 +12,7 @@ import java.util.List;
 public class Meeting {
     private Company company;
     private Calendar date;
-    private String agenda;
+
 
     //REQUIRES: company is valid, month has to be in word form and entered in full while date>=1,
     // year is a valid year 4 digit integer
@@ -41,13 +41,6 @@ public class Meeting {
     }
 
 
-    //MODIFIES: this
-    //EFFECTS: sets the meeting agenda
-    public void setMeetingAgenda(String agenda) {
-        this.agenda = agenda;
-
-    }
-
     //EFFECTS: returns the meeting date
     public Calendar getDate() {
         return date;
@@ -58,10 +51,7 @@ public class Meeting {
         return company;
     }
 
-    //EFFECTS: returns the agenda for the meeting
-    public String getAgenda() {
-        return agenda;
-    }
+
 
     //REQUIRES: month has to be in word form and entered in full while date>=1, year is a valid year 4 digit integer
     //MODIFIES: this
@@ -83,7 +73,6 @@ public class Meeting {
         json.put("year", date.get(Calendar.YEAR));
         json.put("month", date.get(Calendar.MONTH));
         json.put("date", date.get(Calendar.DATE));
-        json.put("agenda", agenda);
         return json;
     }
 

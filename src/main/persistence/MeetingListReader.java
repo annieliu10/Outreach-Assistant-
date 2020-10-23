@@ -65,7 +65,6 @@ public class MeetingListReader {
         int year = json.getInt("year");
         int month = json.getInt("month");
         int date = json.getInt("date");
-        String agenda = json.getString("agenda");
         Company company = new Company(size, industry, companyName, employerName);
         if (contactStatus) {
             company.contacted(interestLevel);
