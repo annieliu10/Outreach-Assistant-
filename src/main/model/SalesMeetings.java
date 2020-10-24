@@ -75,12 +75,13 @@ public class SalesMeetings {
 
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
-        json.put("list of meetings", meetingsToJSON());
+        json.put("list of meetings", meetingstojson());
         return json;
     }
 
     //returns the sales meetings as a JSON array
-    public JSONArray meetingsToJSON() {
+
+    public JSONArray meetingstojson() {
         JSONArray json = new JSONArray();
         for (Meeting next : salesMeetings) {
             json.put(next.toJson());
