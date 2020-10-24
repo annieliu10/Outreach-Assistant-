@@ -7,10 +7,14 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.List;
 import java.util.stream.Stream;
 
 public class MeetingListReader {
@@ -81,30 +85,8 @@ public class MeetingListReader {
 
 
     private String convertFromNumToCalendarMonth(int month) {
-        if (month == 0) {
-            return "January";
-        } else if (month == 1) {
-            return "February";
-        } else if (month == 2) {
-            return "March";
-        } else if (month == 3) {
-            return "April";
-        } else if (month == 4) {
-            return "May";
-        } else if (month == 5) {
-            return "June";
-        } else if (month == 6) {
-            return "July";
-        } else if (month == 7) {
-            return "August";
-        } else if (month == 8) {
-            return "September";
-        } else if (month == 9) {
-            return "October";
-        } else if (month == 10) {
-            return "November";
-        } else {
-            return "December";
-        }
+        List<String> months = Arrays.asList("January", "February", "March", "April", "May", "June", "July",
+                "August", "September", "October", "November", "December");
+        return months.get(month);
     }
 }

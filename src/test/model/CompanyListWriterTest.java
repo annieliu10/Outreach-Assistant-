@@ -3,7 +3,7 @@ package model;
 import org.junit.jupiter.api.Test;
 import persistence.CompanyListReader;
 import persistence.CompanyListWriter;
-import persistence.Writer;
+
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -14,6 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 //tests are modeled based on the sample given
 //URL: https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
 public class CompanyListWriterTest {
+
 
     @Test
     public void testWriterInvalidPath() {
@@ -86,6 +87,5 @@ public class CompanyListWriterTest {
             fail("This exception should not have been thrown");
         }
     }
-
 
 }

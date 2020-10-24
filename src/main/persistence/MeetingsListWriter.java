@@ -8,6 +8,8 @@ public class MeetingsListWriter extends Writer {
         super(path);
     }
 
+
+
     public void write(SalesMeetings meetings) {
         JSONObject json = meetings.toJson();
         saveToFile(json.toString(INDENTS));
