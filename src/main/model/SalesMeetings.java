@@ -39,7 +39,7 @@ public class SalesMeetings {
     }
 
 
-    //EFFECTS: filters the companies that have been contacted and but haven't been booked yet
+    //EFFECTS: filters the companies that have been contacted but haven't been booked yet
     public List<Company> filterBookedMeetingsInContacted(List<Company> contacted) {
         List<Company> store = new ArrayList<>();
         boolean flag = true;
@@ -52,6 +52,7 @@ public class SalesMeetings {
             if (flag) {
                 store.add(next);
             }
+            flag = true;
         }
         return store;
     }

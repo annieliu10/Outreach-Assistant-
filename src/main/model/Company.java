@@ -91,7 +91,6 @@ public class Company {
         return json;
     }
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -105,19 +104,14 @@ public class Company {
                 && contactStatus == company.contactStatus
                 && interestLevel == company.interestLevel
                 && followUpStatus == company.followUpStatus
-                && industry.equals(company.industry)
-                && companyName.equals(company.companyName)
-                && employerName.equals(company.employerName);
+                && Objects.equals(industry, company.industry)
+                && Objects.equals(companyName, company.companyName)
+                && Objects.equals(employerName, company.employerName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(industry,
-                companySize,
-                companyName,
-                employerName,
-                contactStatus,
-                interestLevel,
-                followUpStatus);
+        return Objects.hash(companySize, industry, companyName, employerName, contactStatus,
+                interestLevel, followUpStatus);
     }
 }
