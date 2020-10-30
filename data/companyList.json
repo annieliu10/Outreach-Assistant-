@@ -1,24 +1,6 @@
 {
      "Companies which have been followed-up": [],
      "Companies which have not been contacted": [],
-     "Companies which have been contacted": [
-          {
-               "contact status": true,
-               "size": 50,
-               "interest level": 8,
-               "name": "Company1",
-               "industry": "Information Technology",
-               "follow-up status": false,
-               "employer name": "Recruiter1"
-          },
-          {
-               "contact status": true,
-               "size": 80,
-               "interest level": 5,
-               "name": "Company2",
-               "industry": "Engineering",
-               "follow-up status": false,
-               "employer name": "Recruiter2"
-          }
-     ]
+     "Companies which have been contacted": []
 }
+
