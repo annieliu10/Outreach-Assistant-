@@ -72,20 +72,4 @@ public class Meeting {
         return json;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        Meeting meeting = (Meeting) o;
-        return company.equals(meeting.company);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(company);
-    }
 }

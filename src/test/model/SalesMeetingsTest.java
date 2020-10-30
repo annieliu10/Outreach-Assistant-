@@ -89,9 +89,18 @@ public class SalesMeetingsTest {
         salesMeetings.addMeeting(meeting2);
         List<Company> filtered = salesMeetings.filterBookedMeetingsInContacted(companies.getContactedCompanies());
         assertEquals(0, filtered.size());
+    }
 
+
+    @Test
+    public void testEquals(){
+        List<Company> companies = new ArrayList<>();
+        companies.add(company2);
+        companies.add(company1);
+        Company company = new Company(65, "Information Technology", "AppAnn",
+                "Charlie Liu");
+        assertTrue(companies.get(1).equals(company));
 
 
     }
-
 }
