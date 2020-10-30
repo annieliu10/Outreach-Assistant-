@@ -25,9 +25,10 @@ public class SalesMeetings {
         boolean flag = true;
         salesMeetings.add(meeting);
         for (int i = 0; i < salesMeetings.size() - 1; i++) {
-            if (((meeting.getDate().get(Calendar.DATE))
+            if ((((meeting.getDate().get(Calendar.DATE))
                     == (salesMeetings.get(i).getDate().get(Calendar.DATE)))
-                    && (meeting.getDate().get(Calendar.MONTH) == salesMeetings.get(i).getDate().get(Calendar.MONTH))) {
+                    && (meeting.getDate().get(Calendar.MONTH) == salesMeetings.get(i).getDate().get(Calendar.MONTH)))
+            ) {
                 flag = false;
             }
         }
@@ -35,6 +36,24 @@ public class SalesMeetings {
             salesMeetings.remove(meeting);
         }
         return flag;
+    }
+
+
+    //EFFECTS: filters the companies that have been contacted and but haven't been booked yet
+    public List<Company> filterBookedMeetingsInContacted(List<Company> contacted) {
+        List<Company> store = new ArrayList<>();
+        boolean flag = true;
+        for (Company next : contacted) {
+            for (Meeting meeting : salesMeetings) {
+                if (next.equals(meeting.getCompany())) {
+                    flag = false;
+                }
+            }
+            if (flag) {
+                store.add(next);
+            }
+        }
+        return store;
     }
 
 

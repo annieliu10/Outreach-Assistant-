@@ -7,6 +7,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 
+//Models the sample data persistence demo
+//URL: https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
+
+// Represents a writer that writes JSON representation of a company list to file
 public class CompanyListWriter {
 
 

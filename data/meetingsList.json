@@ -1,26 +1,2 @@
 {"list of meetings": [
-     {
-          "date": 5,
-          "contact status": true,
-          "size": 80,
-          "month": 10,
-          "year": 2020,
-          "interest level": 8,
-          "name": "JL",
-          "industry": "Engineering",
-          "follow-up status": false,
-          "employer name": "Recruiter1"
-     },
-     {
-          "date": 10,
-          "contact status": true,
-          "size": 80,
-          "month": 10,
-          "year": 2020,
-          "interest level": 8,
-          "name": "JL",
-          "industry": "Engineering",
-          "follow-up status": false,
-          "employer name": "Recruiter1"
-     }
 ]}

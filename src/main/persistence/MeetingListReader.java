@@ -17,6 +17,12 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.stream.Stream;
 
+
+//Models the sample data persistence demo
+//URL: https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
+
+// Represents a reader that reads sales meetings list from JSON data stored in file and then retrieve the old data
+// to work with
 public class MeetingListReader {
     private String path;
 
@@ -26,6 +32,8 @@ public class MeetingListReader {
         this.path = path;
     }
 
+    // EFFECTS: reads the list of sales meetings from file and returns it;
+    // throws IOException if an error occurs reading data from file
     public SalesMeetings read() throws IOException {
         String jsonData = readFile(path);
         JSONObject jsonObject = new JSONObject(jsonData.trim());
@@ -33,6 +41,7 @@ public class MeetingListReader {
     }
 
 
+    // EFFECTS: reads the data in the file as strings and returns it
     private String readFile(String path) throws IOException {
         StringBuilder contentBuilder = new StringBuilder();
 
@@ -43,12 +52,16 @@ public class MeetingListReader {
 
     }
 
+    // EFFECTS: parses the sales meeting list from JSONObject and returns it
     private SalesMeetings parseMeetingsList(JSONObject jsonObject) {
         SalesMeetings meetings = new SalesMeetings();
         addMeetingsBack(meetings, jsonObject);
         return meetings;
     }
 
+    // MODIFIES: meetings
+    // EFFECTS: parses the meetings within the JSONObject that contains JSONArrays
+    // and adds them back to SalesMeetings
     private void addMeetingsBack(SalesMeetings meetings, JSONObject jsonObject) {
         JSONArray jsonArray = jsonObject.getJSONArray("list of meetings");
         for (Object json : jsonArray) {
@@ -58,6 +71,9 @@ public class MeetingListReader {
 
     }
 
+
+    // MODIFIES: meetings
+    // EFFECTS: parses a meeting from a JSONObject
     private void addMeeting(JSONObject json, SalesMeetings meetings) {
         String companyName = json.getString("name");
         int size = json.getInt("size");
@@ -84,6 +100,7 @@ public class MeetingListReader {
     }
 
 
+    //EFFECTS: converts from a numerical month to a string month
     private String convertFromNumToCalendarMonth(int month) {
         List<String> months = Arrays.asList("January", "February", "March", "April", "May", "June", "July",
                 "August", "September", "October", "November", "December");

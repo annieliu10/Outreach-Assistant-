@@ -7,9 +7,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 
+// Represents a writer that writes JSON representation of a list of sales meetings to file
 public class MeetingsListWriter {
 
-    //dfdf
+
     protected static final int INDENTS = 5;
     protected PrintWriter writer;
     protected String path;
@@ -36,6 +37,8 @@ public class MeetingsListWriter {
     }
 
 
+    // MODIFIES: this
+    // EFFECTS: writes JSON representation of SalesMeetings to file
     public void write(SalesMeetings meetings) {
         JSONObject json = meetings.toJson();
         saveToFile(json.toString(INDENTS));

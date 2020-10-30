@@ -3,10 +3,7 @@ package model;
 import org.json.JSONObject;
 
 import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.List;
+import java.util.*;
 
 //Represents one sale meeting
 public class Meeting {
@@ -52,7 +49,6 @@ public class Meeting {
     }
 
 
-
     //REQUIRES: month has to be in word form and entered in full while date>=1, year is a valid year 4 digit integer
     //MODIFIES: this
     //EFFECTS: changes the meeting time
@@ -76,4 +72,20 @@ public class Meeting {
         return json;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Meeting meeting = (Meeting) o;
+        return company.equals(meeting.company);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(company);
+    }
 }

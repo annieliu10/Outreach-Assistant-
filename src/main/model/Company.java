@@ -3,6 +3,7 @@ package model;
 import org.json.JSONObject;
 
 import java.util.Date;
+import java.util.Objects;
 
 
 //Represents a company
@@ -88,5 +89,30 @@ public class Company {
         json.put("contact status", contactStatus);
         json.put("follow-up status", followUpStatus);
         return json;
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Company company = (Company) o;
+        return companySize == company.companySize
+                && contactStatus == company.contactStatus
+                && interestLevel == company.interestLevel
+                && followUpStatus == company.followUpStatus
+                && industry.equals(company.industry)
+                && companyName.equals(company.companyName)
+                && employerName.equals(company.employerName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(companySize, industry, companyName, employerName,
+                contactStatus, interestLevel, followUpStatus);
     }
 }

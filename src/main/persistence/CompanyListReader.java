@@ -52,19 +52,19 @@ public class CompanyListReader {
 
     }
 
-    // MODIFIES: CompanyList
-    // EFFECTS: parses the companies in the 3 sub lists within the JSONObject that contays sub JSONArrays
+    // MODIFIES: list
+    // EFFECTS: parses the companies in the 3 sub lists within the JSONObject that contains sub JSONArrays
     // and adds them back to CompanyList
     private void addCompanies(CompanyList list, JSONObject jsonObject) {
         JSONArray uncontacted = jsonObject.getJSONArray("Companies which have not been contacted");
-        JSONArray contacted = jsonObject.getJSONArray("Companies which have ben contacted");
+        JSONArray contacted = jsonObject.getJSONArray("Companies which have been contacted");
         JSONArray followedup = jsonObject.getJSONArray("Companies which have been followed-up");
         addCompanies1(list, uncontacted);
         addCompanies1(list, contacted);
         addCompanies1(list, followedup);
     }
 
-    //MODIFIES: CompanyList
+    //MODIFIES: list
     // EFFECTS: parses the companies from a JSONObject in each sub list  and adds them back to the CompanyList
     private void addCompanies1(CompanyList list, JSONArray array1) {
         for (Object next : array1) {
@@ -73,7 +73,7 @@ public class CompanyListReader {
         }
     }
 
-    // MODIFIES: CompanyList
+    // MODIFIES: list
     // EFFECTS: parses a company from JSONObject
     private void addCompany(CompanyList list, JSONObject jsonObject) {
         String name = jsonObject.getString("name");

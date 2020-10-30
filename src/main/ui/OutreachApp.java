@@ -34,6 +34,7 @@ public class OutreachApp {
 
     //MODIFIES: this
     //EFFECTS: displays the menu only if the user doesn't press quit
+    //automatically saves and loads data
     // referenced this method from the Teller sample
     //https://github.students.cs.ubc.ca/CPSC210/TellerApp
     private void runOutReach() {
@@ -71,7 +72,6 @@ public class OutreachApp {
 
     //EFFECTS: displays the menu
     private void display() {
-
         System.out.println(("\nSelect one of the following: "));
         System.out.println("\npr -> Pre-contact");
         System.out.println("\nm -> Mid-contact");
@@ -220,15 +220,16 @@ public class OutreachApp {
         System.out.println("\nc -> check which meetings are least spaced out");
         String command = inputsFromUser.next();
         doMidContactOptions(command);
-
     }
+
 
     //MODIFIES: this
     //EFFECTS: does different operations based on user input for mid-contact section
     private void doMidContactOptions(String command) {
         if (command.equals("b")) {
-            System.out.println("The list of contacted companies are as follows:");
-            printingCompanies(listOfCompanies.getContactedCompanies());
+            System.out.println("The list of contacted companies that haven't been booked are as follows:");
+            //make sure they haven't been booked already
+            printingCompanies(meetings.filterBookedMeetingsInContacted(listOfCompanies.getContactedCompanies()));
             bookMeetings();
 
         } else if (command.equals("c")) {
@@ -244,6 +245,7 @@ public class OutreachApp {
             System.out.println("Please select a valid option");
         }
     }
+
 
     //MODIFIES: this
     //EFFECTS: updates the list of companies that have been contacted

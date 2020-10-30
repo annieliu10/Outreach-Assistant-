@@ -176,7 +176,7 @@ public class CompanyList {
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
         json.put("Companies which have not been contacted", companiesToJson(unContactedCompanies));
-        json.put("Companies which have ben contacted", companiesToJson(contactedCompanies));
+        json.put("Companies which have been contacted", companiesToJson(contactedCompanies));
         json.put("Companies which have been followed-up", companiesToJson(followedUpCompanies));
         return json;
     }

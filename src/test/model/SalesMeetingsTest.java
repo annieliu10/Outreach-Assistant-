@@ -3,6 +3,7 @@ package model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -34,6 +35,7 @@ public class SalesMeetingsTest {
 
 
     }
+
 
     @Test
     public void testAddMeetingSuccessful() {
@@ -69,6 +71,26 @@ public class SalesMeetingsTest {
         assertEquals(meeting1, meetings.get(0));
         assertEquals(meeting2, meetings.get(1));
         assertEquals(meeting3, meetings.get(2));
+
+    }
+
+    @Test
+    public void testFilterBookedInContacted(){
+        CompanySizeRange range = new CompanySizeRange(50, 200);
+        CompanyList companies = new CompanyList();
+        companies.addNewCompany(company1, range);
+        companies.addNewCompany(company2, range);
+        company1.contacted(5);
+        company2.contacted(8);
+        companies.updateListsBasedOnContactStatuses();
+        Meeting meeting1 = new Meeting(company1, 2020, "October", 28);
+        Meeting meeting2 = new Meeting(company2, 2020, "October", 20);
+        salesMeetings.addMeeting(meeting1);
+        salesMeetings.addMeeting(meeting2);
+        List<Company> filtered = salesMeetings.filterBookedMeetingsInContacted(companies.getContactedCompanies());
+        assertEquals(0, filtered.size());
+
+
 
     }
 
