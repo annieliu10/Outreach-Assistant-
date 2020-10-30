@@ -110,4 +110,14 @@ public class Company {
                 && employerName.equals(company.employerName);
     }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(industry,
+                companySize,
+                companyName,
+                employerName,
+                contactStatus,
+                interestLevel,
+                followUpStatus);
+    }
 }
