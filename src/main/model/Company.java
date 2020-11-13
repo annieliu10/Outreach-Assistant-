@@ -114,4 +114,7 @@ public class Company {
         return Objects.hash(companySize, industry, companyName, employerName, contactStatus,
                 interestLevel, followUpStatus);
     }
+
+
+
 }

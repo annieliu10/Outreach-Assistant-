@@ -42,14 +42,12 @@ public class OutreachApp {
         String enterCommand = null;
         inputsFromUser = new Scanner(System.in);
         init();
-        loadCompanyListData();
-        loadMeetingsListData();
+
         while (stayOnConsole) {
             display();
             enterCommand = inputsFromUser.next();
             if (enterCommand.equals("q")) {
-                saveCompanyListData();
-                saveMeetingsListData();
+
                 stayOnConsole = false;
             } else {
                 proceedWithCommand(enterCommand);
@@ -80,6 +78,8 @@ public class OutreachApp {
         System.out.println("\nvc -> view the contacted list of companies");
         System.out.println("\nvf -> view the followed-up companies");
         System.out.println("\nv -> view booked meetings");
+        System.out.println("\nl -> load data");
+        System.out.println("\ns -> save data");
         System.out.println("\nq -> quit");
     }
 
@@ -101,10 +101,31 @@ public class OutreachApp {
             printingCompanies(listOfCompanies.getFollowedUpCompanies());
         } else if (enterCommand.equals("v")) {
             displayBooking(this.meetings.getSalesMeetings());
+        } else if (enterCommand.equals("l")) {
+            loadData();
+        } else if (enterCommand.equals("s")) {
+            saveData();
         } else {
             System.out.println("Please select a valid option");
         }
     }
+
+
+    //MODIFIES: this
+    //EFFECTS: loads company data
+    private void loadData() {
+        loadCompanyListData();
+        loadMeetingsListData();
+    }
+
+
+    //MODIFIES: this
+    //EFFECTS: saves company data
+    private void saveData() {
+        saveCompanyListData();
+        saveMeetingsListData();
+    }
+
 
     //MODIFIES: this
     //EFFECTS: does the pre-contact operation
