@@ -39,7 +39,7 @@ public class DisplayPrioritizedCompanies extends JFrame {
         setVisible(true);
         setTitle("List of companies you should contact based on this order");
 
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+
         setResizable(false);
 
 

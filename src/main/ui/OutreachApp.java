@@ -413,7 +413,6 @@ public class OutreachApp {
         } catch (FileNotFoundException e) {
             System.out.println("Unable to write to this file");
         }
-
     }
 
 

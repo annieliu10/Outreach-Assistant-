@@ -23,6 +23,8 @@ import java.util.stream.Stream;
 
 // Represents a reader that reads sales meetings list from JSON data stored in file and then retrieve the old data
 // to work with
+
+
 public class MeetingListReader {
     private String path;
 

@@ -79,7 +79,6 @@ public class DropDownMenuForUpdate extends JFrame implements ActionListener {
         setVisible(true);
         setTitle("Update companies");
         setResizable(false);
-
     }
 
 

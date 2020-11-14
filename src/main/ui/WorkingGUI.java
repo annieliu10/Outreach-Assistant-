@@ -1,13 +1,17 @@
 package ui;
 
 import model.*;
+import persistence.CompanyListReader;
+import persistence.CompanyListWriter;
+import persistence.MeetingListReader;
+import persistence.MeetingsListWriter;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.util.ArrayList;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 
 import static jdk.nashorn.internal.runtime.GlobalFunctions.parseInt;
@@ -19,18 +23,23 @@ public class WorkingGUI extends JFrame implements ActionListener {
     JMenu menu;
     JMenu midContact;
     JMenu postContact;
-    JMenuItem preContact, i2, i4, i7, i8, i9, i10, updateContact, book, check, updateFollowUp,
+    JMenuItem preContact, i2, i4, i7, i10, updateContact, book, check, updateFollowUp,
             prioritizeFollowUp;
 
-
+    private static final String STORAGE = "./data/companyList.json";
+    private static final String STORAGE2 = "./data/meetingsList.json";
 
     private CompanyList companyList;
 
-
-
+    private CompanyListReader companyListReader;
+    private CompanyListWriter companyListWriter;
+    private MeetingsListWriter meetingsListWriter;
+    private MeetingListReader meetingListReader;
 
     WorkingGUI() {
-        companyList = new CompanyList();
+        init();
+
+        companyList = loadDataPopUpWindow();
 
 
         setTitle("AIESEC IGT Operations");
@@ -53,6 +62,15 @@ public class WorkingGUI extends JFrame implements ActionListener {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
+    private void init() {
+        companyList = new CompanyList();
+
+        companyListWriter = new CompanyListWriter(STORAGE);
+        companyListReader = new CompanyListReader(STORAGE);
+        meetingsListWriter = new MeetingsListWriter(STORAGE2);
+        meetingListReader = new MeetingListReader(STORAGE2);
+    }
+
     private void setFieldAndLabels() {
 
 
@@ -68,8 +86,7 @@ public class WorkingGUI extends JFrame implements ActionListener {
         i4.addActionListener(this);
 
         i7.addActionListener(this);
-        i8.addActionListener(this);
-        i9.addActionListener(this);
+
         i10.addActionListener(this);
     }
 
@@ -96,8 +113,7 @@ public class WorkingGUI extends JFrame implements ActionListener {
 
         i4 = new JMenuItem("View lists of companies");
         i7 = new JMenuItem("View booked meetings");
-        i8 = new JMenuItem("Load data");
-        i9 = new JMenuItem("Save data");
+
         i10 = new JMenuItem("Quit");
 
 
@@ -114,24 +130,9 @@ public class WorkingGUI extends JFrame implements ActionListener {
         menu.add(postContact);
         menu.add(i4);
         menu.add(i7);
-        menu.add(i8);
-        menu.add(i9);
+
         menu.add(i10);
 
-
-       /* //a group of radio button menu items
-        menu.addSeparator();
-        ButtonGroup group = new ButtonGroup();
-        rbMenuItem = new JRadioButtonMenuItem("A radio button menu item");
-        rbMenuItem.setSelected(true);
-        rbMenuItem.setMnemonic(KeyEvent.VK_R);
-        group.add(rbMenuItem);
-        menu.add(rbMenuItem);
-
-        rbMenuItem = new JRadioButtonMenuItem("Another one");
-        rbMenuItem.setMnemonic(KeyEvent.VK_O);
-        group.add(rbMenuItem);
-        menu.add(rbMenuItem);*/
 
 
         mb.add(menu);
@@ -160,11 +161,52 @@ public class WorkingGUI extends JFrame implements ActionListener {
             DisplayPrioritizedCompanies displayPrioritizedCompanies = new DisplayPrioritizedCompanies(companies);
         } else if (e.getSource() == updateFollowUp) {
             new DropDownMenuForUpdate(companyList.getContactedCompanies());
+        } else if (e.getSource() == i10) {
+            saveDataPopUpWindow();
+            setDefaultCloseOperation(EXIT_ON_CLOSE);
         }
+
+
     }
 
 
+    public CompanyList loadDataPopUpWindow() {
+        int a = JOptionPane.showConfirmDialog(this, "Would you like to load the data?");
 
+        if (a == JOptionPane.YES_OPTION) {
+            try {
+                CompanyList companies = companyListReader.read();
+                return companies;
+            } catch (IOException e) {
+                JFrame frame = new JFrame();
+                frame.setTitle("Error message");
+                frame.setBounds(100, 100, 300, 200);
+                JLabel error = new JLabel("Unable to load data");
+                error.setFont(new Font("Arial", Font.PLAIN, 15));
+                error.setSize(300, 20);
+                error.setLocation(10, 10);
+                frame.add(error);
+
+            }
+        }
+
+
+        return new CompanyList();
+    }
+
+    public void saveDataPopUpWindow() {
+        int a = JOptionPane.showConfirmDialog(this, "Would you like to save the data?");
+        if (a == JOptionPane.YES_OPTION) {
+            try {
+                companyListWriter.open();
+                companyListWriter.write(companyList);
+                companyListWriter.close();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+
+        }
+    }
 }
 
 
