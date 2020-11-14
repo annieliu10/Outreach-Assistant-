@@ -22,44 +22,16 @@ public class DisplayPrioritizedCompanies extends JFrame {
     private JTextArea emptyTextArea;
 
 
-
     public DisplayPrioritizedCompanies(List<Company> companies) {
 
         this.companies = companies;
 
-
-        /*JLabel label = new JLabel();
-        label.setHorizontalAlignment(JLabel.CENTER);
-        label.setSize(400, 100);
-        JButton b = new JButton("Show");
-        b.setBounds(400, 50, 75, 20);
-        String companyLabels[] = {"Un-contacted companies", "Contacted companies", "Followed-up companies"};
-
-        JComboBox cb = new JComboBox(companyLabels);
-        cb.setBounds(50, 50, 200, 20);
-        add(cb);
-        add(label);
-        add(b);
-        setLayout(null);
-        setBounds(300, 90, 900, 900);
-
-
-        setTitle("List of companies");
-
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setResizable(false);
-
-*/
         emptyTextArea = new JTextArea();
         emptyTextArea.setFont(new Font("Arial", Font.PLAIN, 15));
         emptyTextArea.setSize(300, 300);
         emptyTextArea.setLocation(50, 100);
         emptyTextArea.setLineWrap(true);
         add(emptyTextArea);
-
-
-
-
 
 
         setLayout(null);
@@ -75,10 +47,9 @@ public class DisplayPrioritizedCompanies extends JFrame {
 
         int i = 1;
         for (Company next : companies) {
-            textToBeDisplayed.add(i + " . " + next.getCompanyName());
+            textToBeDisplayed.add("\n" + i + " . " + next.getCompanyName());
             i++;
         }
-
 
 
         textToBeDisplayed.toString();

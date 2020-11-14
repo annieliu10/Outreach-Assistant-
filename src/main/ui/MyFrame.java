@@ -276,10 +276,10 @@ class MyFrame extends JFrame
 
 
             tout.setEditable(false);
-            res.setText("Registration Successfully..");
+            res.setText("Company added successfully..");
             int a = JOptionPane.showConfirmDialog(this, "Would you like to continue?");
             if (a == JOptionPane.NO_OPTION) {
-                setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
                 PreferenceWindow selectOption = new PreferenceWindow(listOfCompanies, range);
 
             } else {
