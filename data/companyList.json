@@ -1,13 +1,24 @@
 {
      "Companies which have been followed-up": [],
-     "Companies which have not been contacted": [{
-          "contact status": false,
-          "size": 80,
-          "interest level": 0,
-          "name": "Company 3",
-          "industry": "Information Technology",
-          "follow-up status": false,
-          "employer name": "Employer1"
-     }],
-     "Companies which have been contacted": []
+     "Companies which have not been contacted": [],
+     "Companies which have been contacted": [
+          {
+               "contact status": true,
+               "size": 80,
+               "interest level": 8,
+               "name": "Company 3",
+               "industry": "Information Technology",
+               "follow-up status": false,
+               "employer name": "Employer1"
+          },
+          {
+               "contact status": true,
+               "size": 60,
+               "interest level": 1,
+               "name": "dfdf",
+               "industry": "Marketing",
+               "follow-up status": false,
+               "employer name": "liasjf"
+          }
+     ]
 }

@@ -9,8 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
-public class DropDownMenuForUpdate extends JFrame implements ActionListener {
-
+public class UpdateFollowedUp extends JFrame implements ActionListener {
 
     private List<Company> companies;
     private CompanyList listOfCompanies;
@@ -18,14 +17,12 @@ public class DropDownMenuForUpdate extends JFrame implements ActionListener {
 
     private JTextArea emptyTextArea;
 
-    private JLabel interestLevel;
 
     private JLabel selectCompany;
-    private JTextField tinterestLevel;
 
-    DropDownMenuForUpdate(List<Company> companies, CompanyList listOfCompanies) {
+    UpdateFollowedUp(List<Company> companies, CompanyList companyList) {
         this.companies = companies;
-        this.listOfCompanies = listOfCompanies;
+        this.listOfCompanies = companyList;
 
 
         JLabel label = new JLabel();
@@ -55,20 +52,6 @@ public class DropDownMenuForUpdate extends JFrame implements ActionListener {
         add(selectCompany);
 
 
-        interestLevel = new JLabel("Company's interest level");
-        interestLevel.setFont(new Font("Arial", Font.PLAIN, 12));
-        interestLevel.setSize(250, 20);
-        interestLevel.setLocation(20, 80);
-        add(interestLevel);
-
-
-        tinterestLevel = new JTextField();
-        tinterestLevel.setFont(new Font("Arial", Font.PLAIN, 15));
-        tinterestLevel.setSize(200, 20);
-        tinterestLevel.setLocation(200, 80);
-        add(tinterestLevel);
-
-
         add(cb);
         add(label);
         add(b);
@@ -77,24 +60,28 @@ public class DropDownMenuForUpdate extends JFrame implements ActionListener {
         setLayout(null);
         setBounds(300, 90, 500, 160);
         setVisible(true);
-        setTitle("Update contacted companies");
+        setTitle("Update followed up companies");
         setResizable(false);
+
     }
 
 
     @Override
     public void actionPerformed(ActionEvent e) {
         for (Company next : companies) {
-            if (String.valueOf(cb.getItemAt(cb.getSelectedIndex())).equals(next.getCompanyName())) {
-                next.contacted(Integer.parseInt(tinterestLevel.getText()));
+            if (next.getCompanyName().equals(String.valueOf(cb.getItemAt(cb.getSelectedIndex())))) {
+                next.followedUp();
             }
         }
-        listOfCompanies.updateListsBasedOnContactStatuses();
+        listOfCompanies.updateListsBasedOnFollowedUpCompanies();
+
         int a = JOptionPane.showConfirmDialog(this, "Would you like to continue?");
         if (a == JOptionPane.YES_OPTION) {
 
-            DropDownMenuForUpdate selectOption = new DropDownMenuForUpdate(companies, listOfCompanies);
+            new UpdateFollowedUp(companies, listOfCompanies);
 
         }
+
+
     }
 }

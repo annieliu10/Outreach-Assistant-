@@ -34,7 +34,7 @@ public class PreferenceWindow extends JFrame implements ActionListener {
 
         setTitle("Select the way in which you would like to prioritize");
         setBounds(50, 50, 400, 100);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+
         setResizable(false);
 
 

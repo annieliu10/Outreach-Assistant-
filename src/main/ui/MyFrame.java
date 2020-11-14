@@ -45,26 +45,6 @@ class MyFrame extends JFrame
     private CompanySizeRange range;
 
 
-    private String dates[]
-            = {"1", "2", "3", "4", "5",
-            "6", "7", "8", "9", "10",
-            "11", "12", "13", "14", "15",
-            "16", "17", "18", "19", "20",
-            "21", "22", "23", "24", "25",
-            "26", "27", "28", "29", "30",
-            "31"};
-    private String months[]
-            = {"Jan", "feb", "Mar", "Apr",
-            "May", "Jun", "July", "Aug",
-            "Sup", "Oct", "Nov", "Dec"};
-    private String years[]
-            = {"1995", "1996", "1997", "1998",
-            "1999", "2000", "2001", "2002",
-            "2003", "2004", "2005", "2006",
-            "2007", "2008", "2009", "2010",
-            "2011", "2012", "2013", "2014",
-            "2015", "2016", "2017", "2018",
-            "2019"};
 
     // constructor, to initialize the components
     // with default values.
@@ -132,6 +112,7 @@ class MyFrame extends JFrame
         industry.setLocation(80, 200);
         c.add(industry);
 
+
         infoTech = new JRadioButton("IT");
         infoTech.setFont(new Font("Arial", Font.PLAIN, 15));
         infoTech.setSelected(true);
@@ -167,29 +148,7 @@ class MyFrame extends JFrame
         industryP.add(engineering);
         industryP.add(business);
 
-        dob = new JLabel("DOB");
-        dob.setFont(new Font("Arial", Font.PLAIN, 15));
-        dob.setSize(100, 20);
-        dob.setLocation(100, 320);
-        c.add(dob);
 
-        date = new JComboBox(dates);
-        date.setFont(new Font("Arial", Font.PLAIN, 15));
-        date.setSize(50, 20);
-        date.setLocation(200, 320);
-        c.add(date);
-
-        month = new JComboBox(months);
-        month.setFont(new Font("Arial", Font.PLAIN, 15));
-        month.setSize(60, 20);
-        month.setLocation(250, 320);
-        c.add(month);
-
-        year = new JComboBox(years);
-        year.setFont(new Font("Arial", Font.PLAIN, 15));
-        year.setSize(60, 20);
-        year.setLocation(320, 320);
-        c.add(year);
 
 
         sub = new JButton("Submit");
@@ -235,6 +194,7 @@ class MyFrame extends JFrame
     // by the user and act accordingly
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == sub) {
+            new ImagePopUp();
             String data1 = null;
             String industryInput = null;
             String data
@@ -257,18 +217,12 @@ class MyFrame extends JFrame
                 data1 = "Industry : Business Admin";
                 industryInput = "Business Admin/ Project MGMT";
             }
-            String data2
-                    = "DOB : "
-                    + (String) date.getSelectedItem()
-                    + "/" + (String) month.getSelectedItem()
-                    + "/" + (String) year.getSelectedItem()
-                    + "\n";
 
             String data4 = "Company Size :" + tsize.getText() + "\n";
 
 
             String data5 = "Employer name :" + temployerName.getText() + "\n";
-            tout.setText(data + data4 + data5 + data1 + data2);
+            tout.setText(data + data4 + data5 + data1);
 
             Company company = new Company(parseInt(tsize.getText()), industryInput, tname.getText(),
                     temployerName.getText());
@@ -277,6 +231,8 @@ class MyFrame extends JFrame
 
             tout.setEditable(false);
             res.setText("Company added successfully..");
+
+
             int a = JOptionPane.showConfirmDialog(this, "Would you like to continue?");
             if (a == JOptionPane.NO_OPTION) {
 
@@ -292,9 +248,6 @@ class MyFrame extends JFrame
             tsize.setText(def);
             res.setText(def);
             tout.setText(def);
-            date.setSelectedIndex(0);
-            month.setSelectedIndex(0);
-            year.setSelectedIndex(0);
             resadd.setText(def);
         }
     }

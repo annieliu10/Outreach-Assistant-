@@ -19,24 +19,28 @@ import static jdk.nashorn.internal.runtime.GlobalFunctions.parseInt;
 
 //https://www.javatpoint.com/java-swing
 //https://www.tutorialspoint.com/how-to-add-background-image-to-jframe-in-java
+
 public class WorkingGUI extends JFrame implements ActionListener {
     JMenu menu;
     JMenu midContact;
     JMenu postContact;
-    JMenuItem preContact, i2, i4, i7, i10, updateContact, book, check, updateFollowUp,
+    JMenuItem preContact, i4, i7, i10, updateContact, book, check, updateFollowUp,
             prioritizeFollowUp;
 
     private static final String STORAGE = "./data/companyList.json";
     private static final String STORAGE2 = "./data/meetingsList.json";
 
     private CompanyList companyList;
+    private SalesMeetings meetings;
 
     private CompanyListReader companyListReader;
     private CompanyListWriter companyListWriter;
     private MeetingsListWriter meetingsListWriter;
     private MeetingListReader meetingListReader;
 
+
     WorkingGUI() {
+
         init();
 
         companyList = loadDataPopUpWindow();
@@ -55,8 +59,6 @@ public class WorkingGUI extends JFrame implements ActionListener {
         setAction();
 
 
-        setFieldAndLabels();
-
         setSize(500, 500);
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -64,17 +66,13 @@ public class WorkingGUI extends JFrame implements ActionListener {
 
     private void init() {
         companyList = new CompanyList();
-
+        meetings = new SalesMeetings();
         companyListWriter = new CompanyListWriter(STORAGE);
         companyListReader = new CompanyListReader(STORAGE);
         meetingsListWriter = new MeetingsListWriter(STORAGE2);
         meetingListReader = new MeetingListReader(STORAGE2);
     }
 
-    private void setFieldAndLabels() {
-
-
-    }
 
     private void setAction() {
         preContact.addActionListener(this);
@@ -134,7 +132,6 @@ public class WorkingGUI extends JFrame implements ActionListener {
         menu.add(i10);
 
 
-
         mb.add(menu);
 
         setJMenuBar(mb);
@@ -155,15 +152,20 @@ public class WorkingGUI extends JFrame implements ActionListener {
         } else if (e.getSource() == i4) {
             new ViewListsOfCompanies(companyList);
         } else if (e.getSource() == updateContact) {
-            new DropDownMenuForUpdate(companyList.getUnContactedCompanies());
+            new DropDownMenuForUpdate(companyList.getUnContactedCompanies(), companyList);
+
         } else if (e.getSource() == prioritizeFollowUp) {
             List<Company> companies = companyList.prioritizeFollowUp();
             DisplayPrioritizedCompanies displayPrioritizedCompanies = new DisplayPrioritizedCompanies(companies);
         } else if (e.getSource() == updateFollowUp) {
-            new DropDownMenuForUpdate(companyList.getContactedCompanies());
+            new UpdateFollowedUp(companyList.getContactedCompanies(), companyList);
         } else if (e.getSource() == i10) {
             saveDataPopUpWindow();
             setDefaultCloseOperation(EXIT_ON_CLOSE);
+        } else if (e.getSource() == book) {
+            new BookMeetings(companyList.getContactedCompanies(), meetings);
+        } else if (e.getSource() == i7) {
+            new DisplayMeetings(meetings);
         }
 
 
