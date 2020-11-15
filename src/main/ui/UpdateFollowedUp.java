@@ -24,10 +24,8 @@ public class UpdateFollowedUp extends JFrame implements ActionListener {
         this.companies = companies;
         this.listOfCompanies = companyList;
 
-
         JLabel label = new JLabel();
         label.setHorizontalAlignment(JLabel.CENTER);
-
 
         label.setSize(400, 100);
 
@@ -37,7 +35,6 @@ public class UpdateFollowedUp extends JFrame implements ActionListener {
 
         String[] companyLabels;
         companyLabels = new String[]{""};
-
         cb = new JComboBox(companyLabels);
         for (Company next : companies) {
             cb.addItem(next.getCompanyName());
@@ -45,24 +42,31 @@ public class UpdateFollowedUp extends JFrame implements ActionListener {
 
         cb.setBounds(200, 50, 200, 20);
 
-        selectCompany = new JLabel("Select the company");
-        selectCompany.setFont(new Font("Arial", Font.PLAIN, 12));
-        selectCompany.setSize(250, 20);
-        selectCompany.setLocation(20, 50);
-        add(selectCompany);
-
+        selectCompany();
 
         add(cb);
         add(label);
         add(b);
 
+        settingsForTheFrame();
+
+    }
+
+    private void settingsForTheFrame() {
         // settings for the frame
         setLayout(null);
         setBounds(300, 90, 500, 160);
         setVisible(true);
         setTitle("Update followed up companies");
         setResizable(false);
+    }
 
+    private void selectCompany() {
+        selectCompany = new JLabel("Select the company");
+        selectCompany.setFont(new Font("Arial", Font.PLAIN, 12));
+        selectCompany.setSize(250, 20);
+        selectCompany.setLocation(20, 50);
+        add(selectCompany);
     }
 
 
@@ -74,12 +78,9 @@ public class UpdateFollowedUp extends JFrame implements ActionListener {
             }
         }
         listOfCompanies.updateListsBasedOnFollowedUpCompanies();
-
         int a = JOptionPane.showConfirmDialog(this, "Would you like to continue?");
         if (a == JOptionPane.YES_OPTION) {
-
             new UpdateFollowedUp(companies, listOfCompanies);
-
         }
 
 

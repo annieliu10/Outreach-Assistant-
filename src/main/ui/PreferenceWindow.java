@@ -31,7 +31,6 @@ public class PreferenceWindow extends JFrame implements ActionListener {
         this.listOfCompanies = listOfCompanies;
         this.range = range;
 
-
         setTitle("Select the way in which you would like to prioritize");
         setBounds(50, 50, 400, 100);
 
@@ -41,22 +40,9 @@ public class PreferenceWindow extends JFrame implements ActionListener {
         container = getContentPane();
         container.setLayout(null);
 
-        industryButton = new JRadioButton("Prioritize by industry");
-        industryButton.setFont(new Font("Arial", Font.PLAIN, 15));
-        industryButton.setSelected(true);
-        industryButton.setSize(200, 20);
-        industryButton.setLocation(20, 20);
-        industryButton.addActionListener(this);
-        container.add(industryButton);
+        industryButton();
 
-
-        sizeButton = new JRadioButton("Prioritize by size");
-        sizeButton.setFont(new Font("Arial", Font.PLAIN, 15));
-        sizeButton.setSelected(false);
-        sizeButton.setSize(200, 50);
-        sizeButton.setLocation(20, 40);
-        sizeButton.addActionListener(this);
-        container.add(sizeButton);
+        sizeButton();
 
 
         buttons = new ButtonGroup();
@@ -64,6 +50,26 @@ public class PreferenceWindow extends JFrame implements ActionListener {
         buttons.add(industryButton);
         setVisible(true);
 
+    }
+
+    private void sizeButton() {
+        sizeButton = new JRadioButton("Prioritize by size");
+        sizeButton.setFont(new Font("Arial", Font.PLAIN, 15));
+        sizeButton.setSelected(false);
+        sizeButton.setSize(200, 50);
+        sizeButton.setLocation(20, 40);
+        sizeButton.addActionListener(this);
+        container.add(sizeButton);
+    }
+
+    private void industryButton() {
+        industryButton = new JRadioButton("Prioritize by industry");
+        industryButton.setFont(new Font("Arial", Font.PLAIN, 15));
+        industryButton.setSelected(true);
+        industryButton.setSize(200, 20);
+        industryButton.setLocation(20, 20);
+        industryButton.addActionListener(this);
+        container.add(industryButton);
     }
 
     @Override

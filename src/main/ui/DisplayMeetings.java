@@ -11,7 +11,7 @@ import java.util.Calendar;
 import java.util.List;
 
 public class DisplayMeetings extends JFrame {
-    private SalesMeetings meetings;
+
 
     private Container container;
 
@@ -19,7 +19,9 @@ public class DisplayMeetings extends JFrame {
 
     private JTextArea emptyTextArea;
 
-    DisplayMeetings(SalesMeetings meetings) {
+    private List<Meeting> meetings;
+
+    DisplayMeetings(List<Meeting> meetings) {
         this.meetings = meetings;
         emptyTextArea = new JTextArea();
         emptyTextArea.setFont(new Font("Arial", Font.PLAIN, 15));
@@ -38,7 +40,7 @@ public class DisplayMeetings extends JFrame {
         setResizable(false);
         ArrayList<String> textToBeDisplayed = new ArrayList<>();
 
-        for (Meeting next : meetings.getSalesMeetings()) {
+        for (Meeting next : meetings) {
             textToBeDisplayed.add("\n" + next.getCompany().getCompanyName() + " , " + next.getDate().get(Calendar.YEAR)
                     + "," + (next.getDate().get(Calendar.MONTH) + 1) + ","
                     + next.getDate().get(Calendar.DATE));

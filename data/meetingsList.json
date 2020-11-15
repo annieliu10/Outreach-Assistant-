@@ -1,3 +1,12 @@
-{"list of meetings": []}
-
-
+{"list of meetings": [{
+     "date": 2,
+     "contact status": true,
+     "size": 50,
+     "month": 11,
+     "year": 2020,
+     "interest level": 10,
+     "name": "Company 1",
+     "industry": "Information Technology",
+     "follow-up status": true,
+     "employer name": "Annie "
+}]}

@@ -22,7 +22,7 @@ public class DisplayPrioritizedCompanies extends JFrame {
     private JTextArea emptyTextArea;
 
 
-    public DisplayPrioritizedCompanies(List<Company> companies) {
+    DisplayPrioritizedCompanies(List<Company> companies) {
 
         this.companies = companies;
 

@@ -24,7 +24,7 @@ public class WorkingGUI extends JFrame implements ActionListener {
     JMenu menu;
     JMenu midContact;
     JMenu postContact;
-    JMenuItem preContact, i4, i7, i10, updateContact, book, check, updateFollowUp,
+    JMenuItem preContact, viewCompanies, viewMeetings, quit, updateContact, book, check, updateFollowUp,
             prioritizeFollowUp;
 
     private static final String STORAGE = "./data/companyList.json";
@@ -43,12 +43,10 @@ public class WorkingGUI extends JFrame implements ActionListener {
 
         init();
 
-        companyList = loadDataPopUpWindow();
-
+        loadDataPopUpWindow();
 
         setTitle("AIESEC IGT Operations");
         setLayout(new FlowLayout());
-
 
         JLabel background = new JLabel(new ImageIcon("./aiesecImage.jpg"));
         add(background);
@@ -58,10 +56,9 @@ public class WorkingGUI extends JFrame implements ActionListener {
 
         setAction();
 
-
         setSize(500, 500);
         setVisible(true);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
     }
 
     private void init() {
@@ -81,11 +78,11 @@ public class WorkingGUI extends JFrame implements ActionListener {
         check.addActionListener(this);
         prioritizeFollowUp.addActionListener(this);
         updateFollowUp.addActionListener(this);
-        i4.addActionListener(this);
+        viewCompanies.addActionListener(this);
 
-        i7.addActionListener(this);
+        viewMeetings.addActionListener(this);
 
-        i10.addActionListener(this);
+        quit.addActionListener(this);
     }
 
 
@@ -93,107 +90,87 @@ public class WorkingGUI extends JFrame implements ActionListener {
         JMenuBar mb = new JMenuBar();
 
         menu = new JMenu("Select one of the following: ");
-
-
         preContact = new JMenuItem("Pre-Contact");
-
-
         midContact = new JMenu("Mid-Contact");
         updateContact = new JMenuItem("update the companies that have been contacted");
         book = new JMenuItem("book a new meeting for contacted companies");
         check = new JMenuItem("check which meetings are least spaced out");
-
-
         postContact = new JMenu("Post-Contact");
         prioritizeFollowUp = new JMenuItem("prioritize the companies for follow-up");
         updateFollowUp = new JMenuItem("update the companies that have been followed up");
-
-
-        i4 = new JMenuItem("View lists of companies");
-        i7 = new JMenuItem("View booked meetings");
-
-        i10 = new JMenuItem("Quit");
-
-
-        midContact.add(updateContact);
-        midContact.add(book);
-        midContact.add(check);
-
-        postContact.add(prioritizeFollowUp);
-        postContact.add(updateFollowUp);
-
-
-        menu.add(preContact);
-        menu.add(midContact);
-        menu.add(postContact);
-        menu.add(i4);
-        menu.add(i7);
-
-        menu.add(i10);
-
+        viewCompanies = new JMenuItem("View lists of companies");
+        viewMeetings = new JMenuItem("View booked meetings");
+        quit = new JMenuItem("Quit");
+        addMenuItems();
 
         mb.add(menu);
 
         setJMenuBar(mb);
     }
 
+    private void addMenuItems() {
+        midContact.add(updateContact);
+        midContact.add(book);
+        midContact.add(check);
+        postContact.add(prioritizeFollowUp);
+        postContact.add(updateFollowUp);
+        menu.add(preContact);
+        menu.add(midContact);
+        menu.add(postContact);
+        menu.add(viewCompanies);
+        menu.add(viewMeetings);
+        menu.add(quit);
+    }
 
-    @Override
+
+
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == preContact) {
-            String lowerBound = JOptionPane.showInputDialog("Enter the lower bound");
-            String upperBound = JOptionPane.showInputDialog("Enter the upper bound");
-
-            CompanySizeRange range = new CompanySizeRange(Integer.parseInt(lowerBound), Integer.parseInt(upperBound));
-
-            MyFrame f = new MyFrame(range, companyList);
-
-
-        } else if (e.getSource() == i4) {
+            preContactPane();
+        } else if (e.getSource() == viewCompanies) {
             new ViewListsOfCompanies(companyList);
         } else if (e.getSource() == updateContact) {
             new DropDownMenuForUpdate(companyList.getUnContactedCompanies(), companyList);
-
         } else if (e.getSource() == prioritizeFollowUp) {
             List<Company> companies = companyList.prioritizeFollowUp();
             DisplayPrioritizedCompanies displayPrioritizedCompanies = new DisplayPrioritizedCompanies(companies);
         } else if (e.getSource() == updateFollowUp) {
             new UpdateFollowedUp(companyList.getContactedCompanies(), companyList);
-        } else if (e.getSource() == i10) {
+        } else if (e.getSource() == quit) {
             saveDataPopUpWindow();
             setDefaultCloseOperation(EXIT_ON_CLOSE);
         } else if (e.getSource() == book) {
             new BookMeetings(companyList.getContactedCompanies(), meetings);
-        } else if (e.getSource() == i7) {
-            new DisplayMeetings(meetings);
+        } else if (e.getSource() == viewMeetings) {
+            new DisplayMeetings(meetings.getSalesMeetings());
+        } else if (e.getSource() == check) {
+            List<Meeting> squishedMeetings = meetings.checkMostMeetings();
+            new DisplayMeetings(squishedMeetings);
         }
+    }
 
-
+    private void preContactPane() {
+        String lowerBound = JOptionPane.showInputDialog("Enter the lower bound");
+        String upperBound = JOptionPane.showInputDialog("Enter the upper bound");
+        CompanySizeRange range = new CompanySizeRange(Integer.parseInt(lowerBound), Integer.parseInt(upperBound));
+        MyFrame f = new MyFrame(range, companyList);
     }
 
 
-    public CompanyList loadDataPopUpWindow() {
+    public void loadDataPopUpWindow() {
         int a = JOptionPane.showConfirmDialog(this, "Would you like to load the data?");
 
         if (a == JOptionPane.YES_OPTION) {
             try {
                 CompanyList companies = companyListReader.read();
-                return companies;
-            } catch (IOException e) {
-                JFrame frame = new JFrame();
-                frame.setTitle("Error message");
-                frame.setBounds(100, 100, 300, 200);
-                JLabel error = new JLabel("Unable to load data");
-                error.setFont(new Font("Arial", Font.PLAIN, 15));
-                error.setSize(300, 20);
-                error.setLocation(10, 10);
-                frame.add(error);
+                this.companyList = companies;
+                this.meetings = meetingListReader.read();
 
+            } catch (IOException e) {
+                errorFrame("Unable to load data");
             }
         }
 
-
-        return new CompanyList();
     }
 
     public void saveDataPopUpWindow() {
@@ -203,11 +180,25 @@ public class WorkingGUI extends JFrame implements ActionListener {
                 companyListWriter.open();
                 companyListWriter.write(companyList);
                 companyListWriter.close();
+                meetingsListWriter.open();
+                meetingsListWriter.write(meetings);
+                meetingsListWriter.close();
             } catch (FileNotFoundException e) {
-                e.printStackTrace();
+                errorFrame("Unable to save data");
             }
 
         }
+    }
+
+    private void errorFrame(String s) {
+        JFrame frame = new JFrame();
+        frame.setTitle("Error message");
+        frame.setBounds(100, 100, 300, 200);
+        JLabel error = new JLabel(s);
+        error.setFont(new Font("Arial", Font.PLAIN, 15));
+        error.setSize(300, 20);
+        error.setLocation(10, 10);
+        frame.add(error);
     }
 }
 

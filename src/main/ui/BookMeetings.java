@@ -31,17 +31,13 @@ public class BookMeetings extends JFrame implements ActionListener {
 
     private JLabel res;
     private String dates[]
-            = {"1", "2", "3", "4", "5",
-            "6", "7", "8", "9", "10",
-            "11", "12", "13", "14", "15",
-            "16", "17", "18", "19", "20",
-            "21", "22", "23", "24", "25",
-            "26", "27", "28", "29", "30",
-            "31"};
+            = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18",
+            "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"};
+
     private String months[]
-            = {"January", "February", "March", "April",
-            "May", "June", "July", "August",
-            "September", "October", "November", "December"};
+            = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October",
+            "November", "December"};
+
     private String years[]
             = {"2020", "2021", "2022"};
 
@@ -49,21 +45,13 @@ public class BookMeetings extends JFrame implements ActionListener {
     BookMeetings(List<Company> companies, SalesMeetings meetings) {
         this.companies = companies;
         this.meetings = meetings;
-        JLabel label = new JLabel();
-        label.setHorizontalAlignment(JLabel.CENTER);
 
+        label();
 
-        label.setSize(400, 100);
-
-        JButton b = new JButton("Submit");
-        b.setBounds(220, 110, 75, 20);
-        b.addActionListener(this);
-
+        submitButton();
 
         String[] companyLabels;
         companyLabels = new String[]{""};
-
-
         cb = new JComboBox(companyLabels);
         for (Company next : companies) {
             cb.addItem(next.getCompanyName());
@@ -72,13 +60,79 @@ public class BookMeetings extends JFrame implements ActionListener {
         add(cb);
         cb.setBounds(200, 50, 200, 20);
 
+        selectCompany();
+        selectMeetingTime();
+
+        submitAndReset();
+
+        setResponse();
+
+        displayMeetings();
+
+
+        // settings for the frame
+        setLayout(null);
+        setBounds(300, 90, 800, 450);
+        setVisible(true);
+        setTitle("Update companies");
+        setResizable(false);
+    }
+
+    private void label() {
+        JLabel label = new JLabel();
+        label.setHorizontalAlignment(JLabel.CENTER);
+        label.setSize(400, 100);
+    }
+
+    private void submitButton() {
+        JButton b = new JButton("Submit");
+        b.setBounds(220, 110, 75, 20);
+        b.addActionListener(this);
+    }
+
+    private void displayMeetings() {
+        tout = new JTextArea();
+        tout.setFont(new Font("Arial", Font.PLAIN, 12));
+        tout.setSize(300, 400);
+        tout.setLocation(400, 50);
+        tout.setLineWrap(true);
+        tout.setEditable(false);
+        add(tout);
+    }
+
+    private void setResponse() {
+        res = new JLabel("");
+        res.setFont(new Font("Arial", Font.PLAIN, 20));
+        res.setSize(500, 25);
+        res.setLocation(100, 300);
+        add(res);
+    }
+
+    private void submitAndReset() {
+        sub = new JButton("Submit");
+        sub.setFont(new Font("Arial", Font.PLAIN, 12));
+        sub.setSize(100, 20);
+        sub.setLocation(20, 200);
+        sub.addActionListener(this);
+        add(sub);
+
+        reset = new JButton("Reset");
+        reset.setFont(new Font("Arial", Font.PLAIN, 12));
+        reset.setSize(100, 20);
+        reset.setLocation(130, 200);
+        reset.addActionListener(this);
+        add(reset);
+    }
+
+    private void selectCompany() {
         selectCompany = new JLabel("Select the company");
         selectCompany.setFont(new Font("Arial", Font.PLAIN, 12));
         selectCompany.setSize(250, 20);
         selectCompany.setLocation(20, 50);
         add(selectCompany);
+    }
 
-
+    private void selectMeetingTime() {
         dob = new JLabel("Meeting Time");
         dob.setFont(new Font("Arial", Font.PLAIN, 12));
         dob.setSize(100, 20);
@@ -102,44 +156,6 @@ public class BookMeetings extends JFrame implements ActionListener {
         year.setSize(60, 20);
         year.setLocation(320, 100);
         add(year);
-
-        sub = new JButton("Submit");
-        sub.setFont(new Font("Arial", Font.PLAIN, 12));
-        sub.setSize(100, 20);
-        sub.setLocation(20, 200);
-        sub.addActionListener(this);
-        add(sub);
-
-        reset = new JButton("Reset");
-        reset.setFont(new Font("Arial", Font.PLAIN, 12));
-        reset.setSize(100, 20);
-        reset.setLocation(130, 200);
-        reset.addActionListener(this);
-        add(reset);
-
-        res = new JLabel("");
-        res.setFont(new Font("Arial", Font.PLAIN, 20));
-        res.setSize(500, 25);
-        res.setLocation(100, 300);
-        add(res);
-
-        tout = new JTextArea();
-        tout.setFont(new Font("Arial", Font.PLAIN, 12));
-        tout.setSize(300, 400);
-        tout.setLocation(400, 50);
-        tout.setLineWrap(true);
-        tout.setEditable(false);
-        add(tout);
-
-
-        // settings for the frame
-        setLayout(null);
-        setBounds(300, 90, 800, 450);
-        setVisible(true);
-        setTitle("Update companies");
-        setResizable(false);
-
-
     }
 
     @Override
@@ -157,19 +173,7 @@ public class BookMeetings extends JFrame implements ActionListener {
             String months = (String) month.getSelectedItem();
             Integer years = Integer.parseInt((String) year.getSelectedItem());
 
-            boolean flag = false;
-            for (Company next : companies) {
-                if (next.getCompanyName().equals(companyName)) {
-                    flag = true;
-                    Meeting meeting = new Meeting(next, years, months, dates);
-                    boolean result = meetings.addMeeting(meeting);
-                    if (result) {
-                        res.setText("Booking was successful!");
-                    } else {
-                        res.setText("Booking was unsuccessful because two meetings are on the same day!");
-                    }
-                }
-            }
+            boolean flag = bookMeeting(companyName, dates, months, years);
             if (!flag) {
                 res.setText("The company for which you want to book a meeting isn't in the contacted list.");
             }
@@ -181,15 +185,36 @@ public class BookMeetings extends JFrame implements ActionListener {
             }
 
         } else {
-            String def = "";
-            cb.setSelectedIndex(0);
-            res.setText(def);
-            tout.setText(def);
-            date.setSelectedIndex(0);
-            month.setSelectedIndex(0);
-            year.setSelectedIndex(0);
+            resetEverything();
         }
 
 
+    }
+
+    private void resetEverything() {
+        String def = "";
+        cb.setSelectedIndex(0);
+        res.setText(def);
+        tout.setText(def);
+        date.setSelectedIndex(0);
+        month.setSelectedIndex(0);
+        year.setSelectedIndex(0);
+    }
+
+    private boolean bookMeeting(String companyName, Integer dates, String months, Integer years) {
+        boolean flag = false;
+        for (Company next : companies) {
+            if (next.getCompanyName().equals(companyName)) {
+                flag = true;
+                Meeting meeting = new Meeting(next, years, months, dates);
+                boolean result = meetings.addMeeting(meeting);
+                if (result) {
+                    res.setText("Booking was successful!");
+                } else {
+                    res.setText("Booking was unsuccessful because two meetings are on the same day!");
+                }
+            }
+        }
+        return flag;
     }
 }

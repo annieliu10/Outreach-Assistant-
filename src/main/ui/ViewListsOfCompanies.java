@@ -36,24 +36,15 @@ public class ViewListsOfCompanies extends JFrame implements ActionListener {
         companyLabels = new String[]{"Un-contacted companies", "Contacted companies", "Followed-up companies"};
 
 
-
-
         cb = new JComboBox(companyLabels);
         cb.setBounds(50, 50, 200, 20);
 
-        emptyTextArea = new JTextArea();
-        emptyTextArea.setFont(new Font("Arial", Font.PLAIN, 15));
-        emptyTextArea.setSize(300, 250);
-        emptyTextArea.setLocation(50, 100);
-        emptyTextArea.setLineWrap(true);
-        add(emptyTextArea);
+        emptyTextArea();
 
 
         add(cb);
         add(label);
         add(b);
-
-
 
         // settings for the frame
         setLayout(null);
@@ -61,6 +52,15 @@ public class ViewListsOfCompanies extends JFrame implements ActionListener {
         setVisible(true);
         setTitle("List of companies");
         setResizable(false);
+    }
+
+    private void emptyTextArea() {
+        emptyTextArea = new JTextArea();
+        emptyTextArea.setFont(new Font("Arial", Font.PLAIN, 15));
+        emptyTextArea.setSize(300, 250);
+        emptyTextArea.setLocation(50, 100);
+        emptyTextArea.setLineWrap(true);
+        add(emptyTextArea);
     }
 
 

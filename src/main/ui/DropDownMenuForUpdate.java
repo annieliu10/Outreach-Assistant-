@@ -27,17 +27,14 @@ public class DropDownMenuForUpdate extends JFrame implements ActionListener {
         this.companies = companies;
         this.listOfCompanies = listOfCompanies;
 
-
         JLabel label = new JLabel();
         label.setHorizontalAlignment(JLabel.CENTER);
-
 
         label.setSize(400, 100);
 
         JButton b = new JButton("Submit");
         b.setBounds(220, 110, 75, 20);
         b.addActionListener(this);
-
         String[] companyLabels;
         companyLabels = new String[]{""};
 
@@ -45,16 +42,28 @@ public class DropDownMenuForUpdate extends JFrame implements ActionListener {
         for (Company next : companies) {
             cb.addItem(next.getCompanyName());
         }
-
         cb.setBounds(200, 50, 200, 20);
 
-        selectCompany = new JLabel("Select the company");
-        selectCompany.setFont(new Font("Arial", Font.PLAIN, 12));
-        selectCompany.setSize(250, 20);
-        selectCompany.setLocation(20, 50);
-        add(selectCompany);
+        selectCompany();
+        enterInterest();
 
+        add(cb);
+        add(label);
+        add(b);
 
+        settingsForTheFrame();
+    }
+
+    private void settingsForTheFrame() {
+        // settings for the frame
+        setLayout(null);
+        setBounds(300, 90, 500, 160);
+        setVisible(true);
+        setTitle("Update contacted companies");
+        setResizable(false);
+    }
+
+    private void enterInterest() {
         interestLevel = new JLabel("Company's interest level");
         interestLevel.setFont(new Font("Arial", Font.PLAIN, 12));
         interestLevel.setSize(250, 20);
@@ -67,18 +76,14 @@ public class DropDownMenuForUpdate extends JFrame implements ActionListener {
         tinterestLevel.setSize(200, 20);
         tinterestLevel.setLocation(200, 80);
         add(tinterestLevel);
+    }
 
-
-        add(cb);
-        add(label);
-        add(b);
-
-        // settings for the frame
-        setLayout(null);
-        setBounds(300, 90, 500, 160);
-        setVisible(true);
-        setTitle("Update contacted companies");
-        setResizable(false);
+    private void selectCompany() {
+        selectCompany = new JLabel("Select the company");
+        selectCompany.setFont(new Font("Arial", Font.PLAIN, 12));
+        selectCompany.setSize(250, 20);
+        selectCompany.setLocation(20, 50);
+        add(selectCompany);
     }
 
 
