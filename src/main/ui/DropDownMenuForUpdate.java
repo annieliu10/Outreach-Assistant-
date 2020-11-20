@@ -9,20 +9,22 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
-public class DropDownMenuForUpdate extends JFrame implements ActionListener {
 
+//A drop-down menu that shows the list of companies that have not been contacted so that the user can update the
+// contacted ones
+public class DropDownMenuForUpdate extends JFrame implements ActionListener {
 
     private List<Company> companies;
     private CompanyList listOfCompanies;
     private JComboBox cb;
-
-    private JTextArea emptyTextArea;
 
     private JLabel interestLevel;
 
     private JLabel selectCompany;
     private JTextField tinterestLevel;
 
+    //REQUIRES: companies are in the list of uncontacted companies and but have been contacted in person
+    //EFFECTS: creates a drop down menu that displays the uncontacted companies for the users to select
     DropDownMenuForUpdate(List<Company> companies, CompanyList listOfCompanies) {
         this.companies = companies;
         this.listOfCompanies = listOfCompanies;
@@ -54,6 +56,8 @@ public class DropDownMenuForUpdate extends JFrame implements ActionListener {
         settingsForTheFrame();
     }
 
+    //MODIFIES: this
+    //EFFECTS: sets the panel
     private void settingsForTheFrame() {
         // settings for the frame
         setLayout(null);
@@ -63,13 +67,14 @@ public class DropDownMenuForUpdate extends JFrame implements ActionListener {
         setResizable(false);
     }
 
+    //MODIFIES: this
+    //EFFECTS: sets the label "Company's interest level" on the panel for the user to see what they need to input
     private void enterInterest() {
-        interestLevel = new JLabel("Company's interest level");
+        interestLevel = new JLabel("Company's interest level(1-10)");
         interestLevel.setFont(new Font("Arial", Font.PLAIN, 12));
         interestLevel.setSize(250, 20);
         interestLevel.setLocation(20, 80);
         add(interestLevel);
-
 
         tinterestLevel = new JTextField();
         tinterestLevel.setFont(new Font("Arial", Font.PLAIN, 15));
@@ -78,6 +83,8 @@ public class DropDownMenuForUpdate extends JFrame implements ActionListener {
         add(tinterestLevel);
     }
 
+    //MODIFIES: this
+    //EFFECTS: sets the label "Select the company" on the panel for display
     private void selectCompany() {
         selectCompany = new JLabel("Select the company");
         selectCompany.setFont(new Font("Arial", Font.PLAIN, 12));
@@ -87,6 +94,9 @@ public class DropDownMenuForUpdate extends JFrame implements ActionListener {
     }
 
 
+    //MODIFIES: this
+    //EFFECTS: updates the company that is selected in the backend and prompts the user to see whether they want to
+    // continue update
     @Override
     public void actionPerformed(ActionEvent e) {
         for (Company next : companies) {

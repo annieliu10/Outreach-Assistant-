@@ -10,6 +10,8 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
+
+//A panel that displays companies with different statuses (uncontacted, contacted and followed-up)
 public class ViewListsOfCompanies extends JFrame implements ActionListener {
 
 
@@ -19,7 +21,11 @@ public class ViewListsOfCompanies extends JFrame implements ActionListener {
 
     private JTextArea emptyTextArea;
 
-    ViewListsOfCompanies(CompanyList companyList) {
+
+    //REQUIRES: companyList has to be valid
+    //EFFECTS: displays to the user the a list of companies with the selected state (uncontacted, contacted,
+    // followed-up)
+    public ViewListsOfCompanies(CompanyList companyList) {
         this.companyList = companyList;
 
         JLabel label = new JLabel();
@@ -54,6 +60,9 @@ public class ViewListsOfCompanies extends JFrame implements ActionListener {
         setResizable(false);
     }
 
+
+    //MODIFIES: this
+    //EFFECTS: creates an empty text area that shows the list of companies
     private void emptyTextArea() {
         emptyTextArea = new JTextArea();
         emptyTextArea.setFont(new Font("Arial", Font.PLAIN, 15));
@@ -64,6 +73,13 @@ public class ViewListsOfCompanies extends JFrame implements ActionListener {
     }
 
 
+
+    //MODIFIES: this
+    //EFFECTS: displays the selected group of companies based on user's selection in the drop down menu
+    // if the user selects "un-contacted companies", then a list of companies that haven't been contacted is displayed
+    // if the user selects "contacted companies", then a list of companies that have been contacted but not followed up
+    // is displayed
+    // if the user selects "followed-up companies", then a list of companies that have been followed up is displayed
     @Override
     public void actionPerformed(ActionEvent e) {
         System.out.println("Hi");
@@ -87,7 +103,6 @@ public class ViewListsOfCompanies extends JFrame implements ActionListener {
                 companyNames.add(next.getCompanyName());
             }
         }
-
 
         emptyTextArea.setText(String.valueOf(companyNames));
 

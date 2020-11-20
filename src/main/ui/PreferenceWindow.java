@@ -11,7 +11,9 @@ import java.awt.event.*;
 import java.util.List;
 
 
-// https://docs.oracle.com/javase/tutorial/uiswing/examples/components/CheckBoxDemoProject/src/components/CheckBoxDemo.java
+// Referenced from https://docs.oracle.com/javase/tutorial/uiswing/examples/components/CheckBoxDemoProject/src/
+// components/CheckBoxDemo.java
+// A Checkbox window to select the way in which the user wants the companies to be prioritized
 public class PreferenceWindow extends JFrame implements ActionListener {
 
 
@@ -26,6 +28,9 @@ public class PreferenceWindow extends JFrame implements ActionListener {
     List<Company> prioritizeContacts;
     CompanyIndustryPreferenceOrder order;
 
+    //REQUIRES: listofCompanies has to be valid and range is a valid range
+    //EFFECTS: displays a checkbox window that has options for the user to select the way in which the user wants
+    // the companies to be prioritized
     PreferenceWindow(CompanyList listOfCompanies, CompanySizeRange range) {
 
         this.listOfCompanies = listOfCompanies;
@@ -52,6 +57,9 @@ public class PreferenceWindow extends JFrame implements ActionListener {
 
     }
 
+
+    //MODIFIES: this
+    //EFFECTS: displays the size button
     private void sizeButton() {
         sizeButton = new JRadioButton("Prioritize by size");
         sizeButton.setFont(new Font("Arial", Font.PLAIN, 15));
@@ -62,6 +70,8 @@ public class PreferenceWindow extends JFrame implements ActionListener {
         container.add(sizeButton);
     }
 
+    //MODIFIES: this
+    //EFFECTS: displays the industry button
     private void industryButton() {
         industryButton = new JRadioButton("Prioritize by industry");
         industryButton.setFont(new Font("Arial", Font.PLAIN, 15));
@@ -72,6 +82,10 @@ public class PreferenceWindow extends JFrame implements ActionListener {
         container.add(industryButton);
     }
 
+
+    //MODIFIES: this
+    //EFFECTS: prioritizes the companies in the backend based on the option the user selects and then prompts another
+    // panel that includes a list of companies that are prioritized
     @Override
     public void actionPerformed(ActionEvent e) {
         if (sizeButton.isSelected()) {

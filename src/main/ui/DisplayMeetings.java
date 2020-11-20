@@ -10,17 +10,18 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+
+//A panel that displays the list of booked meetings to the user
 public class DisplayMeetings extends JFrame {
 
-
-    private Container container;
-
-    private JLabel res;
 
     private JTextArea emptyTextArea;
 
     private List<Meeting> meetings;
 
+
+    //REQUIRES: the meetings have to be valid and booked
+    //EFFECTS: displays the list of meetings that were booked successfully in a white text area
     DisplayMeetings(List<Meeting> meetings) {
         this.meetings = meetings;
         emptyTextArea = new JTextArea();

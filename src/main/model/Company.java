@@ -79,6 +79,7 @@ public class Company {
         return followUpStatus;
     }
 
+    //EFFECTS: parses from java objects to json objects
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
         json.put("name", companyName);
@@ -91,6 +92,8 @@ public class Company {
         return json;
     }
 
+    //EFFECTS: compares the fields (company size, contact status, interest level, follow-up status)
+    //to see whether two companies are considered the "same"
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -109,6 +112,7 @@ public class Company {
                 && Objects.equals(employerName, company.employerName);
     }
 
+    //EFFECTS: used in the equals method to compare two objects
     @Override
     public int hashCode() {
         return Objects.hash(companySize, industry, companyName, employerName, contactStatus,

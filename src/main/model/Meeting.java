@@ -21,6 +21,7 @@ public class Meeting {
         this.company = company;
     }
 
+    //EFFECTS: converts from string to month
     private int convertFromStringToNumMonth(String month) {
         List<String> months = Arrays.asList("January", "February", "March", "April", "May", "June", "July",
                 "August", "September", "October", "November", "December");
@@ -57,6 +58,7 @@ public class Meeting {
         this.date.set(year, months, date);
     }
 
+    //EFFECTS: converts the meeting java object to a json object
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
         json.put("name", company.getCompanyName());

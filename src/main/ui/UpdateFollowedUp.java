@@ -9,6 +9,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
+
+// A panel that updates the companies that have been followed up physically but not updated to the followed-up status
 public class UpdateFollowedUp extends JFrame implements ActionListener {
 
     private List<Company> companies;
@@ -20,7 +22,11 @@ public class UpdateFollowedUp extends JFrame implements ActionListener {
 
     private JLabel selectCompany;
 
-    UpdateFollowedUp(List<Company> companies, CompanyList companyList) {
+
+    //REQUIRES: companyList has to be valid and companies are contacted
+    //EFFECTS: updates the companies that have been followed up physically but not yet updated to the followed-up
+    // status; displays the companies in a drop down menu
+    public UpdateFollowedUp(List<Company> companies, CompanyList companyList) {
         this.companies = companies;
         this.listOfCompanies = companyList;
 
@@ -52,6 +58,8 @@ public class UpdateFollowedUp extends JFrame implements ActionListener {
 
     }
 
+    //MODIFIES: this
+    //EFFECTS: sets the frame for the panel
     private void settingsForTheFrame() {
         // settings for the frame
         setLayout(null);
@@ -61,6 +69,8 @@ public class UpdateFollowedUp extends JFrame implements ActionListener {
         setResizable(false);
     }
 
+    //MODIFIES: this
+    //EFFECTS: sets a label of "select the company" to display to the user
     private void selectCompany() {
         selectCompany = new JLabel("Select the company");
         selectCompany.setFont(new Font("Arial", Font.PLAIN, 12));
@@ -70,6 +80,9 @@ public class UpdateFollowedUp extends JFrame implements ActionListener {
     }
 
 
+    //MODIFIES: this
+    //EFFECTS: updates the company that has been selected in the drop down menu and prompts the user to continue the
+    // update in a popup window
     @Override
     public void actionPerformed(ActionEvent e) {
         for (Company next : companies) {

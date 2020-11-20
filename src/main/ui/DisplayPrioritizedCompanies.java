@@ -4,24 +4,22 @@ import model.Company;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
+
+//A panel that displays the list of companies that were prioritized in the order in which they should be contacted
 public class DisplayPrioritizedCompanies extends JFrame {
 
 
     private List<Company> companies;
 
-    private Container container;
-
-    private JLabel res;
-
     private JTextArea emptyTextArea;
 
 
+    //REQUIRES: companies either have not been contacted before or have been contacted but not followed up
+    //EFFECTS: displays the list of companies that have been prioritized in the order in which they should be contacted
+    // in an empty text area
     DisplayPrioritizedCompanies(List<Company> companies) {
 
         this.companies = companies;
@@ -51,12 +49,7 @@ public class DisplayPrioritizedCompanies extends JFrame {
             i++;
         }
 
-
         textToBeDisplayed.toString();
         emptyTextArea.setText(String.valueOf(textToBeDisplayed));
-
-
     }
-
-
 }

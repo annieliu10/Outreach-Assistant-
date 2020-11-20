@@ -93,14 +93,14 @@ public class SalesMeetings {
     }
 
 
+    //EFFECTS: converts the list of meetings from java object to json object and returns it
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
         json.put("list of meetings", meetingstojson());
         return json;
     }
 
-    //returns the sales meetings as a JSON array
-
+    //EFFECTS: converts the sales meetings to a JSON array and returns it
     public JSONArray meetingstojson() {
         JSONArray json = new JSONArray();
         for (Meeting next : salesMeetings) {
