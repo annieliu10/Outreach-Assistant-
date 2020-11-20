@@ -10,6 +10,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
@@ -26,7 +28,7 @@ public class WorkingGUI extends JFrame implements ActionListener {
     JMenuItem preContact;
     JMenuItem viewCompanies;
     JMenuItem viewMeetings;
-    JMenuItem quit;
+
     JMenuItem updateContact;
     JMenuItem book;
     JMenuItem check;
@@ -47,7 +49,6 @@ public class WorkingGUI extends JFrame implements ActionListener {
 
     //EFFECTS: displays the menu of options the user can choose from, title, background image of AIESEC
     public WorkingGUI() {
-
         init();
 
         loadDataPopUpWindow();
@@ -65,7 +66,42 @@ public class WorkingGUI extends JFrame implements ActionListener {
 
         setSize(500, 500);
         setVisible(true);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
 
+        windowCloseSave();
+
+    }
+
+    private void windowCloseSave() {
+        addWindowListener(new WindowListener() {
+            public void windowOpened(WindowEvent e) {
+            }
+            
+            public void windowClosing(WindowEvent e) {
+                saveDataPopUpWindow();
+            }
+
+            @Override
+            public void windowClosed(WindowEvent e) {
+            }
+
+            @Override
+            public void windowIconified(WindowEvent e) {
+            }
+
+            @Override
+            public void windowDeiconified(WindowEvent e) {
+            }
+
+            @Override
+            public void windowActivated(WindowEvent e) {
+
+            }
+
+            @Override
+            public void windowDeactivated(WindowEvent e) {
+            }
+        });
     }
 
 
@@ -94,7 +130,7 @@ public class WorkingGUI extends JFrame implements ActionListener {
 
         viewMeetings.addActionListener(this);
 
-        quit.addActionListener(this);
+
     }
 
 
@@ -114,7 +150,7 @@ public class WorkingGUI extends JFrame implements ActionListener {
         updateFollowUp = new JMenuItem("update the companies that have been followed up");
         viewCompanies = new JMenuItem("View lists of companies");
         viewMeetings = new JMenuItem("View booked meetings");
-        quit = new JMenuItem("Quit");
+
         addMenuItems();
 
         mb.add(menu);
@@ -135,9 +171,8 @@ public class WorkingGUI extends JFrame implements ActionListener {
         menu.add(postContact);
         menu.add(viewCompanies);
         menu.add(viewMeetings);
-        menu.add(quit);
-    }
 
+    }
 
 
     //MODIFIES: this
@@ -154,9 +189,6 @@ public class WorkingGUI extends JFrame implements ActionListener {
             DisplayPrioritizedCompanies displayPrioritizedCompanies = new DisplayPrioritizedCompanies(companies);
         } else if (e.getSource() == updateFollowUp) {
             new UpdateFollowedUp(companyList.getContactedCompanies(), companyList);
-        } else if (e.getSource() == quit) {
-            saveDataPopUpWindow();
-            setDefaultCloseOperation(EXIT_ON_CLOSE);
         } else if (e.getSource() == book) {
             new BookMeetings(companyList.getContactedCompanies(), meetings);
         } else if (e.getSource() == viewMeetings) {

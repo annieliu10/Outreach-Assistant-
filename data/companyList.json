@@ -59,10 +59,18 @@
           "contact status": false,
           "size": 50,
           "interest level": 0,
+          "name": "Company C",
+          "industry": "Information Technology",
+          "follow-up status": false,
+          "employer name": "dgdf"
+     }],
+     "Companies which have been contacted": [{
+          "contact status": true,
+          "size": 50,
+          "interest level": 8,
           "name": "Company 10",
           "industry": "Marketing",
           "follow-up status": false,
           "employer name": "Melissa "
-     }],
-     "Companies which have been contacted": []
+     }]
 }
