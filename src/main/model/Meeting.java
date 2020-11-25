@@ -2,7 +2,6 @@ package model;
 
 import org.json.JSONObject;
 
-import java.lang.reflect.Array;
 import java.util.*;
 
 //Represents one sale meeting
@@ -11,8 +10,6 @@ public class Meeting {
     private Calendar date;
 
 
-    //REQUIRES: company is valid, month has to be in word form and entered in full while date>=1,
-    // year is a valid year 4 digit integer
     //EFFECTS: constructs the meeting with given company, year, month and date
     public Meeting(Company company, int year, String month, int date) {
         this.date = Calendar.getInstance();
@@ -21,10 +18,14 @@ public class Meeting {
         this.company = company;
     }
 
+    private List<String> createMonths() {
+        return Arrays.asList("January", "February", "March", "April", "May", "June", "July",
+                "August", "September", "October", "November", "December");
+    }
+
     //EFFECTS: converts from string to month
     private int convertFromStringToNumMonth(String month) {
-        List<String> months = Arrays.asList("January", "February", "March", "April", "May", "June", "July",
-                "August", "September", "October", "November", "December");
+        List<String> months = createMonths();
         List<Integer> nums = new ArrayList<>();
         for (int i = 0; i < 12; i++) {
             nums.add(i);
@@ -53,7 +54,7 @@ public class Meeting {
     //REQUIRES: month has to be in word form and entered in full while date>=1, year is a valid year 4 digit integer
     //MODIFIES: this
     //EFFECTS: changes the meeting time
-    public void changeMeetingTime(int year, String month, int date) {
+    public void changeMeetingTime(int year, String month, int date)  {
         int months = convertFromStringToNumMonth(month);
         this.date.set(year, months, date);
     }

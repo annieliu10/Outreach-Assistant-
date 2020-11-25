@@ -1,5 +1,6 @@
 package model;
 
+import exceptions.InvalidSize;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -16,7 +17,11 @@ public class CompanyListTest {
     @BeforeEach
     public void setUp() {
         companies = new CompanyList();
-        range = new CompanySizeRange(50, 200);
+        try {
+            range = new CompanySizeRange(50, 200);
+        } catch (InvalidSize invalidSize) {
+            invalidSize.getMessage();
+        }
         industries = new CompanyIndustryPreferenceOrder();
     }
 

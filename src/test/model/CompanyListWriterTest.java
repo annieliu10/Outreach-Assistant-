@@ -1,5 +1,6 @@
 package model;
 
+import exceptions.InvalidSize;
 import org.junit.jupiter.api.Test;
 import persistence.CompanyListReader;
 import persistence.CompanyListWriter;
@@ -57,7 +58,12 @@ public class CompanyListWriterTest {
         Company company2 = new Company(70, "Marketing", "HealthPlus",
                 "Ann Dawson");
         Company company3 = new Company(10, "Marketing", "J@L", "Chris Dune");
-        CompanySizeRange range = new CompanySizeRange(10, 200);
+        CompanySizeRange range = null;
+        try {
+            range = new CompanySizeRange(10, 200);
+        } catch (InvalidSize invalidSize) {
+            invalidSize.getMessage();
+        }
         CompanyIndustryPreferenceOrder industries = new CompanyIndustryPreferenceOrder();
         CompanyList list1 = new CompanyList();
         list1.addNewCompany(company1, range);

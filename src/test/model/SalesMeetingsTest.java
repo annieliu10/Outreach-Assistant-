@@ -1,5 +1,6 @@
 package model;
 
+import exceptions.InvalidSize;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -76,7 +77,12 @@ public class SalesMeetingsTest {
 
     @Test
     public void testFilterBookedInContacted(){
-        CompanySizeRange range = new CompanySizeRange(50, 200);
+        CompanySizeRange range = null;
+        try {
+            range = new CompanySizeRange(50, 200);
+        } catch (InvalidSize invalidSize) {
+            invalidSize.getMessage();
+        }
         CompanyList companies = new CompanyList();
         companies.addNewCompany(company1, range);
         companies.addNewCompany(company2, range);

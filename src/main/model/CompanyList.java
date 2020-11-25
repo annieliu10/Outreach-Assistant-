@@ -173,6 +173,7 @@ public class CompanyList {
 
 
 
+    //EFFECTS: Converts java objects to json objects
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
         json.put("Companies which have not been contacted", companiesToJson(unContactedCompanies));

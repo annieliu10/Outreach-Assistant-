@@ -1,5 +1,7 @@
 package model;
 
+import exceptions.InvalidSize;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,10 +12,15 @@ public class CompanySizeRange {
     private Integer lowerBound;
     private Integer upperBound;
 
-    // REQUIRES: lower <= upper
-    // EFFECTS: constructs a range of integers from
-    // lowerBound to upperBound including the lowerBound and upperBound
-    public CompanySizeRange(Integer lowerBound, Integer upperBound) {
+
+    // EFFECTS:
+    // if lowerBound <1, throws InvalidSize exception
+    // if lowerBound > upperBound, throws InvalidSize exception
+    // otherwise, constructs a range of integers from lowerBound to upperBound including the lowerBound and upperBound
+    public CompanySizeRange(Integer lowerBound, Integer upperBound) throws InvalidSize {
+        if (lowerBound < 1 | lowerBound > upperBound) {
+            throw new InvalidSize("Be careful about the bounds");
+        }
         this.lowerBound = lowerBound;
         this.upperBound = upperBound;
         range = new ArrayList<>();

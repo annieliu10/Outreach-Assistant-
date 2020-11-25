@@ -1,5 +1,6 @@
 package ui;
 
+import exceptions.InvalidSize;
 import model.*;
 import persistence.CompanyListReader;
 import persistence.CompanyListWriter;
@@ -76,7 +77,7 @@ public class WorkingGUI extends JFrame implements ActionListener {
         addWindowListener(new WindowListener() {
             public void windowOpened(WindowEvent e) {
             }
-            
+
             public void windowClosing(WindowEvent e) {
                 saveDataPopUpWindow();
             }
@@ -204,7 +205,12 @@ public class WorkingGUI extends JFrame implements ActionListener {
     private void preContactPane() {
         String lowerBound = JOptionPane.showInputDialog("Enter the lower bound");
         String upperBound = JOptionPane.showInputDialog("Enter the upper bound");
-        CompanySizeRange range = new CompanySizeRange(Integer.parseInt(lowerBound), Integer.parseInt(upperBound));
+        CompanySizeRange range = null;
+        try {
+            range = new CompanySizeRange(Integer.parseInt(lowerBound), Integer.parseInt(upperBound));
+        } catch (InvalidSize invalidSize) {
+            invalidSize.getMessage();
+        }
         CompanyForm f = new CompanyForm(range, companyList);
     }
 

@@ -1,5 +1,6 @@
 package ui;
 
+import exceptions.InvalidSize;
 import model.*;
 import persistence.CompanyListReader;
 import persistence.CompanyListWriter;
@@ -179,7 +180,12 @@ public class OutreachApp {
         int lowerBound = inputsFromUser.nextInt();
         System.out.println("Upper Bound: ");
         int upperBound = inputsFromUser.nextInt();
-        CompanySizeRange range = new CompanySizeRange(lowerBound, upperBound);
+        CompanySizeRange range = null;
+        try {
+            range = new CompanySizeRange(lowerBound, upperBound);
+        } catch (InvalidSize invalidSize) {
+            invalidSize.getMessage();
+        }
         addingCompanies(range);
         return range;
     }
@@ -320,7 +326,10 @@ public class OutreachApp {
         for (Company next : listOfCompanies.getContactedCompanies()) {
             if (next.getCompanyName().equals(companyName)) {
                 flag = true;
-                Meeting meeting = new Meeting(next, year, month, date);
+                Meeting meeting = null;
+
+                meeting = new Meeting(next, year, month, date);
+
                 boolean result = meetings.addMeeting(meeting);
                 if (result) {
                     System.out.println("Booking was successful");

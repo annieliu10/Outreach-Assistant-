@@ -219,7 +219,10 @@ public class BookMeetings extends JFrame implements ActionListener {
     private void bookMeeting(String companyName, Integer dates, String months, Integer years) {
         for (Company next : companies) {
             if (next.getCompanyName().equals(companyName)) {
-                Meeting meeting = new Meeting(next, years, months, dates);
+                Meeting meeting = null;
+
+                meeting = new Meeting(next, years, months, dates);
+
                 boolean result = meetings.addMeeting(meeting);
                 if (result) {
                     res.setText("Booking was successful!");
