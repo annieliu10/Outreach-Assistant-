@@ -43,7 +43,8 @@ so that I can change booking times.
 
 
 ## Phase 4: Task 2
-- CompanySizeRange class is made more robust and tested
+- Test and design a class in your model package that is robust.  
+- Class: CompanySizeRange Method: CompanySizeRange constructor 
 
 
 ## Phase 4: Task 3
