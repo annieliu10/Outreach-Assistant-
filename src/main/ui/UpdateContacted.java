@@ -12,7 +12,7 @@ import java.util.List;
 
 //A drop-down menu that shows the list of companies that have not been contacted so that the user can update the
 // contacted ones
-public class DropDownMenuForUpdate extends JFrame implements ActionListener {
+public class UpdateContacted extends JFrame implements ActionListener {
 
     private List<Company> companies;
     private CompanyList listOfCompanies;
@@ -25,7 +25,7 @@ public class DropDownMenuForUpdate extends JFrame implements ActionListener {
 
     //REQUIRES: companies are in the list of uncontacted companies and but have been contacted in person
     //EFFECTS: creates a drop down menu that displays the uncontacted companies for the users to select
-    DropDownMenuForUpdate(List<Company> companies, CompanyList listOfCompanies) {
+    UpdateContacted(List<Company> companies, CompanyList listOfCompanies) {
         this.companies = companies;
         this.listOfCompanies = listOfCompanies;
 
@@ -108,7 +108,7 @@ public class DropDownMenuForUpdate extends JFrame implements ActionListener {
         int a = JOptionPane.showConfirmDialog(this, "Would you like to continue?");
         if (a == JOptionPane.YES_OPTION) {
 
-            DropDownMenuForUpdate selectOption = new DropDownMenuForUpdate(companies, listOfCompanies);
+            UpdateContacted selectOption = new UpdateContacted(companies, listOfCompanies);
 
         }
     }

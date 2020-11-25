@@ -12,7 +12,7 @@ import java.util.List;
 public class DisplayPrioritizedCompanies extends JFrame {
 
 
-    private List<Company> companies;
+
 
     private JTextArea emptyTextArea;
 
@@ -22,7 +22,6 @@ public class DisplayPrioritizedCompanies extends JFrame {
     // in an empty text area
     DisplayPrioritizedCompanies(List<Company> companies) {
 
-        this.companies = companies;
 
         emptyTextArea = new JTextArea();
         emptyTextArea.setFont(new Font("Arial", Font.PLAIN, 15));

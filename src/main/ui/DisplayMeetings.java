@@ -17,13 +17,13 @@ public class DisplayMeetings extends JFrame {
 
     private JTextArea emptyTextArea;
 
-    private List<Meeting> meetings;
+
 
 
     //REQUIRES: the meetings have to be valid and booked
     //EFFECTS: displays the list of meetings that were booked successfully in a white text area
     DisplayMeetings(List<Meeting> meetings) {
-        this.meetings = meetings;
+
         emptyTextArea = new JTextArea();
         emptyTextArea.setFont(new Font("Arial", Font.PLAIN, 15));
         emptyTextArea.setSize(300, 300);

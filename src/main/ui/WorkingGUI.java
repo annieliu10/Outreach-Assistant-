@@ -184,7 +184,7 @@ public class WorkingGUI extends JFrame implements ActionListener {
         } else if (e.getSource() == viewCompanies) {
             new ViewListsOfCompanies(companyList);
         } else if (e.getSource() == updateContact) {
-            new DropDownMenuForUpdate(companyList.getUnContactedCompanies(), companyList);
+            new UpdateContacted(companyList.getUnContactedCompanies(), companyList);
         } else if (e.getSource() == prioritizeFollowUp) {
             List<Company> companies = companyList.prioritizeFollowUp();
             DisplayPrioritizedCompanies displayPrioritizedCompanies = new DisplayPrioritizedCompanies(companies);

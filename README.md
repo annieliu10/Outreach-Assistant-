@@ -42,6 +42,18 @@ so that I can change booking times.
 - As a user, I want to be able to load the meetings from file 
 
 
-## Reflect
+## Phase 4: Task 3
 - CompanySizeRange class is made more robust and tested
+If I had more time to work on the project...
+- I would refactor the persistence package so that I would have a saveable interface which is implemented by separate
+CompanyListReader and MeetingsListReader. Because of the similarities between 
+the methods in the CompanyListWriter and MeetingsListWriter, I would also make
+an abstract class to which the two can extend to reduce coupling. 
+- Refactoring can also be done in the DisplayMeetings and DisplayPrioritizedCompanies classes
+since the two serve the same purpose which is to display the list of meetings/ companies
+to the panel 
+- UpdateFollowedUp and DropDownMenuForUpdate are also similar in terms of structure hence an abstract class
+can abstract away the similarities between the two
+
+
 

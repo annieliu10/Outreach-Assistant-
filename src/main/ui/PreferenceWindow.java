@@ -22,11 +22,11 @@ public class PreferenceWindow extends JFrame implements ActionListener {
     private JRadioButton industryButton;
     private ButtonGroup buttons;
 
-    CompanyList listOfCompanies;
-    CompanySizeRange range;
+    private CompanyList listOfCompanies;
+    private CompanySizeRange range;
 
-    List<Company> prioritizeContacts;
-    CompanyIndustryPreferenceOrder order;
+    private List<Company> prioritizeContacts;
+    private CompanyIndustryPreferenceOrder order;
 
     //REQUIRES: listofCompanies has to be valid and range is a valid range
     //EFFECTS: displays a checkbox window that has options for the user to select the way in which the user wants

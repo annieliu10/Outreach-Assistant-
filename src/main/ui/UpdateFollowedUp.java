@@ -17,8 +17,6 @@ public class UpdateFollowedUp extends JFrame implements ActionListener {
     private CompanyList listOfCompanies;
     private JComboBox cb;
 
-    private JTextArea emptyTextArea;
-
 
     private JLabel selectCompany;
 
