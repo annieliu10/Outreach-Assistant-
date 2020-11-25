@@ -41,3 +41,7 @@ so that I can change booking times.
 - As a user, I want to be able to save the meetings to file
 - As a user, I want to be able to load the meetings from file 
 
+
+## Reflect
+- CompanySizeRange class is made more robust and tested
+
