@@ -42,8 +42,12 @@ so that I can change booking times.
 - As a user, I want to be able to load the meetings from file 
 
 
-## Phase 4: Task 3
+## Phase 4: Task 2
 - CompanySizeRange class is made more robust and tested
+
+
+## Phase 4: Task 3
+
 If I had more time to work on the project...
 - I would refactor the persistence package so that I would have a saveable interface which is implemented by separate
 CompanyListReader and MeetingsListReader. Because of the similarities between 
